@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夏铭骏 | AI品牌创意设计师</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 🔥 已替换为国内可秒开的字体镜像源 -->
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Microsoft YaHei', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: '#0a0a0a', 
+                        card: '#15171e', 
+                        accent: '#ec4899', 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: transparent; 
+            color: #F9FAFB; 
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec4899;
+        }
+
+        /* 🔥 核心交互：卡片微光特效 */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1; 
+        }
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.06); 
+            box-shadow: 0 0 40px 5px rgba(236, 72, 153, 0.4);
+            border-color: transparent;
+            transform: translateY(-6px);
+            z-index: 20; 
+        }
+
+        .media-container img, .media-container video {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover .media-container img,
+        .project-card:hover .media-container video {
+            transform: scale(1.05);
+        }
+
+        /* 播放按钮 */
+        .play-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover .play-btn {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .ios-transition {
+            transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* 全局光束 */
+        @keyframes beam-sweep-1 {
+            0% { transform: rotate(-45deg) translateY(-120vh) translateX(-50vw); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: rotate(-45deg) translateY(120vh) translateX(50vw); opacity: 0; }
+        }
+        @keyframes beam-sweep-2 {
+            0% { transform: rotate(-35deg) translateY(-100vh) translateX(-40vw); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: rotate(-35deg) translateY(120vh) translateX(60vw); opacity: 0; }
+        }
+        .beam-1 { animation: beam-sweep-1 14s infinite linear; }
+        .beam-2 { animation: beam-sweep-2 18s infinite linear; animation-delay: -6s; }
+
+        /* 强力波动 */
+        @keyframes ping-strong {
+            0% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 10px rgba(236,72,153,0.8); }
+            100% { transform: scale(3.5); opacity: 0; box-shadow: 0 0 50px rgba(236,72,153,0.1); }
+        }
+        .animate-ping-strong {
+            animation: ping-strong 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes arrow-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+        .animate-arrow-float {
+            animation: arrow-float 2s ease-in-out infinite;
+        }
+
+        /* 自定义瀑布流滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent selection:text-white relative">
+
+    <div class="fixed inset-0 z-[-1] bg-[#050505] overflow-hidden pointer-events-none flex items-center justify-center">
+        <div class="absolute w-[200vw] h-[18vh] bg-gradient-to-r from-transparent via-cyan-400/[0.25] to-transparent filter blur-[80px] mix-blend-screen beam-1"></div>
+        <div class="absolute w-[200vw] h-[25vh] bg-gradient-to-r from-transparent via-pink-500/[0.15] to-transparent filter blur-[100px] mix-blend-screen beam-2"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300 bg-black/30 backdrop-blur-md border-b border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center cursor-pointer relative z-10" onclick="window.scrollTo(0,0)">
+                    <span class="font-extrabold text-2xl tracking-tight text-white flex items-start">
+                        PORTFOLIO
+                        <sup class="text-[10px] font-normal text-gray-400 ml-1 mt-1">®</sup>
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex space-x-10 absolute left-1/2 transform -translate-x-1/2 w-full justify-center pointer-events-none">
+                    <div class="flex space-x-10 pointer-events-auto">
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">首页</a>
+                        <a href="#experience" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">经历</a>
+                        <a href="#portfolio" class="nav-link text-white font-medium transition-colors text-[15px]">作品</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">联系</a>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4 relative z-10">
+                    <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" class="flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all duration-300 font-medium text-sm">
+                        <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        下载简历
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首屏 Hero 区域 -->
+    <header id="home" class="relative overflow-hidden flex items-center min-h-screen">
+        <div class="absolute inset-0 z-0 pointer-events-none" style="mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);">
+            <video id="bg-video" autoplay loop muted="muted" playsinline class="absolute inset-0 w-full h-full object-cover">
+                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/60"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-32 pb-20 flex flex-col items-center text-center mt-10">
+            <h2 class="text-5xl md:text-[64px] font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-6 tracking-wide drop-shadow-lg">
+                Portfolio
+            </h2>
+            
+            <div class="flex items-center justify-center gap-5 md:gap-6 mb-6">
+                <div class="flex items-baseline">
+                    <h1 class="text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">夏铭骏</h1>
+                    <span class="text-white/40 font-light mx-4 md:mx-5 text-4xl md:text-5xl translate-y-[2px] italic">/</span>
+                    <h1 class="text-5xl md:text-[56px] font-bold text-white tracking-tight leading-none" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
+                </div>
+                <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20">
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-10">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[14px] text-gray-300 backdrop-blur-md cursor-default group">
+                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    <span class="text-white font-medium tracking-wide">江南大学</span><span class="ml-1.5">设计学院</span>
+                </div>
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[14px] text-gray-300 backdrop-blur-md cursor-default group">
+                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span class="text-white font-medium tracking-wide">3.5年</span><span class="ml-1.5">互联网大厂工作经验</span>
+                </div>
+            </div>
+            
+            <p class="text-gray-400 text-sm md:text-[15px] max-w-2xl mx-auto italic mb-14 tracking-wide">
+                "专注于品牌文创设计与动态设计，持续探索AIGC的建设与应用"
+            </p>
+
+            <button onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})" class="inline-flex items-center px-10 py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-[15px] hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] hover:scale-105 transition-all duration-300">
+                查看作品 
+                <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 🌟 工作经历模块 -->
+    <section id="experience" class="py-24 relative z-20 overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex items-center gap-3 mb-12">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <h2 class="text-2xl font-bold text-white tracking-tight">工作经历</h2>
+            </div>
+
+            <!-- 时间轴容器 -->
+            <div class="relative ml-4 md:ml-6 space-y-10">
+                <!-- 🔥 修改点1：线使用 -translate-x-1/2 绝对居中对齐到 left-0 -->
+                <div class="absolute left-0 top-[-40px] bottom-[-40px] w-[2px] bg-gray-800/80 pointer-events-none z-0 -translate-x-1/2" style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"></div>
+
+                <!-- 经历项目 1 (美团) -->
+                <div class="relative pl-8 md:pl-12 z-10">
+                    <!-- 🔥 修改点2：将圆点移到卡片外侧，同样用 -translate-x-1/2 吸附在 left-0，保证与线完美重合 -->
+                    <div class="absolute left-0 top-[36px] md:top-[46px] w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
+                        <span class="absolute inset-0 block rounded-full bg-accent animate-ping-strong z-0"></span>
+                        <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_12px_rgba(236,72,153,1)] z-10"></span>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+                        <div class="p-6 md:p-8 cursor-pointer relative" onclick="toggleExperience('exp-1', 'icon-1')">
+                            
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                                <div class="flex-1">
+                                    <img src="https://console.bce.baidu.com/api/v1/znzs/user/file/download?src=user&fileId=65b93ac8-8d5d-470c-817f-41b0af94f70c.png" alt="美团" class="h-6 md:h-7 mb-2 object-contain object-left">
+                                    <p class="text-[14px] font-medium text-accent mb-4">品牌创意设计中心 | AI与品牌创意设计</p>
+                                    <p class="text-gray-300 text-[14px] leading-relaxed font-light">
+                                        聚焦美团品牌创意设计，项目横跨文创产品、空间体验与 AIGC 动态影像。主导美团袋鼠IP的风格化模型训练与工作流建设，实现设计资产降本增效，连续3年获评年度绩效“超出预期”。
+                                    </p>
+                                </div>
+                                <div class="md:text-right flex flex-col md:items-end flex-shrink-0 mt-2 md:mt-0">
+                                    <div class="text-[22px] font-bold text-white tracking-tight mb-1">
+                                        2022<span class="text-gray-500 font-normal mx-1">-</span>至今
+                                    </div>
+                                    <div class="text-[12px] text-gray-400 font-medium tracking-wide">AI品牌创意设计师 (职级 L7)</div>
+                                </div>
+                            </div>
+                            <div class="w-full flex justify-center mt-6">
+                                <div class="p-1 text-gray-500 hover:text-white transition-colors">
+                                    <svg id="icon-1" class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="exp-1" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out px-6 md:px-8">
+                            <div class="overflow-hidden">
+                                <div class="pb-8 border-t border-white/10 pt-6 space-y-6">
+                                    <div class="flex gap-3">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-500 mt-2 flex-shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                                        <div>
+                                            <h4 class="text-gray-100 text-[15px] font-semibold mb-1">品牌文创与全链路产品设计</h4>
+                                            <p class="text-gray-400 text-[14px] leading-relaxed font-light">主导2023、2024美团中秋礼盒、14周年限定探索团礼盒及小象会员业务文创开发。把控从概念到落地的全流程，核心项目累计创收逾千万元，销量同比增长显著，多次获评设计部卓越项目推荐。</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-500 mt-2 flex-shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                                        <div>
+                                            <h4 class="text-gray-100 text-[15px] font-semibold mb-1">AIGC工具化建设与前沿探索</h4>
+                                            <p class="text-gray-400 text-[14px] leading-relaxed font-light">主导美团袋鼠IP风格化LoRA模型训练，并与团队共建袋鼠融合模型。上线一年以来，规模化产出业务设计资产5000+张；以高频节气节日海报为例，推动单图交付周期由3天压缩至1天，单点提效约60%，大幅优化了团队协作流程。</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-500 mt-2 flex-shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                                        <div>
+                                            <h4 class="text-gray-100 text-[15px] font-semibold mb-1">多元视觉表达：动态创意与空间体验</h4>
+                                            <p class="text-gray-400 text-[14px] leading-relaxed font-light">运用前沿3D与AI技术创作《大艺术家团团》等品牌短片，累计曝光超1600万。独立负责350㎡上海新总部礼品店空间全案设计及青山计划环保装置，持续拓宽品牌视觉边界。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 经历项目 2 (江南大学) -->
+                <div class="relative pl-8 md:pl-12 z-10">
+                    <!-- 🔥 修改点3：江南大学的圆点同理移到外侧，绝对居中吸附 -->
+                    <div class="absolute left-0 top-1/2 w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
+                        <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_8px_rgba(236,72,153,0.5)]"></span>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+                        <div class="p-6 md:p-8 relative">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-1.5 mb-1.5">
+                                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6logo.png" alt="江南大学" class="h-6 md:h-7 object-contain">
+                                        <h3 class="text-xl font-bold text-white tracking-wide">江南大学设计学院</h3>
+                                    </div>
+                                    <p class="text-[14px] font-medium text-accent">环境艺术设计专业</p>
+                                </div>
+                                <div class="md:text-right flex flex-col md:items-end flex-shrink-0 mt-2 md:mt-0">
+                                    <div class="text-[20px] md:text-[22px] font-bold text-white tracking-tight">
+                                        2022毕业
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 🌟 作品集模块 -->
+    <main id="portfolio" class="py-24 relative z-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                    我的<span class="text-accent">作品集</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
+                    这里展示了我近年来的部分项目，涵盖AIGC应用、品牌文创、空间设计等多个领域
+                </p>
+            </div>
+
+            <!-- 分类筛选按钮区 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-16" id="portfolio-filters">
+                <button onclick="switchPortfolioView('main', this)" class="filter-btn px-6 py-2 rounded-full bg-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]">精选作品</button>
+                <button onclick="switchPortfolioView('flash', this)" class="filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40">闪作</button>
+            </div>
+
+            <!-- 🔥 主作品视图 (完美 6 卡片) -->
+            <div id="main-portfolio-view" class="transition-opacity duration-500 opacity-100 block">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- 卡片 1 -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png", "autoHeight": true },
+                        "category": "AIGC建设与应用",
+                        "year": "2025",
+                        "title": "袋鼠IP模型训练",
+                        "desc": "探索AIGC技术在企业内部的落地，通过训练团团IP专属模型，大幅提升设计团队的内容产出效率与视觉统一性。",
+                        "tags": ["组织提效", "AI模型训练"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE1.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE2.jpg?v=update",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE3.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE4.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE5.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE6.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE7.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE8.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE9.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png" alt="袋鼠IP模型训练" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
+                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
+                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2025</p>
+                                <h3 class="text-lg font-bold text-white mb-3">袋鼠IP模型训练</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#组织提效</span>
+                                <span>#AI模型训练</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 2 -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" },
+                        "category": "品牌文创",
+                        "year": "2024",
+                        "title": "2024美团中秋礼盒",
+                        "desc": "以全新视觉理念打造的2024美团中秋礼盒，探索材料与工艺的创新运用。",
+                        "tags": ["产品设计", "品牌文创"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE1.jpg?v=new",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE2.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE3.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE4.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE5.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE6.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE7.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE8.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE9.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE10.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE11.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E5%9B%BE12.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E4%B8%AD%E7%A7%8B%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
+                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
+                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            </div>
+                            
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2024</p>
+                                <h3 class="text-lg font-bold text-white mb-3">2024美团中秋礼盒</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#产品设计</span>
+                                <span>#品牌文创</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 3 -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "video", "src": "https://file.icve.com.cn/file_doc/qdqqd/Qd7MvckX_vip.mp4" },
+                        "category": "AIGC建设与应用",
+                        "year": "2025",
+                        "title": "大艺术家团团创意动画",
+                        "desc": "利用前沿3D与AI技术创作的《大艺术家团团》高水准动态创意短片，有效提升品牌在年轻群体中的传播声量。",
+                        "tags": ["AI动画", "品牌文创"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE1.webp",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE2.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE3.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE4.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE5.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE6.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE7.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E5%9B%BE8.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                                <source src="https://dc-file.leanticket.cn/7AAx481EiCxgtwvstUMdgpzuGgCp9fFs/VznmAkRZ_vip.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
+                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
+                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2025</p>
+                                <h3 class="text-lg font-bold text-white mb-3">大艺术家团团创意动画</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#AI动画</span>
+                                <span>#品牌文创</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 4 (原 卡片 6：马年新春创意动画) -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E8%A7%86%E9%A2%91.mp4" },
+                        "category": "AIGC建设与应用",
+                        "year": "2026",
+                        "title": "美团马年新春创意动画",
+                        "desc": "美团马年新春创意动画短片，探索前沿3D动态视觉表达与品牌IP的趣味结合。",
+                        "tags": ["3D动画", "动态创意", "新年祝福"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE1.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE2.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE3.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2026</p>
+                                <h3 class="text-lg font-bold text-white mb-3">美团马年新春创意动画</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#3D动画</span>
+                                <span>#动态创意</span>
+                                <span>#新年祝福</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 5 -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update", "autoHeight": true },
+                        "category": "品牌空间体验",
+                        "year": "2025",
+                        "title": "美团文创礼品店空间设计",
+                        "desc": "独立负责上海新总部350㎡实体文创空间全案设计，打造“员工第三空间”社交休憩地。",
+                        "tags": ["空间设计", "体验设计"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE1.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE2.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE3.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE4.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE5.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE6.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <!-- 🔥 已加上 ?v=update 强制刷新缓存 -->
+                            <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update" alt="美团文创礼品店空间设计" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌空间体验 · 2025</p>
+                                <h3 class="text-lg font-bold text-white mb-3">美团文创礼品店空间设计</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#空间设计</span>
+                                <span>#体验设计</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 6 (原 卡片 4：2023美团中秋礼盒) -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                        "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2023%E4%B8%AD%E7%A7%8B.mp4" },
+                        "category": "品牌文创",
+                        "year": "2023",
+                        "title": "2023美团中秋礼盒",
+                        "desc": "美团2023年中秋礼盒全链路设计，将可持续环保理念与业务深度结合，首创“太空舱”产品形态。",
+                        "tags": ["全链路文创设计", "周边手办", "美团公益"],
+                        "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/1.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/3.jpg",
+                            [
+                                "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4a.mp4",
+                                "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4b.mp4"
+                            ],
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/5.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/6.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/7.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/8.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/9.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/10.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/11.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/12.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/13.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/14.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/15.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/16.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/17.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/18.jpg",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/19.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/20.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/21.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/22.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/23.mp4",
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/24.jpg"
+                        ]
+                    })'>
+                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
+                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
+                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2023</p>
+                                <h3 class="text-lg font-bold text-white mb-3">2023美团中秋礼盒</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                                <span>#全链路文创设计</span>
+                                <span>#周边手办</span>
+                                <span>#美团公益</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-center mt-12 mb-8">
+                    <button onclick="document.querySelectorAll('.filter-btn')[1].click(); setTimeout(() => { document.getElementById('portfolio-filters').scrollIntoView({behavior: 'smooth', block: 'start'}) }, 100);" class="group flex flex-col items-center text-gray-400 hover:text-accent transition-colors focus:outline-none">
+                        <span class="text-[13px] tracking-widest mb-3 font-medium transition-all duration-300 group-hover:-translate-y-1">探索更多项目与闪作</span>
+                        <div class="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:bg-accent/10 group-hover:border-accent/40 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.5)] group-hover:translate-y-1">
+                            <div class="transition-transform duration-500 flex items-center justify-center">
+                                <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+            </div> 
+
+            <!-- 🔥 视图切换包裹器 (2): 闪作瀑布流视图 -->
+            <div id="flash-portfolio-view" class="transition-opacity duration-500 hidden opacity-0">
+                <div class="flex justify-center mb-10">
+                    <div class="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-md">
+                        <span class="text-accent font-black mr-2 text-lg translate-y-[2px]">*</span>
+                        <span class="text-gray-400 text-[13px] md:text-[14px] tracking-wide font-light">闪作代表了其他没经过包装梳理，但是我觉得有趣的项目！</span>
+                    </div>
+                </div>
+
+                <!-- 瀑布流容器 -->
+                <div id="flash-waterfall-grid" class="columns-2 md:columns-3 lg:columns-4 gap-4">
+                    <!-- JS 动态注入 -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 🌟 联系页 -->
+    <section id="contact" class="py-32 relative z-20 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+
+            <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[12px] md:text-[13px] text-gray-300 backdrop-blur-xl mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-default">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
+                <span class="font-bold tracking-widest uppercase font-['Montserrat']">求职中 AVAILABLE FOR WORK</span>
+            </div>
+
+            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-['Montserrat'] uppercase leading-none">
+                <span class="text-white drop-shadow-lg">THANK </span>
+                <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-rose-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]">YOU</span>
+            </h2>
+
+            <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-20 leading-relaxed font-light tracking-wide">
+                感谢您浏览我的作品集。<br>
+                无论是项目协作、全职机会，还是纯粹的设计交流，我都非常期待与您取得联系。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div onclick="copyContact('x903129947', '微信')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-emerald-500/40 hover:shadow-[0_10px_40px_rgba(16,185,129,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-500">
+                        <svg class="w-8 h-8 text-gray-400 group-hover:text-emerald-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">WeChat</h3>
+                    <p class="text-[13px] font-medium text-emerald-500 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
+                </div>
+
+                <div onclick="copyContact('+86 17681621482', '电话')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-blue-500/40 hover:shadow-[0_10px_40px_rgba(59,130,246,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
+                        <svg class="w-8 h-8 text-gray-400 group-hover:text-blue-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Phone</h3>
+                    <p class="text-[13px] font-medium text-gray-400 group-hover:text-blue-400 transition-colors tracking-wide">+86 17681621482</p>
+                </div>
+
+                <div onclick="copyContact('m17681621482@163.com', '邮箱')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-purple-500/40 hover:shadow-[0_10px_40px_rgba(168,85,247,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-500">
+                        <svg class="w-8 h-8 text-gray-400 group-hover:text-purple-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Email</h3>
+                    <p class="text-[13px] font-medium text-gray-400 group-hover:text-purple-400 transition-colors tracking-wide">m17681621482@163.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/5 py-10 text-center relative z-20 bg-black/40 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+            <p class="text-gray-600 text-sm mb-4">
+                &copy; 2026 夏铭骏 Portfolio. All rights reserved. 
+            </p>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="group flex flex-col items-center text-gray-500 hover:text-accent transition-colors duration-300 mt-2">
+                <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2 group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-300">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                </div>
+                <span class="text-[12px] font-medium tracking-widest uppercase">BACK TO TOP</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- 全屏长图浏览弹窗 -->
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+        <div id="modal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300 cursor-pointer" onclick="closeModal()"></div>
+        
+        <div id="modal-content" class="relative z-10 w-[95%] max-w-5xl h-[90vh] bg-[#0f1117] rounded-[24px] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden ios-transition" style="opacity: 0; transform: scale(0.15);">
+            
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/40 hover:bg-black/80 text-white p-3 rounded-full backdrop-blur-md transition-colors border border-white/10 shadow-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div id="modal-scroll-area" class="flex-1 w-full overflow-y-auto bg-[#0a0a0a]">
+                <div id="modal-hero-container" class="w-full relative"></div>
+                <div id="modal-info-container" class="w-full px-8 py-12 md:px-16 max-w-5xl mx-auto flex flex-col items-start text-left bg-[#0f1117]"></div>
+
+                <div class="w-full px-6 md:px-16 pb-24 bg-[#0f1117]">
+                    <div class="w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/5">
+                        <div id="modal-image-container" class="w-full flex flex-col items-center justify-start"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 闪作专属弹窗 -->
+    <div id="flash-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-8">
+        <div id="flash-modal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-400 cursor-pointer" onclick="closeFlashModal()"></div>
+        
+        <div id="flash-modal-content" class="relative z-10 w-full max-w-5xl h-[85vh] md:h-[80vh] bg-[#15171e] rounded-[24px] md:rounded-[32px] flex flex-col md:flex-row overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] transition-all duration-400 transform scale-95 opacity-0">
+            
+            <button onclick="closeFlashModal()" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 bg-black/40 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-md transition-colors border border-white/10 shadow-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div id="flash-modal-left-container" class="w-full md:w-[55%] lg:w-[60%] h-[45vh] md:h-full bg-[#0a0a0a] relative border-b md:border-b-0 md:border-r border-white/5 overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center opacity-30 filter blur-xl" id="flash-modal-bg-blur"></div>
+                <div id="flash-modal-gallery" class="relative z-10 w-full h-full overflow-y-auto custom-scrollbar scroll-smooth">
+                    <div id="flash-modal-gallery-inner" class="flex flex-col items-center justify-center min-h-full p-4 md:p-8 gap-6 md:gap-8"></div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-[45%] lg:w-[40%] h-[40vh] md:h-full flex flex-col bg-[#15171e] relative">
+                <div class="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+                    <div class="flex items-center gap-3 mb-6 pb-6 border-b border-white/5">
+                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" class="w-10 h-10 rounded-full border border-white/20 object-cover">
+                        <div>
+                            <h4 class="text-white text-[15px] font-bold tracking-wide">夏铭骏 Aaron</h4>
+                            <p class="text-[12px] text-gray-500">AI品牌创意设计师</p>
+                        </div>
+                    </div>
+
+                    <h2 id="flash-modal-title" class="text-2xl font-extrabold text-white mb-4 tracking-tight leading-snug">标题</h2>
+                    <p id="flash-modal-desc" class="text-gray-300 text-[14px] leading-relaxed mb-6 font-light">描述内容</p>
+                    <div id="flash-modal-tags" class="flex flex-wrap gap-2 mb-8 text-accent text-[13px] font-medium"></div>
+                    <div id="flash-modal-date" class="text-[12px] text-gray-600 font-medium">发布于 2026-03-24</div>
+                    
+                    <!-- 🔥 补回丢失的评论区容器 -->
+                    <div id="flash-modal-comments-container" class="mt-8 pt-6 border-t border-white/5 hidden">
+                        <h3 class="text-[14px] font-bold text-white mb-4">共 <span id="flash-modal-comments-count">0</span> 条评论</h3>
+                        <div id="flash-modal-comments-list" class="flex flex-col gap-5"></div>
+                    </div>
+                </div>
+
+                <div class="p-4 md:p-6 border-t border-white/5 flex items-center justify-between bg-[#15171e] z-20">
+                    <div class="flex-1 mr-4 bg-white/5 rounded-full px-4 py-2 flex items-center border border-white/5">
+                        <span class="text-gray-500 text-[13px]">说点什么...</span>
+                    </div>
+                    <div class="flex items-center gap-5 text-gray-400">
+                        <div class="flex items-center gap-1.5 hover:text-red-500 cursor-pointer transition-colors group relative select-none" onclick="triggerLike(event, this)">
+                            <svg id="flash-like-btn-svg" class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                            <span id="flash-modal-likes" class="text-[14px] font-medium transition-all duration-300">128</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 hover:text-yellow-400 cursor-pointer transition-colors group">
+                            <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 闪作全屏看图 -->
+    <div id="flash-fullscreen-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/95 backdrop-blur-xl transition-opacity duration-300 opacity-0" onclick="closeFlashFullscreen()">
+        <button onclick="closeFlashFullscreen()" class="absolute top-4 right-4 md:top-8 md:right-8 z-50 text-white/60 hover:text-white p-3 rounded-full transition-all bg-white/5 hover:bg-white/20 backdrop-blur-md shadow-lg hover:scale-110">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <img id="flash-fullscreen-img" src="" class="max-w-[95vw] max-h-[95vh] object-contain transition-transform duration-300 scale-95 cursor-zoom-out drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]" onclick="event.stopPropagation(); closeFlashFullscreen();">
+    </div>
+
+    <!-- 回到顶部 -->
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 z-[90] p-3.5 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(236,72,153,0.6)] transition-all duration-500 opacity-0 pointer-events-none translate-y-4 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(236,72,153,0.8)]">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path></svg>
+    </button>
+
+    <!-- Toast 提示 -->
+    <div id="toast-message" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-[150] flex items-center px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_10px_40px_rgba(0,0,0,0.5)] text-white text-sm font-medium transition-all duration-300 opacity-0 translate-y-[-20px] pointer-events-none">
+        <svg class="w-5 h-5 text-emerald-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span id="toast-text">已复制到剪贴板</span>
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgVideo = document.getElementById('bg-video');
+            if (bgVideo) {
+                bgVideo.muted = true;
+                bgVideo.play().catch(err => console.log("自动播放拦截:", err));
+            }
+        });
+
+        const navbar = document.getElementById('navbar');
+        const backToTopBtn = document.getElementById('back-to-top'); 
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
+                navbar.classList.remove('bg-transparent', 'border-transparent');
+            } else {
+                navbar.classList.remove('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
+                navbar.classList.add('bg-transparent', 'border-transparent');
+            }
+
+            if (backToTopBtn) {
+                if (window.scrollY > 200) {
+                    backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                    backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                    backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                }
+            }
+        });
+
+        function toggleExperience(expId, iconId) {
+            const expDiv = document.getElementById(expId);
+            const icon = document.getElementById(iconId);
+            if (expDiv.classList.contains('grid-rows-[0fr]')) {
+                expDiv.classList.remove('grid-rows-[0fr]');
+                expDiv.classList.add('grid-rows-[1fr]');
+                icon.classList.add('rotate-180');
+            } else {
+                expDiv.classList.add('grid-rows-[0fr]');
+                expDiv.classList.remove('grid-rows-[1fr]');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        const modal = document.getElementById('project-modal');
+        const backdrop = document.getElementById('modal-backdrop');
+        const content = document.getElementById('modal-content');
+        const modalScrollArea = document.getElementById('modal-scroll-area'); 
+        let lastClickedCardRect = null;
+
+        function openProjectModal(event, data) {
+            if (modalScrollArea) {
+                modalScrollArea.scrollTop = 0;
+                modalScrollArea.classList.remove('is-scrolled');
+            }
+
+            const heroContainer = document.getElementById('modal-hero-container');
+            // 🔥 统一改为：高度自适应(h-auto) + 完整包裹(object-contain) + 深色底背景
+            // 加入最高限制(max-h-[80vh])是为了防止极个别超高竖屏视频直接顶出屏幕
+            const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
+            
+            if (data.hero.type === 'video') {
+                heroContainer.innerHTML = `<video autoplay loop muted playsinline controls class="${heroClass}"><source src="${data.hero.src}" type="video/mp4"></video>`;
+            } else {
+                heroContainer.innerHTML = `<img src="${data.hero.src}" class="${heroClass}">`;
+            }
+
+            const infoContainer = document.getElementById('modal-info-container');
+            infoContainer.innerHTML = `
+                <span class="inline-flex items-center px-3.5 py-1.5 bg-white/[0.06] rounded-full text-[12px] font-medium text-gray-300 border border-white/10 backdrop-blur-md relative z-10 translate-y-6 pointer-events-auto shadow-sm">
+                    ${data.category}
+                    <span class="mx-1.5 text-gray-500 font-bold">·</span>
+                    ${data.year}
+                </span>
+            `;
+
+            const imgContainer = document.getElementById('modal-image-container');
+            imgContainer.innerHTML = '';
+            const sources = Array.isArray(data.content) ? data.content : [data.content];
+            
+            sources.forEach(item => {
+                if (Array.isArray(item)) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'flex w-full'; 
+                    item.forEach(src => {
+                        let media;
+                        if (src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm')) {
+                            media = document.createElement('video');
+                            media.src = src;
+                            media.autoplay = true;
+                            media.loop = true;
+                            media.muted = true;
+                            media.setAttribute('playsinline', '');
+                        } else {
+                            media = document.createElement('img');
+                            media.src = src;
+                            media.loading = 'lazy';
+                        }
+                        media.className = 'flex-1 w-1/2 block object-cover border-r border-black last:border-0';
+                        rowDiv.appendChild(media);
+                    });
+                    imgContainer.appendChild(rowDiv);
+                } else {
+                    let media;
+                    if (item.toLowerCase().endsWith('.mp4') || item.toLowerCase().endsWith('.webm')) {
+                        media = document.createElement('video');
+                        media.src = item;
+                        media.autoplay = true;
+                        media.loop = true;
+                        media.muted = true;
+                        media.setAttribute('playsinline', '');
+                    } else {
+                        media = document.createElement('img');
+                        media.src = item;
+                        media.loading = 'lazy';
+                    }
+                    media.className = 'w-full block object-cover'; 
+                    imgContainer.appendChild(media);
+                }
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            let translateX = 0;
+            let translateY = 0;
+            if (event && event.currentTarget) {
+                lastClickedCardRect = event.currentTarget.getBoundingClientRect();
+                const cardCenterX = lastClickedCardRect.left + lastClickedCardRect.width / 2;
+                const cardCenterY = lastClickedCardRect.top + lastClickedCardRect.height / 2;
+                const windowCenterX = window.innerWidth / 2;
+                const windowCenterY = window.innerHeight / 2;
+                
+                translateX = cardCenterX - windowCenterX;
+                translateY = cardCenterY - windowCenterY;
+            }
+
+            content.style.transition = 'none';
+            content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
+            content.style.opacity = '0';
+            void content.offsetWidth;
+            content.style.transition = ''; 
+            
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                content.style.transform = `translate(0px, 0px) scale(1)`;
+                content.style.opacity = '1';
+            }, 10);
+        }
+
+        function closeModal() {
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0');
+            
+            let translateX = 0;
+            let translateY = 0;
+            if (lastClickedCardRect) {
+                const cardCenterX = lastClickedCardRect.left + lastClickedCardRect.width / 2;
+                const cardCenterY = lastClickedCardRect.top + lastClickedCardRect.height / 2;
+                const windowCenterX = window.innerWidth / 2;
+                const windowCenterY = window.innerHeight / 2;
+                translateX = cardCenterX - windowCenterX;
+                translateY = cardCenterY - windowCenterY;
+            }
+
+            content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
+            content.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+                
+                document.getElementById('modal-hero-container').innerHTML = '';
+                document.getElementById('modal-info-container').innerHTML = '';
+                document.getElementById('modal-image-container').innerHTML = ''; 
+                
+                content.style.transform = '';
+                content.style.opacity = '';
+            }, 450); 
+        }
+
+        const flashWorksData = [
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/%E7%BE%8E%E5%9B%A214%E5%91%A8%E5%B9%B4%E9%99%90%E5%AE%9A%E7%89%88%E6%8E%A2%E7%B4%A2%E5%9B%A2%E5%9B%A2.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/%E7%BE%8E%E5%9B%A214%E5%91%A8%E5%B9%B4%E9%99%90%E5%AE%9A%E7%89%88%E6%8E%A2%E7%B4%A2%E5%9B%A2%E5%9B%A2.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/2.mp4",
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/3a.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/3b.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/3c.mp4"
+                    ],
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/4.mp4"
+                ],
+                title: "美团14周年限定版探索团团",
+                desc: "美团14周年庆的限定版探索团团！历经好几个版本的打磨，最终的宇航员造型细节拉满，记录一下最终的渲染效果与材质细节。🚀",
+                tags: ["潮玩手办", "3D渲染", "品牌文创"],
+                date: "2024-03-24",
+                likes: "1025",
+                comments: [
+                    {
+                        author: "夏铭骏 Aaron",
+                        avatar: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png",
+                        text: "宇航探索袋鼠系列产品累计为礼品店带来 <span class='text-white font-bold text-[14px]'>400+万</span> 的销售额🎉",
+                        time: "刚刚",
+                        isAuthor: true
+                    }
+                ]
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/1.mp4", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/1.mp4",
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/2.jpg",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/3.jpg"
+                    ],
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/4.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/5.mp4",
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/6.jpg",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/7.jpg"
+                    ],
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/8.jpg"
+                ],
+                title: "员工入职一周年纪念礼",
+                desc: "美团员工入职一周年专属纪念礼设计，融入美团IP与企业文化元素，传递公司对员工的关怀与认可，增强组织归属感与纪念意义。",
+                tags: ["品牌文创", "礼盒设计", "员工关怀"],
+                date: "2026-04-01",
+                likes: "1025"
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E6%AD%A3%E8%A7%86%E5%9B%BE.png", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E6%AD%A3%E8%A7%86%E5%9B%BE.png",
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E4%B9%B0%E8%8F%9C.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E4%BC%91%E5%A8%B1.mp4"
+                    ],
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E5%A4%96%E5%8D%96.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E7%81%AB%E9%94%85.mp4"
+                    ],
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E9%85%92%E5%BA%97.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E9%AA%91%E8%A1%8C.mp4"
+                    ]
+                ],
+                title: "团团的世界盲盒系列",
+                desc: "“团团的世界”主题盲盒第一弹，通过多套不同职业与场景的潮玩形象，丰富美团袋鼠IP的世界观，深受年轻用户喜爱并引发社交分享热潮。",
+                tags: ["潮玩盲盒", "3D建模", "IP延展"],
+                date: "2026-04-01",
+                likes: "1025"
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E7%94%9F%E6%97%A5%E6%9D%AF.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E7%94%9F%E6%97%A5%E6%9D%AF.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E6%89%8B%E6%9C%BA%E6%95%88%E6%9E%9C.png",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E5%8C%85%E8%A3%85%E7%9B%92.jpg"
+                ],
+                title: "团团的生日礼盒",
+                desc: "为美团IP袋鼠团团专属打造的生日礼盒设计，探索品牌IP与礼赠场景的趣味结合，提升受众的品牌归属感与情感连接。",
+                tags: ["品牌文创", "礼盒设计", "IP周边"],
+                date: "2026-04-01",
+                likes: "1025"
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%8C%85%E8%A3%85%E7%9B%92%E6%95%88%E6%9E%9C%E5%9B%BE.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%8C%85%E8%A3%85%E7%9B%92%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%BD%AF%E8%83%B6%E5%8C%85%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E6%A9%A1%E8%83%B6%E5%8C%85%26%E8%AE%A1%E6%97%B6%E5%99%A8%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E6%B9%BF%E6%96%99.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%B9%B2%E6%96%99.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E5%B8%86%E5%B8%83%E5%8C%85.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E6%BD%AE%E9%85%B7%E5%A5%B3%E5%AD%A9%E8%83%8C%E5%A4%A7%E8%B1%A1%E5%BC%82%E5%9E%8B%E5%8C%85.jpg"
+                ],
+                title: "小象会员文创系列",
+                desc: "小象超市针对新会员打造爆品属性的会员礼生活周边，以开卡赠或者满赠形式给到会员礼品，凸显“会员身份特权”并长期打造会员独有的心智建设，以此达到会员用户订单增量和让会员用户心智更牢。",
+                tags: ["包装设计", "文创周边", "品牌视觉"],
+                date: "2026-03-25",
+                likes: "1025",
+                comments: [
+                    {
+                        author: "夏铭骏 Aaron",
+                        avatar: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png",
+                        text: "业务反馈极佳，看完设计稿后追加200万预算😄。最终小象调料罐和小象帆布包共发放约43万件，会员年卡转化率提升0.39pp，同时为礼品店创造逾400万的销售额✌",
+                        time: "刚刚",
+                        isAuthor: true
+                    }
+                ]
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/1.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/1.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/2.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/3.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/4.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/5.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/6.jpg"
+                ],
+                title: "财神团团系列手办",
+                desc: "为美团年轻潮流群体和传统文化爱好者，设计一套新年财神主题的手办，主打收藏、社交、礼品三大需求，将传统财神形象与潮流设计风格相结合时，能打破传统文化元素在人们心中的固有印象，吸引年轻潮流爱好者以及对传统文化感兴趣的群体。同时为春节、海外礼赠等场合提供更多元的文创礼品。",
+                tags: ["潮玩手办", "品牌文创", "新年礼品"],
+                date: "2026-04-01",
+                likes: "1025",
+                comments: [
+                    {
+                        author: "夏铭骏 Aaron",
+                        avatar: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png",
+                        text: "祝大家钱程似锦，提钱享福😍💴",
+                        time: "刚刚",
+                        isAuthor: true
+                    }
+                ]
+            },
+            {
+                bgColor: "white", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/%E5%B0%81%E9%9D%A2.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/0.jpg",
+                    { src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/1.png?v=v2", halfWidth: true },
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/2.gif",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/3.jpg"
+                    ],
+                    { src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/4.png?v=v2", halfWidth: true },
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/5.gif",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/6.jpg"
+                    ],
+                    { src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/7.png?v=v2", halfWidth: true },
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/8.gif",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/9.jpg"
+                    ]
+                ],
+                title: "神券节法门寺联名手串",
+                desc: "神券节背景：外卖营销和美团文创合作为美团消费用户，结合1218神券节活动，联名法门寺，联合10+品牌商，设计开发转运手串，在新年来临之际，营造祈福集福氛围，打造爆款文创，提升活动效果。",
+                tags: ["跨界联名", "文创周边", "产品设计"],
+                date: "2026-04-01",
+                likes: "1025",
+                comments: [
+                    {
+                        author: "夏铭骏 Aaron",
+                        avatar: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png",
+                        text: "本期联合7个外卖餐饮&闪购品牌，在神券节期间以可邀请助力下单满赠组件发放6600串，4天带来周边玩法参与人数 <span class='text-white font-bold text-[14px]'>8.23w</span>、其中 <span class='text-white font-bold text-[14px]'>1.4w</span> 人发起邀请助力，达成 <span class='text-white font-bold text-[14px]'>12w</span> 神券节期间增量订单、单均价达106.6元；外部在小红书渠道产生大量用户发出兑换攻略自来水，传播总曝光 <span class='text-white font-bold text-[14px]'>528w</span>，总互动 <span class='text-white font-bold text-[14px]'>2.3w</span>，1000+赞爆文6篇，500+赞爆文5篇。",
+                        time: "刚刚",
+                        isAuthor: true
+                    }
+                ]
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E5%B0%8F%E5%9B%BE.jpg", 
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E8%AF%84%E5%AE%A1%E5%9B%A2%E5%8A%A8%E6%80%812.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E8%AF%84%E5%AE%A1%E5%9B%A2%E5%8A%A8%E6%80%813.mp4"
+                ],
+                title: "小美评审团新年动态皮肤设计",
+                desc: "小美评审团的初衷为「帮助平台合适地处理消费者&商家矛盾，促进平台内部的和谐」，并让公众知晓美团公平公正公开的平台治理方式，促进外部的认可和理解。当前上线春节马年套装一期，增加节日氛围，提升用户答题积极性与活跃度。",
+                tags: ["运营设计", "AI应用"],
+                date: "2026-04-01",
+                likes: "1025",
+                comments: [
+                    {
+                        author: "夏铭骏 Aaron",
+                        avatar: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png",
+                        text: "业务认可度高，六款动态皮肤一稿过，春节上线前三天提升用户参与率0.78%，春节期间兑换用户活跃度上升15.2%。",
+                        time: "刚刚",
+                        isAuthor: true
+                    }
+                ]
+            }
+        ];
+
+        function switchPortfolioView(viewType, btnElement) {
+            const allBtns = document.querySelectorAll('.filter-btn');
+            allBtns.forEach(btn => {
+                btn.className = "filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40";
+            });
+            btnElement.className = "filter-btn px-6 py-2 rounded-full bg-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]";
+
+            const mainView = document.getElementById('main-portfolio-view');
+            const flashView = document.getElementById('flash-portfolio-view');
+
+            if (viewType === 'flash') {
+                mainView.classList.replace('opacity-100', 'opacity-0');
+                setTimeout(() => {
+                    mainView.classList.replace('block', 'hidden');
+                    renderFlashWorks(); 
+                    flashView.classList.replace('hidden', 'block');
+                    void flashView.offsetWidth; 
+                    flashView.classList.replace('opacity-0', 'opacity-100');
+                }, 300);
+            } else {
+                flashView.classList.replace('opacity-100', 'opacity-0');
+                setTimeout(() => {
+                    flashView.classList.replace('block', 'hidden');
+                    mainView.classList.replace('hidden', 'block');
+                    void mainView.offsetWidth;
+                    mainView.classList.replace('opacity-0', 'opacity-100');
+                }, 300);
+            }
+        }
+
+        function renderFlashWorks() {
+            const grid = document.getElementById('flash-waterfall-grid');
+            if (grid.children.length > 0) return; 
+
+            let html = '';
+            flashWorksData.forEach((work, index) => {
+                const workJson = encodeURIComponent(JSON.stringify(work)).replace(/'/g, "%27");
+                
+                const isCoverVideo = work.src.toLowerCase().endsWith('.mp4') || work.src.toLowerCase().endsWith('.webm');
+                
+                if (work.featured) {
+                    const mediaHtml = isCoverVideo
+                        ? `<video src="${work.src}" autoplay loop muted playsinline class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
+                        : `<img src="${work.src}" loading="lazy" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
+                    
+                    html += `
+                        <div class="block w-full mb-4 md:mb-6 group cursor-pointer relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(236,72,153,0.2)]" style="column-span: all; -webkit-column-span: all;" onclick="openFlashModal('${workJson}')">
+                            <div class="flex flex-col md:flex-row w-full h-auto md:h-[320px]">
+                                <div class="relative w-full md:w-[65%] h-[220px] md:h-full overflow-hidden bg-[#0a0a0a]">
+                                    ${mediaHtml}
+                                </div>
+                                <div class="p-6 md:p-8 w-full md:w-[35%] flex flex-col justify-center items-start gap-4 bg-gradient-to-br from-white/[0.02] to-white/[0.05] relative border-t md:border-t-0 md:border-l border-white/[0.05]">
+                                    <div class="inline-flex items-center px-2.5 py-1 rounded bg-accent/20 border border-accent/30 text-[11px] text-accent font-bold tracking-wide uppercase">
+                                        <svg class="w-3.5 h-3.5 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                        Featured
+                                    </div>
+                                    <h4 class="text-white text-[20px] md:text-[24px] font-bold tracking-wide leading-tight">${work.title}</h4>
+                                    <p class="text-gray-400 text-[13px] md:text-[14px] line-clamp-3 leading-relaxed">${work.desc}</p>
+                                    <div class="flex flex-wrap gap-2 text-accent text-[12px] font-medium mt-1">
+                                        ${work.tags.map(tag => `<span>#${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const mediaHtml = isCoverVideo
+                        ? `<video src="${work.src}" autoplay loop muted playsinline class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
+                        : `<img src="${work.src}" loading="lazy" class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
+                    
+                    html += `
+                        <div class="break-inside-avoid inline-block w-full mb-3 md:mb-4 group cursor-pointer relative rounded-xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]" onclick="openFlashModal('${workJson}')">
+                            <div class="relative w-full overflow-hidden">
+                                ${mediaHtml}
+                            </div>
+                            <div class="p-3.5 w-full flex items-start justify-between gap-2">
+                                <h4 class="text-gray-100 text-[14px] font-bold tracking-wide leading-snug line-clamp-2">${work.title}</h4>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            grid.innerHTML = html;
+        }
+
+        const flashModal = document.getElementById('flash-modal');
+        const flashModalContent = document.getElementById('flash-modal-content');
+        const flashModalBackdrop = document.getElementById('flash-modal-backdrop');
+
+        function openFlashModal(encodedData) {
+            const data = JSON.parse(decodeURIComponent(encodedData));
+            
+            const galleryInner = document.getElementById('flash-modal-gallery-inner');
+            const galleryScroll = document.getElementById('flash-modal-gallery');
+            const leftContainer = document.getElementById('flash-modal-left-container');
+            const bgBlur = document.getElementById('flash-modal-bg-blur');
+            
+            galleryInner.innerHTML = '';
+            galleryScroll.scrollTop = 0; 
+
+            const imagesToRender = data.images && data.images.length > 0 ? data.images : [data.src];
+            const isMulti = imagesToRender.length > 1;
+            
+            const firstItemSrc = typeof imagesToRender[0] === 'string' ? imagesToRender[0] : imagesToRender[0].src;
+            const isSingleVideo = !isMulti && (firstItemSrc.toLowerCase().endsWith('.mp4') || firstItemSrc.toLowerCase().endsWith('.webm'));
+
+            // 🔥 修复点1：先定义基础布局类名
+            let baseClass = (isMulti || isSingleVideo) 
+                ? 'flex flex-col w-full min-h-full' 
+                : 'flex flex-col items-center justify-center min-h-full p-4 md:p-8 gap-6 md:gap-8';
+            
+            // 🔥 修复点2：将背景白色的判定与基础类名合并，防止被覆盖。
+            // 采用“深色底+纯白芯”策略：外层容器深色吸收滚动条缝隙，内层容器纯白融化Logo底色
+            if (data.bgColor === 'white') {
+                baseClass += ' bg-white'; // 追加白底
+                leftContainer.classList.remove('bg-[#0a0a0a]');
+                leftContainer.classList.add('bg-[#15171e]'); // 外框深色，防白边
+                bgBlur.style.display = 'none'; 
+            } else {
+                leftContainer.classList.remove('bg-[#15171e]');
+                leftContainer.classList.add('bg-[#0a0a0a]');
+                bgBlur.style.display = 'block';
+                bgBlur.style.backgroundImage = `url('${data.src}')`;
+            }
+
+            // 统一赋值，确保 bg-white 生效
+            galleryInner.className = baseClass;
+            
+            const borderColor = data.bgColor === 'white' ? 'border-gray-200' : 'border-[#0a0a0a]';
+
+            imagesToRender.forEach(item => {
+                if (Array.isArray(item)) {
+                    let rowHtml = '<div class="flex w-full">';
+                    item.forEach(subSrc => {
+                        const isVideo = subSrc.toLowerCase().endsWith('.mp4') || subSrc.toLowerCase().endsWith('.webm');
+                        if (isVideo) {
+                            rowHtml += `<video src="${subSrc}" autoplay loop muted playsinline class="flex-1 w-0 block object-cover border-r ${borderColor} last:border-0"></video>`;
+                        } else {
+                            rowHtml += `<img src="${subSrc}" loading="lazy" class="flex-1 w-0 block object-cover cursor-zoom-in border-r ${borderColor} last:border-0" onclick="openFlashFullscreen(this.src)" title="点击查看大图">`;
+                        }
+                    });
+                    rowHtml += '</div>';
+                    galleryInner.innerHTML += rowHtml;
+                } else {
+                    const itemSrc = typeof item === 'string' ? item : item.src;
+                    const isHalfWidth = typeof item === 'object' && item.halfWidth;
+                    const isVideo = itemSrc.toLowerCase().endsWith('.mp4') || itemSrc.toLowerCase().endsWith('.webm');
+                    
+                    // 🔥 修复为上下均匀且更加紧凑的边距 (my-3 md:my-4)
+                    const mediaClass = isHalfWidth 
+                        ? "w-[65%] md:w-[45%] mx-auto block object-contain my-3 md:my-4 cursor-zoom-in" 
+                        : "w-full block object-cover m-0 p-0 cursor-zoom-in";
+
+                    if (isMulti || isSingleVideo) {
+                        if (isVideo) {
+                            galleryInner.innerHTML += `<video src="${itemSrc}" autoplay loop muted playsinline class="${mediaClass.replace('cursor-zoom-in', '')}"></video>`;
+                        } else {
+                            galleryInner.innerHTML += `<img src="${itemSrc}" loading="lazy" class="${mediaClass}" onclick="openFlashFullscreen(this.src)" title="点击查看大图">`;
+                        }
+                    } else {
+                        galleryInner.innerHTML += `<img src="${itemSrc}" loading="lazy" class="w-auto max-w-full max-h-[85vh] flex-shrink-0 object-contain drop-shadow-2xl cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]" onclick="openFlashFullscreen(this.src)" title="点击查看大图">`;
+                    }
+                }
+            });
+
+            document.getElementById('flash-modal-title').innerText = data.title;
+            document.getElementById('flash-modal-desc').innerText = data.desc;
+            document.getElementById('flash-modal-date').innerText = `发布于 ${data.date}`;
+            document.getElementById('flash-modal-likes').innerText = data.likes;
+            
+            const likeIcon = document.getElementById('flash-like-btn-svg');
+            if (likeIcon) {
+                likeIcon.setAttribute('fill', 'none');
+                likeIcon.classList.remove('text-red-500');
+            }
+            
+            const tagsHtml = data.tags.map(tag => `<span class="cursor-pointer hover:underline">#${tag}</span>`).join('');
+            document.getElementById('flash-modal-tags').innerHTML = tagsHtml;
+
+            // 🔥 渲染评论区并增加安全校验
+            const commentsContainer = document.getElementById('flash-modal-comments-container');
+            const commentsList = document.getElementById('flash-modal-comments-list');
+            const commentsCount = document.getElementById('flash-modal-comments-count');
+            
+            if (commentsContainer && commentsList && commentsCount) {
+                if (data.comments && data.comments.length > 0) {
+                    commentsCount.innerText = data.comments.length;
+                    let commentsHtml = '';
+                    data.comments.forEach(comment => {
+                        commentsHtml += `
+                            <div class="flex gap-3">
+                                <img src="${comment.avatar}" class="w-8 h-8 rounded-full border border-white/10 object-cover flex-shrink-0">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-[13px] font-semibold text-gray-300">${comment.author}</span>
+                                        ${comment.isAuthor ? '<span class="text-[10px] bg-white/10 text-gray-400 px-1.5 py-0.5 rounded-sm border border-white/5">作者</span>' : ''}
+                                    </div>
+                                    <p class="text-[13px] text-gray-400 leading-relaxed">${comment.text}</p>
+                                    <div class="text-[11px] text-gray-600 mt-1.5">${comment.time}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    commentsList.innerHTML = commentsHtml;
+                    commentsContainer.classList.remove('hidden');
+                    commentsContainer.classList.add('block');
+                } else {
+                    commentsContainer.classList.add('hidden');
+                    commentsContainer.classList.remove('block');
+                    commentsList.innerHTML = '';
+                }
+            }
+
+            flashModal.classList.remove('hidden');
+            flashModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            requestAnimationFrame(() => {
+                flashModalBackdrop.classList.replace('opacity-0', 'opacity-100');
+                flashModalContent.classList.replace('opacity-0', 'opacity-100');
+                flashModalContent.classList.replace('scale-95', 'scale-100');
+            });
+        }
+
+        function closeFlashModal() {
+            flashModalBackdrop.classList.replace('opacity-100', 'opacity-0');
+            flashModalContent.classList.replace('opacity-100', 'opacity-0');
+            flashModalContent.classList.replace('scale-100', 'scale-95');
+            
+            setTimeout(() => {
+                flashModal.classList.remove('flex');
+                flashModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 400); 
+        }
+
+        // 🔥 彻底解决心脏横排问题的“防弹”物理点赞动效
+        // (采用原生 Web Animations API，不依赖任何外部 CSS，强制绝对脱离文档流，保证100%生效)
+        function triggerLike(event, btnElement) {
+            event.stopPropagation();
+            
+            // 1. 按钮图标弹出
+            const svgIcon = document.getElementById('flash-like-btn-svg');
+            svgIcon.setAttribute('fill', 'currentColor');
+            svgIcon.classList.add('text-red-500');
+            
+            // 使用原生 API 执行弹跳
+            svgIcon.animate([
+                { transform: 'scale(1)' },
+                { transform: 'scale(1.4)', offset: 0.3 },
+                { transform: 'scale(1)' }
+            ], { duration: 400, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
+
+            // 2. 点赞数字更新跳动
+            const likesSpan = document.getElementById('flash-modal-likes');
+            let currentLikes = likesSpan.innerText;
+            if (currentLikes.toString().toLowerCase().includes('k')) {
+                currentLikes = parseFloat(currentLikes) * 1000;
+            } else {
+                currentLikes = parseInt(currentLikes);
+            }
+            if (!isNaN(currentLikes)) {
+                currentLikes++;
+                likesSpan.innerText = currentLikes;
+                likesSpan.style.color = "#ef4444"; 
+                likesSpan.animate([
+                    { transform: 'scale(1)' },
+                    { transform: 'scale(1.2)', offset: 0.3 },
+                    { transform: 'scale(1)' }
+                ], { duration: 400, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
+                setTimeout(() => { likesSpan.style.color = ""; }, 400);
+            }
+
+            // 3. 强制脱离布局的防弹小爱心 (绝对定位 + 独立原生动画)
+            const heart = document.createElement('div');
+            // 关键：绝对定位，保证永远不会和旁边数字排在同一行
+            heart.style.position = 'absolute';
+            heart.style.left = '50%';
+            heart.style.bottom = '100%';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '999';
+            
+            const colors = ['#ef4444', '#f43f5e', '#ec4899', '#fb7185'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            heart.innerHTML = `<svg style="width: 24px; height: 24px; color: ${randomColor}; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+            
+            btnElement.appendChild(heart);
+
+            // 随机漂浮轨迹
+            const xOffset = (Math.random() - 0.5) * 80; // 左右随机散开
+            const rot = (Math.random() - 0.5) * 60;     // 随机倾斜
+            const yOffset = -100 - Math.random() * 60;  // 随机漂浮高度
+
+            // 使用 Web Animations API 生成动效，不需要 CSS 支持也能完美运行！
+            heart.animate([
+                { transform: `translate(-50%, 0) scale(0)`, opacity: 0 },
+                { transform: `translate(calc(-50% + ${xOffset * 0.3}px), ${yOffset * 0.3}px) scale(1.2) rotate(${rot * 0.3}deg)`, opacity: 1, offset: 0.2 },
+                { transform: `translate(calc(-50% + ${xOffset}px), ${yOffset}px) scale(0.8) rotate(${rot}deg)`, opacity: 0 }
+            ], {
+                duration: 1200 + Math.random() * 400, // 1.2~1.6秒持续时间
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+
+            // 动画结束后销毁DOM
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        const flashFullscreenModal = document.getElementById('flash-fullscreen-modal');
+        const flashFullscreenImg = document.getElementById('flash-fullscreen-img');
+
+        function openFlashFullscreen(src) {
+            flashFullscreenImg.src = src;
+            flashFullscreenModal.classList.remove('hidden');
+            flashFullscreenModal.classList.add('flex');
+            
+            requestAnimationFrame(() => {
+                flashFullscreenModal.classList.replace('opacity-0', 'opacity-100');
+                flashFullscreenImg.classList.replace('scale-95', 'scale-100');
+            });
+        }
+
+        function closeFlashFullscreen() {
+            flashFullscreenModal.classList.replace('opacity-100', 'opacity-0');
+            flashFullscreenImg.classList.replace('scale-100', 'scale-95');
+            
+            setTimeout(() => {
+                flashFullscreenModal.classList.add('hidden');
+                flashFullscreenModal.classList.remove('flex');
+                flashFullscreenImg.src = ''; 
+            }, 300);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!flashFullscreenModal.classList.contains('hidden')) {
+                    closeFlashFullscreen();
+                } else if (!flashModal.classList.contains('hidden')) {
+                    closeFlashModal();
+                } else if (!modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            }
+        });
+
+        let toastTimeout;
+        function copyContact(text, type) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast(`已成功复制${type}：${text}`);
+                }
+            } catch (err) {
+                console.error('复制失败', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-message');
+            const toastText = document.getElementById('toast-text');
+            
+            toastText.innerText = message;
+            
+            toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
