@@ -6,7 +6,6 @@
     <title>夏铭骏 | AI品牌创意设计师</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 🔥 已替换为国内可秒开的字体镜像源 -->
     <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -30,22 +29,17 @@
             color: #F9FAFB; 
         }
 
-        /* 自定义滚动条 */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ec4899;
+        /* 🔥 彻底移除所有按钮的浏览器默认外框，并取消移动端的点击灰色/蓝色高亮 */
+        button, button:focus, button:focus-visible, button:active {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 🔥 核心交互：卡片微光特效 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+
         .project-card {
             background: rgba(255, 255, 255, 0.03); 
             backdrop-filter: blur(24px); 
@@ -71,7 +65,6 @@
             transform: scale(1.05);
         }
 
-        /* 播放按钮 */
         .play-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
@@ -91,7 +84,6 @@
             transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* 全局光束 */
         @keyframes beam-sweep-1 {
             0% { transform: rotate(-45deg) translateY(-120vh) translateX(-50vw); opacity: 0; }
             20% { opacity: 1; }
@@ -107,7 +99,6 @@
         .beam-1 { animation: beam-sweep-1 14s infinite linear; }
         .beam-2 { animation: beam-sweep-2 18s infinite linear; animation-delay: -6s; }
 
-        /* 强力波动 */
         @keyframes ping-strong {
             0% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 10px rgba(236,72,153,0.8); }
             100% { transform: scale(3.5); opacity: 0; box-shadow: 0 0 50px rgba(236,72,153,0.1); }
@@ -116,25 +107,9 @@
             animation: ping-strong 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
 
-        @keyframes arrow-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
-        }
-        .animate-arrow-float {
-            animation: arrow-float 2s ease-in-out infinite;
-        }
-
-        /* 自定义瀑布流滚动条 */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.02);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
     </style>
 </head>
 <body class="antialiased selection:bg-accent selection:text-white relative">
@@ -184,12 +159,10 @@
         </div>
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-24 md:pt-32 pb-16 md:pb-20 flex flex-col items-center text-center mt-6 md:mt-10">
-            <!-- 🔥 修复：增加了 py-2 和 leading-tight 撑开背景绘制区域，防止 i 的顶部被裁切 -->
             <h2 class="text-4xl md:text-[64px] font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-4 md:mb-6 tracking-wide drop-shadow-lg py-2 leading-tight">
                 Portfolio
             </h2>
             
-            <!-- 🔥 手机端专项适配：增加折行机制，强制不折行文字，自适应缩放字体 -->
             <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
                 <div class="flex items-baseline whitespace-nowrap">
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">夏铭骏</h1>
@@ -199,7 +172,6 @@
                 <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
             </div>
 
-            <!-- 🔥 优化标签在手机端的间距与防断行 -->
             <div class="flex flex-wrap justify-center gap-2.5 md:gap-4 mb-8 md:mb-10">
                 <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[13px] md:text-[14px] text-gray-300 backdrop-blur-md cursor-default group whitespace-nowrap">
                     <svg class="w-4 h-4 mr-1.5 md:mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
@@ -232,14 +204,11 @@
                 <h2 class="text-2xl font-bold text-white tracking-tight">工作经历</h2>
             </div>
 
-            <!-- 时间轴容器 -->
             <div class="relative ml-4 md:ml-6 space-y-10">
-                <!-- 🔥 修改点1：线使用 -translate-x-1/2 绝对居中对齐到 left-0 -->
                 <div class="absolute left-0 top-[-40px] bottom-[-40px] w-[2px] bg-gray-800/80 pointer-events-none z-0 -translate-x-1/2" style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"></div>
 
-                <!-- 经历项目 1 (美团) -->
+                <!-- 经历项目 1 -->
                 <div class="relative pl-8 md:pl-12 z-10">
-                    <!-- 🔥 修改点2：将圆点移到卡片外侧，同样用 -translate-x-1/2 吸附在 left-0，保证与线完美重合 -->
                     <div class="absolute left-0 top-[36px] md:top-[46px] w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
                         <span class="absolute inset-0 block rounded-full bg-accent animate-ping-strong z-0"></span>
                         <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_12px_rgba(236,72,153,1)] z-10"></span>
@@ -299,9 +268,8 @@
                     </div>
                 </div>
 
-                <!-- 经历项目 2 (江南大学) -->
+                <!-- 经历项目 2 -->
                 <div class="relative pl-8 md:pl-12 z-10">
-                    <!-- 🔥 修改点3：江南大学的圆点同理移到外侧，绝对居中吸附 -->
                     <div class="absolute left-0 top-1/2 w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
                         <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_8px_rgba(236,72,153,0.5)]"></span>
                     </div>
@@ -325,7 +293,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -343,17 +310,16 @@
                 </p>
             </div>
 
-            <!-- 分类筛选按钮区 -->
             <div class="flex flex-wrap justify-center gap-3 mb-16" id="portfolio-filters">
-                <button onclick="switchPortfolioView('main', this)" class="filter-btn px-6 py-2 rounded-full bg-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]">精选作品</button>
+                <!-- 🔥 给选中状态的按钮增加 border border-accent，防止颜色过渡时闪现白色 -->
+                <button onclick="switchPortfolioView('main', this)" class="filter-btn px-6 py-2 rounded-full bg-accent border border-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]">精选作品</button>
                 <button onclick="switchPortfolioView('flash', this)" class="filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40">闪作</button>
             </div>
 
-            <!-- 🔥 主作品视图 (完美 6 卡片) -->
+            <!-- 主作品视图 -->
             <div id="main-portfolio-view" class="transition-opacity duration-500 opacity-100 block">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <!-- 卡片 1 -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png", "autoHeight": true },
                         "category": "AIGC建设与应用",
@@ -392,7 +358,6 @@
                         </div>
                     </div>
 
-                    <!-- 卡片 2 -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" },
                         "category": "品牌文创",
@@ -423,10 +388,10 @@
                                 <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
                                 <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
                             </div>
-                            
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
+                                    <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +407,6 @@
                         </div>
                     </div>
 
-                    <!-- 卡片 3 -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://file.icve.com.cn/file_doc/qdqqd/Qd7MvckX_vip.mp4" },
                         "category": "AIGC建设与应用",
@@ -471,7 +435,8 @@
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
+                                    <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
                         </div>
@@ -487,7 +452,6 @@
                         </div>
                     </div>
 
-                    <!-- 卡片 4 (原 卡片 6：马年新春创意动画) -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E8%A7%86%E9%A2%91.mp4" },
                         "category": "AIGC建设与应用",
@@ -507,7 +471,8 @@
                             </video>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
+                                    <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
                         </div>
@@ -524,7 +489,6 @@
                         </div>
                     </div>
 
-                    <!-- 卡片 5 -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update", "autoHeight": true },
                         "category": "品牌空间体验",
@@ -542,7 +506,6 @@
                         ]
                     })'>
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <!-- 🔥 已加上 ?v=update 强制刷新缓存 -->
                             <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update" alt="美团文创礼品店空间设计" class="w-full h-full object-cover">
                         </div>
                         <div class="p-5 flex-1 flex flex-col justify-between">
@@ -557,7 +520,6 @@
                         </div>
                     </div>
 
-                    <!-- 卡片 6 (原 卡片 4：2023美团中秋礼盒) -->
                     <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2023%E4%B8%AD%E7%A7%8B.mp4" },
                         "category": "品牌文创",
@@ -605,7 +567,8 @@
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
+                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
+                                    <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
                         </div>
@@ -634,10 +597,9 @@
                         </div>
                     </button>
                 </div>
-
             </div> 
 
-            <!-- 🔥 视图切换包裹器 (2): 闪作瀑布流视图 -->
+            <!-- 闪作瀑布流视图 -->
             <div id="flash-portfolio-view" class="transition-opacity duration-500 hidden opacity-0">
                 <div class="flex justify-center mb-10">
                     <div class="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-md">
@@ -646,7 +608,6 @@
                     </div>
                 </div>
 
-                <!-- 瀑布流容器 -->
                 <div id="flash-waterfall-grid" class="columns-2 md:columns-3 lg:columns-4 gap-4">
                     <!-- JS 动态注入 -->
                 </div>
@@ -677,15 +638,17 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <div onclick="copyContact('x903129947', '微信')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-emerald-500/40 hover:shadow-[0_10px_40px_rgba(16,185,129,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-500">
-                        <svg class="w-8 h-8 text-gray-400 group-hover:text-emerald-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        <!-- 🔥 放弃会引发跨域拦截的 Mask，恢复 img 标签。改用极具科技感的“彩色霓虹发光”特效 -->
+                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%BE%AE%E4%BF%A1.png" alt="WeChat" class="w-12 h-12 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">WeChat</h3>
-                    <p class="text-[13px] font-medium text-emerald-500 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
+                    <p class="text-[13px] font-medium text-gray-400 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
                 </div>
 
                 <div onclick="copyContact('+86 17681621482', '电话')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-blue-500/40 hover:shadow-[0_10px_40px_rgba(59,130,246,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
-                        <svg class="w-8 h-8 text-gray-400 group-hover:text-blue-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <!-- 🔥 电话：悬浮时恢复不透明，并亮起蓝色光晕 -->
+                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%94%B5%E8%AF%9D.png?v=update" alt="Phone" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(96,165,250,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Phone</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-blue-400 transition-colors tracking-wide">+86 17681621482</p>
@@ -693,7 +656,8 @@
 
                 <div onclick="copyContact('m17681621482@163.com', '邮箱')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-purple-500/40 hover:shadow-[0_10px_40px_rgba(168,85,247,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-500">
-                        <svg class="w-8 h-8 text-gray-400 group-hover:text-purple-400 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <!-- 🔥 邮箱：尺寸已缩小为 w-7 h-7，增加内部呼吸感 -->
+                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%82%AE%E4%BB%B6.png?v=update" alt="Email" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Email</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-purple-400 transition-colors tracking-wide">m17681621482@163.com</p>
@@ -771,7 +735,6 @@
                     <div id="flash-modal-tags" class="flex flex-wrap gap-2 mb-8 text-accent text-[13px] font-medium"></div>
                     <div id="flash-modal-date" class="text-[12px] text-gray-600 font-medium">发布于 2026-03-24</div>
                     
-                    <!-- 🔥 补回丢失的评论区容器 -->
                     <div id="flash-modal-comments-container" class="mt-8 pt-6 border-t border-white/5 hidden">
                         <h3 class="text-[14px] font-bold text-white mb-4">共 <span id="flash-modal-comments-count">0</span> 条评论</h3>
                         <div id="flash-modal-comments-list" class="flex flex-col gap-5"></div>
@@ -875,8 +838,6 @@
             }
 
             const heroContainer = document.getElementById('modal-hero-container');
-            // 🔥 统一改为：高度自适应(h-auto) + 完整包裹(object-contain) + 深色底背景
-            // 加入最高限制(max-h-[80vh])是为了防止极个别超高竖屏视频直接顶出屏幕
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
             
             if (data.hero.type === 'video') {
@@ -1070,7 +1031,7 @@
                     ]
                 ],
                 title: "团团的世界盲盒系列",
-                desc: "“团团的世界”主题盲盒第一弹，通过多套不同职业与场景的潮玩形象，丰富美团袋鼠IP的世界观，深受年轻用户喜爱并引发社交分享热潮。",
+                desc: "美团品牌升级吉祥物为袋鼠团团之后，推出的第一套袋鼠形象盲盒，将团团形象与业务场景结合,强化袋鼠作为公司吉祥物,活跃在公司各个业务中,体现做用户体验美好生活的伙伴.",
                 tags: ["潮玩盲盒", "3D建模", "IP延展"],
                 date: "2026-04-01",
                 likes: "1025"
@@ -1201,9 +1162,11 @@
         function switchPortfolioView(viewType, btnElement) {
             const allBtns = document.querySelectorAll('.filter-btn');
             allBtns.forEach(btn => {
+                // 🔥 JS 动态赋值时同样移除了 focus:outline-none
                 btn.className = "filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40";
             });
-            btnElement.className = "filter-btn px-6 py-2 rounded-full bg-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]";
+            // 🔥 JS 动态赋值时，同样给选中状态加上 border border-accent
+            btnElement.className = "filter-btn px-6 py-2 rounded-full bg-accent border border-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]";
 
             const mainView = document.getElementById('main-portfolio-view');
             const flashView = document.getElementById('flash-portfolio-view');
@@ -1304,17 +1267,14 @@
             const firstItemSrc = typeof imagesToRender[0] === 'string' ? imagesToRender[0] : imagesToRender[0].src;
             const isSingleVideo = !isMulti && (firstItemSrc.toLowerCase().endsWith('.mp4') || firstItemSrc.toLowerCase().endsWith('.webm'));
 
-            // 🔥 修复点1：先定义基础布局类名
             let baseClass = (isMulti || isSingleVideo) 
                 ? 'flex flex-col w-full min-h-full' 
                 : 'flex flex-col items-center justify-center min-h-full p-4 md:p-8 gap-6 md:gap-8';
             
-            // 🔥 修复点2：将背景白色的判定与基础类名合并，防止被覆盖。
-            // 采用“深色底+纯白芯”策略：外层容器深色吸收滚动条缝隙，内层容器纯白融化Logo底色
             if (data.bgColor === 'white') {
-                baseClass += ' bg-white'; // 追加白底
+                baseClass += ' bg-white'; 
                 leftContainer.classList.remove('bg-[#0a0a0a]');
-                leftContainer.classList.add('bg-[#15171e]'); // 外框深色，防白边
+                leftContainer.classList.add('bg-[#15171e]'); 
                 bgBlur.style.display = 'none'; 
             } else {
                 leftContainer.classList.remove('bg-[#15171e]');
@@ -1323,7 +1283,6 @@
                 bgBlur.style.backgroundImage = `url('${data.src}')`;
             }
 
-            // 统一赋值，确保 bg-white 生效
             galleryInner.className = baseClass;
             
             const borderColor = data.bgColor === 'white' ? 'border-gray-200' : 'border-[#0a0a0a]';
@@ -1346,7 +1305,6 @@
                     const isHalfWidth = typeof item === 'object' && item.halfWidth;
                     const isVideo = itemSrc.toLowerCase().endsWith('.mp4') || itemSrc.toLowerCase().endsWith('.webm');
                     
-                    // 🔥 修复为上下均匀且更加紧凑的边距 (my-3 md:my-4)
                     const mediaClass = isHalfWidth 
                         ? "w-[65%] md:w-[45%] mx-auto block object-contain my-3 md:my-4 cursor-zoom-in" 
                         : "w-full block object-cover m-0 p-0 cursor-zoom-in";
@@ -1377,7 +1335,6 @@
             const tagsHtml = data.tags.map(tag => `<span class="cursor-pointer hover:underline">#${tag}</span>`).join('');
             document.getElementById('flash-modal-tags').innerHTML = tagsHtml;
 
-            // 🔥 渲染评论区并增加安全校验
             const commentsContainer = document.getElementById('flash-modal-comments-container');
             const commentsList = document.getElementById('flash-modal-comments-list');
             const commentsCount = document.getElementById('flash-modal-comments-count');
@@ -1434,24 +1391,19 @@
             }, 400); 
         }
 
-        // 🔥 彻底解决心脏横排问题的“防弹”物理点赞动效
-        // (采用原生 Web Animations API，不依赖任何外部 CSS，强制绝对脱离文档流，保证100%生效)
         function triggerLike(event, btnElement) {
             event.stopPropagation();
             
-            // 1. 按钮图标弹出
             const svgIcon = document.getElementById('flash-like-btn-svg');
             svgIcon.setAttribute('fill', 'currentColor');
             svgIcon.classList.add('text-red-500');
             
-            // 使用原生 API 执行弹跳
             svgIcon.animate([
                 { transform: 'scale(1)' },
                 { transform: 'scale(1.4)', offset: 0.3 },
                 { transform: 'scale(1)' }
             ], { duration: 400, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
 
-            // 2. 点赞数字更新跳动
             const likesSpan = document.getElementById('flash-modal-likes');
             let currentLikes = likesSpan.innerText;
             if (currentLikes.toString().toLowerCase().includes('k')) {
@@ -1471,9 +1423,7 @@
                 setTimeout(() => { likesSpan.style.color = ""; }, 400);
             }
 
-            // 3. 强制脱离布局的防弹小爱心 (绝对定位 + 独立原生动画)
             const heart = document.createElement('div');
-            // 关键：绝对定位，保证永远不会和旁边数字排在同一行
             heart.style.position = 'absolute';
             heart.style.left = '50%';
             heart.style.bottom = '100%';
@@ -1487,23 +1437,20 @@
             
             btnElement.appendChild(heart);
 
-            // 随机漂浮轨迹
-            const xOffset = (Math.random() - 0.5) * 80; // 左右随机散开
-            const rot = (Math.random() - 0.5) * 60;     // 随机倾斜
-            const yOffset = -100 - Math.random() * 60;  // 随机漂浮高度
+            const xOffset = (Math.random() - 0.5) * 80; 
+            const rot = (Math.random() - 0.5) * 60;     
+            const yOffset = -100 - Math.random() * 60;  
 
-            // 使用 Web Animations API 生成动效，不需要 CSS 支持也能完美运行！
             heart.animate([
                 { transform: `translate(-50%, 0) scale(0)`, opacity: 0 },
                 { transform: `translate(calc(-50% + ${xOffset * 0.3}px), ${yOffset * 0.3}px) scale(1.2) rotate(${rot * 0.3}deg)`, opacity: 1, offset: 0.2 },
                 { transform: `translate(calc(-50% + ${xOffset}px), ${yOffset}px) scale(0.8) rotate(${rot}deg)`, opacity: 0 }
             ], {
-                duration: 1200 + Math.random() * 400, // 1.2~1.6秒持续时间
+                duration: 1200 + Math.random() * 400, 
                 easing: 'ease-out',
                 fill: 'forwards'
             });
 
-            // 动画结束后销毁DOM
             setTimeout(() => heart.remove(), 2000);
         }
 
