@@ -107,6 +107,43 @@
             animation: ping-strong 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
 
+        /* 🔥 新增：边缘流光按钮专属特效 (彻底修复透色与不旋转问题) */
+        .flow-border-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 9999px; /* 强制锁定圆角 */
+            background: #0a0a0a;
+        }
+        .flow-border-btn::before {
+            content: '';
+            position: absolute;
+            /* 使用 -100% 撑开一个绝对居中的巨大正方形，保证旋转时覆盖完整 */
+            top: -100%;
+            left: -100%;
+            right: -100%;
+            bottom: -100%;
+            background: conic-gradient(from 0deg, transparent 75%, #ec4899 100%);
+            animation: spin-flow 2s linear infinite;
+            z-index: -2;
+        }
+        .flow-border-btn::after {
+            content: '';
+            position: absolute;
+            inset: 1.5px; /* 这里决定边缘流光线条的粗细，1.5px 刚好精致 */
+            background: #0a0a0a; /* 🔥 必须是 100% 纯实色，绝不能有透明度！阻挡底部光晕透上来 */
+            border-radius: 9999px;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        .flow-border-btn:hover::after {
+            background: #1a1a1a; /* 鼠标悬浮时内部颜色微微变亮 */
+        }
+        @keyframes spin-flow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
@@ -140,8 +177,9 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4 relative z-10">
-                    <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" class="flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all duration-300 font-medium text-sm">
-                        <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <!-- 🔥 去除粉色光晕和粉色icon，恢复极致清爽的玻璃拟物，带纯白扫光 -->
+                    <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1-%E7%BE%8E%E5%9B%A2-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" class="sweep-light-btn flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/30 hover:shadow-[0_4px_20px_rgba(255,255,255,0.1)] transition-all duration-300 font-medium text-sm group">
+                        <svg class="w-4 h-4 mr-2 text-gray-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         下载简历
                     </a>
                 </div>
@@ -832,10 +870,7 @@
         let lastClickedCardRect = null;
 
         function openProjectModal(event, data) {
-            if (modalScrollArea) {
-                modalScrollArea.scrollTop = 0;
-                modalScrollArea.classList.remove('is-scrolled');
-            }
+            // 🔥 移除了这里失效的 scrollTop = 0 代码（因为弹窗处于 hidden 状态时，浏览器会忽略所有滚动操作）
 
             const heroContainer = document.getElementById('modal-hero-container');
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
@@ -903,6 +938,13 @@
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
+
+            // 🔥 修复：必须在弹窗移除 hidden 并可见后，强制滚动条回顶
+            if (modalScrollArea) {
+                modalScrollArea.scrollTop = 0;
+                // 为了对抗 2023中秋 等包含大量视频项目时的“焦点自动抢占下拉”，加一个极短的延时来二次锁定顶部！
+                setTimeout(() => { modalScrollArea.scrollTop = 0; }, 20);
+            }
 
             let translateX = 0;
             let translateY = 0;
