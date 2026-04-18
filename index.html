@@ -6,7 +6,7 @@
     <title>夏铭骏 | AI品牌创意设计师</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&display=block" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -29,7 +29,6 @@
             color: #F9FAFB; 
         }
 
-        /* 🔥 彻底移除所有按钮的浏览器默认外框，并取消移动端的点击灰色/蓝色高亮 */
         button, button:focus, button:focus-visible, button:active {
             outline: none !important;
             -webkit-tap-highlight-color: transparent;
@@ -45,24 +44,29 @@
             backdrop-filter: blur(24px); 
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 1; 
+            will-change: transform, box-shadow; 
         }
-        .project-card:hover {
+
+        .project-card.is-visible {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .project-card.is-visible:hover {
             background: rgba(255, 255, 255, 0.06); 
-            box-shadow: 0 0 40px 5px rgba(236, 72, 153, 0.4);
-            border-color: transparent;
-            transform: translateY(-6px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(236, 72, 153, 0.35);
+            border-color: rgba(236, 72, 153, 0.3); 
+            transform: translateY(-12px) scale(1.03); 
             z-index: 20; 
         }
 
         .media-container img, .media-container video {
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); 
         }
-        .project-card:hover .media-container img,
-        .project-card:hover .media-container video {
-            transform: scale(1.05);
+        .project-card.is-visible:hover .media-container img,
+        .project-card.is-visible:hover .media-container video {
+            transform: scale(1.06);
         }
 
         .play-btn {
@@ -107,42 +111,136 @@
             animation: ping-strong 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
 
-        /* 🔥 新增：边缘流光按钮专属特效 (彻底修复透色与不旋转问题) */
-        .flow-border-btn {
+        .sweep-light-btn {
             position: relative;
             overflow: hidden;
             z-index: 1;
-            border-radius: 9999px; /* 强制锁定圆角 */
-            background: #0a0a0a;
         }
-        .flow-border-btn::before {
+        .sweep-light-btn::before {
             content: '';
             position: absolute;
-            /* 使用 -100% 撑开一个绝对居中的巨大正方形，保证旋转时覆盖完整 */
-            top: -100%;
+            top: 0;
             left: -100%;
-            right: -100%;
-            bottom: -100%;
-            background: conic-gradient(from 0deg, transparent 75%, #ec4899 100%);
-            animation: spin-flow 2s linear infinite;
-            z-index: -2;
-        }
-        .flow-border-btn::after {
-            content: '';
-            position: absolute;
-            inset: 1.5px; /* 这里决定边缘流光线条的粗细，1.5px 刚好精致 */
-            background: #0a0a0a; /* 🔥 必须是 100% 纯实色，绝不能有透明度！阻挡底部光晕透上来 */
-            border-radius: 9999px;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));
+            transform: skewX(-20deg);
+            animation: sweep-glass 4s infinite;
+            pointer-events: none;
             z-index: -1;
-            transition: all 0.3s ease;
         }
-        .flow-border-btn:hover::after {
-            background: #1a1a1a; /* 鼠标悬浮时内部颜色微微变亮 */
+        @keyframes sweep-glass {
+            0% { left: -100%; }
+            30% { left: 200%; }
+            100% { left: 200%; }
         }
-        @keyframes spin-flow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        @keyframes blur-in {
+            0% { filter: blur(20px); opacity: 0; transform: scale(0.95); }
+            100% { filter: blur(0); opacity: 1; transform: scale(1); }
         }
+        @keyframes fade-up-hero {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes nav-blur-fade-up {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        .animate-nav-item { opacity: 0; }
+        .fonts-loaded .animate-nav-item { animation: nav-blur-fade-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .delay-nav-1 { animation-delay: 0.1s; }
+        .delay-nav-2 { animation-delay: 0.2s; }
+        .delay-nav-3 { animation-delay: 0.3s; }
+        .delay-nav-4 { animation-delay: 0.4s; }
+        .delay-nav-5 { animation-delay: 0.5s; }
+        .delay-nav-6 { animation-delay: 0.6s; }
+
+        @keyframes dramatic-blur-fade-up {
+            0% { opacity: 0; filter: blur(24px); transform: translateY(60px) scale(0.95); }
+            100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+        
+        .animate-hero-text-1 { opacity: 0; animation: dramatic-blur-fade-up 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
+        
+        .glow-text-portfolio {
+            text-shadow: 0 0 12px rgba(255,255,255,0.4), 0 0 24px rgba(236,72,153,0.15);
+        }
+
+        @keyframes super-blur-fade-up {
+            0% { opacity: 0; filter: blur(40px); transform: translateY(120px) scale(0.95); }
+            100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+        
+        .animate-super-blur-1, .animate-super-blur-2 { opacity: 0; will-change: transform, opacity, filter; }
+        .fonts-loaded .animate-super-blur-1 { animation: super-blur-fade-up 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.2s; }
+        .fonts-loaded .animate-super-blur-2 { animation: super-blur-fade-up 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.5s; }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-blur-text {
+            opacity: 0;
+            filter: blur(30px);
+            transform: translateY(80px) scale(0.95);
+            will-change: transform, opacity, filter;
+        }
+        .reveal-blur-text.is-visible {
+            transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1; filter: blur(0); transform: translateY(0) scale(1);
+        }
+
+        .char-box {
+            display: inline-block;
+            opacity: 0;
+            filter: blur(20px);
+            transform: translateY(40px) scale(0.9);
+            will-change: transform, opacity, filter;
+        }
+        .reveal-stagger.is-visible .char-box {
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1; filter: blur(0); transform: translateY(0) scale(1);
+        }
+
+        /* 🔥 新增：简介视频内文字专属呼吸排浪动效 */
+        .about-text-stagger {
+            opacity: 0;
+            filter: blur(24px);
+            transform: translateY(40px) scale(0.95);
+            transition: all 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .is-expanded .about-text-stagger {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0) scale(1);
+        }
+        .delay-abt-1 { transition-delay: 0.1s; }
+        .delay-abt-2 { transition-delay: 0.3s; }
+        .delay-abt-3 { transition-delay: 0.5s; }
+
+        @keyframes card-reveal-blur {
+            0% { opacity: 0; filter: blur(24px); transform: translateY(60px) scale(0.95); }
+            100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+        .reveal-card-blur { opacity: 0; will-change: transform, opacity, filter; }
+        .reveal-card-blur.is-visible { animation: card-reveal-blur 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .reveal-card-blur.delay-100 { animation-delay: 0.1s; }
+        .reveal-card-blur.delay-200 { animation-delay: 0.25s; }
+        .reveal-card-blur.delay-300 { animation-delay: 0.4s; }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-blur-300 { transition-delay: 150ms; } 
+        .delay-blur-800 { transition-delay: 450ms; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
@@ -158,26 +256,25 @@
 
     <!-- 导航栏 -->
     <nav class="fixed w-full z-40 top-0 transition-all duration-300 bg-black/30 backdrop-blur-md border-b border-white/5" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="w-full px-6 md:px-12 lg:px-16 relative">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center cursor-pointer relative z-10" onclick="window.scrollTo(0,0)">
-                    <span class="font-extrabold text-2xl tracking-tight text-white flex items-start">
-                        PORTFOLIO
-                        <sup class="text-[10px] font-normal text-gray-400 ml-1 mt-1">®</sup>
+                <div class="flex-shrink-0 flex items-center cursor-pointer relative z-10 animate-nav-item delay-nav-1" onclick="window.scrollTo(0,0)">
+                    <span class="font-extrabold text-2xl tracking-tight text-white flex items-center">
+                        HELLO ：）
                     </span>
                 </div>
                 
                 <div class="hidden md:flex space-x-10 absolute left-1/2 transform -translate-x-1/2 w-full justify-center pointer-events-none">
                     <div class="flex space-x-10 pointer-events-auto">
-                        <a href="#home" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">首页</a>
-                        <a href="#experience" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">经历</a>
-                        <a href="#portfolio" class="nav-link text-white font-medium transition-colors text-[15px]">作品</a>
-                        <a href="#contact" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px]">联系</a>
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-2">首页</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-3">关于</a>
+                        <a href="#experience" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-4">经历</a>
+                        <a href="#portfolio" class="nav-link text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-5">作品</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-6">联系</a>
                     </div>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4 relative z-10">
-                    <!-- 🔥 去除粉色光晕和粉色icon，恢复极致清爽的玻璃拟物，带纯白扫光 -->
+                <div class="hidden md:flex items-center space-x-4 relative z-10 animate-nav-item delay-nav-6">
                     <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1-%E7%BE%8E%E5%9B%A2-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" class="sweep-light-btn flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/30 hover:shadow-[0_4px_20px_rgba(255,255,255,0.1)] transition-all duration-300 font-medium text-sm group">
                         <svg class="w-4 h-4 mr-2 text-gray-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         下载简历
@@ -187,55 +284,86 @@
         </div>
     </nav>
 
-    <!-- 首屏 Hero 区域 -->
-    <header id="home" class="relative overflow-hidden flex items-center min-h-screen">
-        <div class="absolute inset-0 z-0 pointer-events-none" style="mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);">
-            <video id="bg-video" autoplay loop muted="muted" playsinline class="absolute inset-0 w-full h-full object-cover">
-                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" type="video/mp4">
+    <!-- 首屏视频 -->
+    <section id="home" class="relative w-full h-screen bg-[#050505] overflow-hidden flex items-center justify-center z-10">
+        <div class="absolute inset-0 z-0">
+            <video id="hero-video" autoplay loop muted playsinline class="w-full h-full object-cover">
+                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-black/60"></div>
+            <!-- 顶部微渐变保护文字可见度 -->
+            <div class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-black/50 via-black/20 to-transparent pointer-events-none"></div>
+            <!-- 🔥 新增：首屏下方过渡到黑色的渐变蒙版，用于自然衔接下方空间 -->
+            <div class="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none"></div>
         </div>
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-24 md:pt-32 pb-16 md:pb-20 flex flex-col items-center text-center mt-6 md:mt-10">
-            <h2 class="text-4xl md:text-[64px] font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-4 md:mb-6 tracking-wide drop-shadow-lg py-2 leading-tight">
-                Portfolio
-            </h2>
-            
-            <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
-                <div class="flex items-baseline whitespace-nowrap">
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">夏铭骏</h1>
-                    <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] italic">/</span>
-                    <h1 class="text-4xl sm:text-5xl md:text-[56px] font-bold text-white tracking-tight leading-none" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
-                </div>
-                <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-2.5 md:gap-4 mb-8 md:mb-10">
-                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[13px] md:text-[14px] text-gray-300 backdrop-blur-md cursor-default group whitespace-nowrap">
-                    <svg class="w-4 h-4 mr-1.5 md:mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                    <span class="text-white font-medium tracking-wide">江南大学</span><span class="ml-1.5">设计学院</span>
-                </div>
-                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[13px] md:text-[14px] text-gray-300 backdrop-blur-md cursor-default group whitespace-nowrap">
-                    <svg class="w-4 h-4 mr-1.5 md:mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span class="text-white font-medium tracking-wide">3.5年</span><span class="ml-1.5">互联网大厂工作经验</span>
-                </div>
-            </div>
-            
-            <p class="text-gray-400 text-sm md:text-[15px] max-w-[90%] md:max-w-2xl mx-auto italic mb-10 md:mb-14 tracking-wide leading-relaxed">
-                "专注于品牌文创设计与动态设计，持续探索AIGC的建设与应用"
-            </p>
-
-            <button onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})" class="inline-flex items-center px-8 md:px-10 py-3.5 md:py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-[14px] md:text-[15px] hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] hover:scale-105 transition-all duration-300">
-                查看作品 
-                <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-            </button>
+        <div class="absolute top-28 md:top-32 left-6 md:left-12 lg:left-16 z-10 text-left pointer-events-none">
+            <h1 class="font-['Oswald'] text-white tracking-[0.08em] leading-[1.05]">
+                <span class="block text-[42px] md:text-[64px] lg:text-[80px] font-light text-white/90 glow-text-portfolio animate-super-blur-1">Aaron's</span>
+                <span class="block text-[64px] md:text-[96px] lg:text-[130px] font-bold uppercase glow-text-portfolio animate-super-blur-2">PORTFOLIO</span>
+            </h1>
         </div>
-    </header>
+
+        <!-- 🔥 已删除向下滑动的指示箭头 -->
+    </section>
+
+    <!-- 🌟 全新重构的滚动扩散(Scroll Expand) 简介区域 -->
+    <!-- 🔥 修复：将向上偏移从 -40vh 减弱至 -15vh，拉开舒适的间距，同时不至于产生黑边脱节 -->
+    <section id="about" class="relative w-full h-[220vh] bg-transparent z-20 -mt-[15vh]">
+        <!-- Sticky 容器，在滚动时吸附在视口内 -->
+        <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+            
+            <div id="about-video-box" class="relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] will-change-transform">
+                <!-- 背景视频 -->
+                <video id="bg-video" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                    <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" type="video/mp4">
+                </video>
+                
+                <!-- 由 JS 控制深浅的蒙版，辅助文字阅读 -->
+                <div id="about-video-overlay" class="absolute inset-0 bg-transparent pointer-events-none transition-colors duration-200"></div>
+
+                <!-- 内部的文字内容区 (当视频全屏后才通过 is-expanded 类触发动画显示) -->
+                <div id="about-text-content" class="absolute inset-0 flex flex-col items-center text-center justify-center w-full px-4 pt-16 md:pt-20 pointer-events-none">
+                    
+                    <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-10 md:mb-14 about-text-stagger delay-abt-1 pointer-events-auto">
+                        <div class="flex items-baseline whitespace-nowrap">
+                            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">夏铭骏</h1>
+                            <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] italic">/</span>
+                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-bold text-white tracking-tight leading-none" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
+                        </div>
+                        <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-center mb-12 md:mb-16 text-[13px] md:text-[15px] text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] about-text-stagger delay-abt-2 pointer-events-auto">
+                        <div class="flex items-center group cursor-default transition-all duration-300 hover:text-white hover:-translate-y-0.5">
+                            <svg class="w-4 h-4 mr-1.5 md:mr-2 text-white/80 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                            <span class="font-medium tracking-wide">江南大学</span>
+                        </div>
+                        <span class="w-[1px] h-3.5 md:h-4 bg-white/30 mx-3 md:mx-5"></span>
+                        <div class="flex items-center group cursor-default transition-all duration-300 hover:text-white hover:-translate-y-0.5">
+                            <svg class="w-4 h-4 mr-1.5 md:mr-2 text-white/80 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span class="font-medium tracking-wide">3.5年 <span class="ml-1 font-normal opacity-90">美团品牌创意设计中心</span></span>
+                        </div>
+                        <span class="w-[1px] h-3.5 md:h-4 bg-white/30 mx-3 md:mx-5"></span>
+                        <div class="flex items-center group cursor-default transition-all duration-300 hover:text-white hover:-translate-y-0.5">
+                            <svg class="w-4 h-4 mr-1.5 md:mr-2 text-white/80 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                            <span class="font-medium tracking-wide">AI与品牌创意</span>
+                        </div>
+                    </div>
+
+                    <button onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})" class="inline-flex items-center px-8 md:px-10 py-3.5 md:py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-[14px] md:text-[15px] hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] hover:scale-105 transition-all duration-300 about-text-stagger delay-abt-3 pointer-events-auto">
+                        探索作品集 
+                        <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- 🌟 工作经历模块 -->
+    <!-- 🔥 修复2：恢复原本宽敞的 py-24 边距，不再让工作经历和简介挤在一起 -->
     <section id="experience" class="py-24 relative z-20 overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-3 mb-12">
+            <div class="flex items-center gap-3 mb-12 reveal-on-scroll">
                 <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
@@ -246,7 +374,7 @@
                 <div class="absolute left-0 top-[-40px] bottom-[-40px] w-[2px] bg-gray-800/80 pointer-events-none z-0 -translate-x-1/2" style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"></div>
 
                 <!-- 经历项目 1 -->
-                <div class="relative pl-8 md:pl-12 z-10">
+                <div class="relative pl-8 md:pl-12 z-10 reveal-on-scroll delay-100">
                     <div class="absolute left-0 top-[36px] md:top-[46px] w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
                         <span class="absolute inset-0 block rounded-full bg-accent animate-ping-strong z-0"></span>
                         <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_12px_rgba(236,72,153,1)] z-10"></span>
@@ -307,7 +435,7 @@
                 </div>
 
                 <!-- 经历项目 2 -->
-                <div class="relative pl-8 md:pl-12 z-10">
+                <div class="relative pl-8 md:pl-12 z-10 reveal-on-scroll delay-200">
                     <div class="absolute left-0 top-1/2 w-4 h-4 z-10 -translate-x-1/2 -translate-y-1/2">
                         <span class="relative block w-4 h-4 rounded-full bg-accent ring-4 ring-[#050505] shadow-[0_0_8px_rgba(236,72,153,0.5)]"></span>
                     </div>
@@ -336,20 +464,20 @@
     </section>
 
     <!-- 🌟 作品集模块 -->
-    <main id="portfolio" class="py-24 relative z-20 border-t border-white/5">
+    <main id="portfolio" class="py-24 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                    我的<span class="text-accent">作品集</span>
+            <div class="text-center mb-16 flex flex-col items-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight flex justify-center">
+                    <span class="reveal-blur-text inline-block">我的</span>
+                    <span class="text-accent reveal-blur-text delay-blur-300 inline-block ml-1">作品集</span>
                 </h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
+                <p id="portfolio-desc" class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base reveal-stagger">
                     这里展示了我近年来的部分项目，涵盖AIGC应用、品牌文创、空间设计等多个领域
                 </p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-3 mb-16" id="portfolio-filters">
-                <!-- 🔥 给选中状态的按钮增加 border border-accent，防止颜色过渡时闪现白色 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-16 reveal-blur-text delay-blur-800" id="portfolio-filters">
                 <button onclick="switchPortfolioView('main', this)" class="filter-btn px-6 py-2 rounded-full bg-accent border border-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]">精选作品</button>
                 <button onclick="switchPortfolioView('flash', this)" class="filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40">闪作</button>
             </div>
@@ -358,7 +486,7 @@
             <div id="main-portfolio-view" class="transition-opacity duration-500 opacity-100 block">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png", "autoHeight": true },
                         "category": "AIGC建设与应用",
                         "year": "2025",
@@ -396,7 +524,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" },
                         "category": "品牌文创",
                         "year": "2024",
@@ -428,7 +556,6 @@
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
                                     <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
@@ -445,8 +572,8 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
-                        "hero": { "type": "video", "src": "https://file.icve.com.cn/file_doc/qdqqd/Qd7MvckX_vip.mp4" },
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-300" onclick='openProjectModal(event, {
+                        "hero": { "type": "video", "src": "https://dc-file.leanticket.cn/7AAx481EiCxgtwvstUMdgpzuGgCp9fFs/VznmAkRZ_vip.mp4" },
                         "category": "AIGC建设与应用",
                         "year": "2025",
                         "title": "大艺术家团团创意动画",
@@ -473,7 +600,6 @@
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
                                     <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
@@ -490,7 +616,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E8%A7%86%E9%A2%91.mp4" },
                         "category": "AIGC建设与应用",
                         "year": "2026",
@@ -509,7 +635,6 @@
                             </video>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
                                     <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
@@ -527,7 +652,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update", "autoHeight": true },
                         "category": "品牌空间体验",
                         "year": "2025",
@@ -558,7 +683,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-300" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2023%E4%B8%AD%E7%A7%8B.mp4" },
                         "category": "品牌文创",
                         "year": "2023",
@@ -605,7 +730,6 @@
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <!-- 🔥 已将 translate-x-[1px] 改为了 -translate-x-[1px] -->
                                     <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
                                 </div>
                             </div>
@@ -658,43 +782,40 @@
     <section id="contact" class="py-32 relative z-20 overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
 
-            <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[12px] md:text-[13px] text-gray-300 backdrop-blur-xl mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-default">
+            <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[12px] md:text-[13px] text-gray-300 backdrop-blur-xl mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-default reveal-on-scroll">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
                 <span class="font-bold tracking-widest uppercase font-['Montserrat']">求职中 AVAILABLE FOR WORK</span>
             </div>
 
-            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-['Montserrat'] uppercase leading-none">
+            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-['Montserrat'] uppercase leading-none reveal-on-scroll">
                 <span class="text-white drop-shadow-lg">THANK </span>
                 <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-rose-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]">YOU</span>
             </h2>
 
-            <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-20 leading-relaxed font-light tracking-wide">
+            <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-20 leading-relaxed font-light tracking-wide reveal-on-scroll delay-100">
                 感谢您浏览我的作品集。<br>
                 无论是项目协作、全职机会，还是纯粹的设计交流，我都非常期待与您取得联系。
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <div onclick="copyContact('x903129947', '微信')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-emerald-500/40 hover:shadow-[0_10px_40px_rgba(16,185,129,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                <div onclick="copyContact('x903129947', '微信')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-emerald-500/40 hover:shadow-[0_10px_40px_rgba(16,185,129,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer reveal-on-scroll delay-100">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-500">
-                        <!-- 🔥 放弃会引发跨域拦截的 Mask，恢复 img 标签。改用极具科技感的“彩色霓虹发光”特效 -->
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%BE%AE%E4%BF%A1.png" alt="WeChat" class="w-12 h-12 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">WeChat</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
                 </div>
 
-                <div onclick="copyContact('+86 17681621482', '电话')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-blue-500/40 hover:shadow-[0_10px_40px_rgba(59,130,246,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                <div onclick="copyContact('+86 17681621482', '电话')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-blue-500/40 hover:shadow-[0_10px_40px_rgba(59,130,246,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer reveal-on-scroll delay-200">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
-                        <!-- 🔥 电话：悬浮时恢复不透明，并亮起蓝色光晕 -->
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%94%B5%E8%AF%9D.png?v=update" alt="Phone" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(96,165,250,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Phone</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-blue-400 transition-colors tracking-wide">+86 17681621482</p>
                 </div>
 
-                <div onclick="copyContact('m17681621482@163.com', '邮箱')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-purple-500/40 hover:shadow-[0_10px_40px_rgba(168,85,247,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                <div onclick="copyContact('m17681621482@163.com', '邮箱')" class="group relative p-10 rounded-[32px] bg-white/[0.02] border border-white/[0.06] backdrop-blur-2xl hover:bg-white/[0.05] hover:border-purple-500/40 hover:shadow-[0_10px_40px_rgba(168,85,247,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-pointer reveal-on-scroll delay-300">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-500">
-                        <!-- 🔥 邮箱：尺寸已缩小为 w-7 h-7，增加内部呼吸感 -->
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%82%AE%E4%BB%B6.png?v=update" alt="Email" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]">
                     </div>
                     <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Email</h3>
@@ -818,13 +939,130 @@
 
     <!-- 交互脚本 -->
     <script>
+        let scrollObserver;
+        let aboutTicking = false;
+
         document.addEventListener('DOMContentLoaded', () => {
+            
+            document.fonts.ready.then(() => {
+                document.body.classList.add('fonts-loaded');
+            });
+            setTimeout(() => {
+                document.body.classList.add('fonts-loaded');
+            }, 2500);
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        
+                        if (entry.target.classList.contains('reveal-card-blur')) {
+                            entry.target.addEventListener('animationend', () => {
+                                entry.target.style.animation = 'none';
+                                entry.target.style.opacity = '1';
+                            }, { once: true });
+                        }
+
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll, .reveal-blur-text, .reveal-stagger, .reveal-card-blur').forEach((el) => {
+                scrollObserver.observe(el);
+            });
+
+            const descEl = document.getElementById('portfolio-desc');
+            if (descEl) {
+                const text = "这里展示了我近年来的部分项目，涵盖AIGC应用、品牌文创、空间设计等多个领域";
+                descEl.innerHTML = ''; 
+                [...text].forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.innerText = char;
+                    span.className = 'char-box';
+                    span.style.transitionDelay = `${400 + i * 20}ms`;
+                    descEl.appendChild(span);
+                });
+            }
+
             const bgVideo = document.getElementById('bg-video');
             if (bgVideo) {
                 bgVideo.muted = true;
                 bgVideo.play().catch(err => console.log("自动播放拦截:", err));
             }
+            
+            const heroVideo = document.getElementById('hero-video');
+            if (heroVideo) {
+                heroVideo.muted = true;
+                heroVideo.play().catch(err => console.log("首屏视频自动播放拦截:", err));
+            }
         });
+
+        // 🔥 新增：核心滚动扩散引擎 (Scroll-Linked Animation)
+        function updateAboutAnimation() {
+            const aboutSection = document.getElementById('about');
+            const aboutVideoBox = document.getElementById('about-video-box');
+            const aboutTextContent = document.getElementById('about-text-content');
+            const aboutOverlay = document.getElementById('about-video-overlay');
+
+            if (!aboutSection || !aboutVideoBox) return;
+
+            const rect = aboutSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const windowWidth = document.body.clientWidth; // 避免滚动条导致水平溢出
+
+            // 计算进度 0 -> 1
+            let progress = 0;
+            if (rect.top > 0) {
+                progress = 0;
+            } else if (rect.top <= -(rect.height - windowHeight)) {
+                progress = 1;
+            } else {
+                progress = Math.abs(rect.top) / (rect.height - windowHeight);
+            }
+
+            // 定义动画初始和结束状态参数
+            const isMobile = windowWidth < 768;
+            const initWidth = isMobile ? windowWidth * 0.85 : windowWidth * 0.35; // 稍微调小初始宽度，让卡片感更精致
+            const initHeight = initWidth * (9/16); // 16:9 比例
+            const initBR = isMobile ? 20 : 32; // 初始圆角
+
+            // 根据滚动进度计算实时数值
+            const curWidth = initWidth + (windowWidth - initWidth) * progress;
+            const curHeight = initHeight + (windowHeight - initHeight) * progress;
+            const curBR = initBR + (0 - initBR) * progress;
+
+            // 应用到视频画框
+            aboutVideoBox.style.width = `${curWidth}px`;
+            aboutVideoBox.style.height = `${curHeight}px`;
+            aboutVideoBox.style.borderRadius = `${curBR}px`;
+            
+            // 背景蒙版随之变暗，以辅助文字阅读
+            aboutOverlay.style.backgroundColor = `rgba(0, 0, 0, ${progress * 0.65})`;
+            
+            // 🔥 修复3：使用高级 CSS mask-image 物理溶解视频底部，完美无缝过渡到下一个板块！
+            let maskSize = Math.max(0, (progress - 0.5) * 2) * 35; // 当进度过半时，底部向上溶解最高 35vh
+            if (maskSize > 0.1) {
+                aboutVideoBox.style.maskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
+                aboutVideoBox.style.webkitMaskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
+            } else {
+                aboutVideoBox.style.maskImage = 'none';
+                aboutVideoBox.style.webkitMaskImage = 'none';
+            }
+
+            // 进度超过 85% 时触发排浪文字入场
+            if (progress > 0.85) {
+                aboutTextContent.classList.add('is-expanded');
+            } else {
+                aboutTextContent.classList.remove('is-expanded');
+            }
+        }
 
         const navbar = document.getElementById('navbar');
         const backToTopBtn = document.getElementById('back-to-top'); 
@@ -847,7 +1085,19 @@
                     backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
                 }
             }
+
+            // 🔥 触发滚动动画计算，使用 requestAnimationFrame 保证丝滑性能
+            if (!aboutTicking) {
+                window.requestAnimationFrame(() => {
+                    updateAboutAnimation();
+                    aboutTicking = false;
+                });
+                aboutTicking = true;
+            }
         });
+
+        // 页面刚加载时初始化一次
+        updateAboutAnimation();
 
         function toggleExperience(expId, iconId) {
             const expDiv = document.getElementById(expId);
@@ -870,8 +1120,6 @@
         let lastClickedCardRect = null;
 
         function openProjectModal(event, data) {
-            // 🔥 移除了这里失效的 scrollTop = 0 代码（因为弹窗处于 hidden 状态时，浏览器会忽略所有滚动操作）
-
             const heroContainer = document.getElementById('modal-hero-container');
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
             
@@ -939,10 +1187,8 @@
             modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
 
-            // 🔥 修复：必须在弹窗移除 hidden 并可见后，强制滚动条回顶
             if (modalScrollArea) {
                 modalScrollArea.scrollTop = 0;
-                // 为了对抗 2023中秋 等包含大量视频项目时的“焦点自动抢占下拉”，加一个极短的延时来二次锁定顶部！
                 setTimeout(() => { modalScrollArea.scrollTop = 0; }, 20);
             }
 
@@ -1204,10 +1450,8 @@
         function switchPortfolioView(viewType, btnElement) {
             const allBtns = document.querySelectorAll('.filter-btn');
             allBtns.forEach(btn => {
-                // 🔥 JS 动态赋值时同样移除了 focus:outline-none
                 btn.className = "filter-btn px-6 py-2 rounded-full bg-white/[0.03] backdrop-blur-lg border border-white/[0.08] text-gray-300 hover:bg-accent/10 hover:text-white font-medium text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:border-accent/40";
             });
-            // 🔥 JS 动态赋值时，同样给选中状态加上 border border-accent
             btnElement.className = "filter-btn px-6 py-2 rounded-full bg-accent border border-accent text-white font-medium text-sm transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]";
 
             const mainView = document.getElementById('main-portfolio-view');
@@ -1238,10 +1482,12 @@
             if (grid.children.length > 0) return; 
 
             let html = '';
+            const delayClasses = ['delay-100', 'delay-200', 'delay-300']; 
+
             flashWorksData.forEach((work, index) => {
                 const workJson = encodeURIComponent(JSON.stringify(work)).replace(/'/g, "%27");
-                
                 const isCoverVideo = work.src.toLowerCase().endsWith('.mp4') || work.src.toLowerCase().endsWith('.webm');
+                const delayClass = delayClasses[index % 3]; 
                 
                 if (work.featured) {
                     const mediaHtml = isCoverVideo
@@ -1249,7 +1495,7 @@
                         : `<img src="${work.src}" loading="lazy" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
                     
                     html += `
-                        <div class="block w-full mb-4 md:mb-6 group cursor-pointer relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(236,72,153,0.2)]" style="column-span: all; -webkit-column-span: all;" onclick="openFlashModal('${workJson}')">
+                        <div class="reveal-card-blur ${delayClass} block w-full mb-4 md:mb-6 group cursor-pointer relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(236,72,153,0.2)]" style="column-span: all; -webkit-column-span: all;" onclick="openFlashModal('${workJson}')">
                             <div class="flex flex-col md:flex-row w-full h-auto md:h-[320px]">
                                 <div class="relative w-full md:w-[65%] h-[220px] md:h-full overflow-hidden bg-[#0a0a0a]">
                                     ${mediaHtml}
@@ -1274,7 +1520,7 @@
                         : `<img src="${work.src}" loading="lazy" class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
                     
                     html += `
-                        <div class="break-inside-avoid inline-block w-full mb-3 md:mb-4 group cursor-pointer relative rounded-xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]" onclick="openFlashModal('${workJson}')">
+                        <div class="reveal-card-blur ${delayClass} break-inside-avoid inline-block w-full mb-3 md:mb-4 group cursor-pointer relative rounded-xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]" onclick="openFlashModal('${workJson}')">
                             <div class="relative w-full overflow-hidden">
                                 ${mediaHtml}
                             </div>
@@ -1286,6 +1532,12 @@
                 }
             });
             grid.innerHTML = html;
+
+            if (typeof scrollObserver !== 'undefined') {
+                document.querySelectorAll('#flash-waterfall-grid .reveal-card-blur').forEach(el => {
+                    scrollObserver.observe(el);
+                });
+            }
         }
 
         const flashModal = document.getElementById('flash-modal');
