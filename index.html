@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>夏铭骏 | AI品牌创意设计师</title>
+    
+    <!-- 🔥 最高优先级预加载首屏核心视频 -->
+    <link rel="preload" as="video" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
+    <!-- 🔥 新增：最高优先级预加载表情包插画，保证小人瞬间出现 -->
+    <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%961.png">
+    <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%962.png">
+
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&display=block" rel="stylesheet">
@@ -24,9 +31,25 @@
         }
     </script>
     <style>
-        body {
-            background-color: transparent; 
+        /* 🔥 极其关键：强制网页在第一毫秒就是深黑底色，彻底杜绝默认的白屏闪烁！ */
+        html, body {
+            background-color: #050505 !important; 
             color: #F9FAFB; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 🔥 加载幕布的原生保底样式：不依赖外部框架，瞬间无缝展现 */
+        #global-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #050505;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s ease-in-out;
         }
 
         button, button:focus, button:focus-visible, button:active {
@@ -242,12 +265,42 @@
         .delay-blur-300 { transition-delay: 150ms; } 
         .delay-blur-800 { transition-delay: 450ms; }
 
+        /* 🔥 新增：两张图快速交替的逐帧动画 (Frame-by-frame) */
+        @keyframes running-avatar {
+            0%, 49.9% { background-image: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%961.png'); }
+            50%, 100% { background-image: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%962.png'); }
+        }
+        .animate-running-avatar {
+            /* 0.4秒一个循环，速度轻快，像原地走动 */
+            animation: running-avatar 0.4s infinite; 
+        }
+
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
     </style>
 </head>
 <body class="antialiased selection:bg-accent selection:text-white relative">
+
+    <!-- 🔥 新增：全局电影级加载幕布 (Preloader) - 情感化表情包版本 -->
+    <div id="global-loader" class="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
+        <!-- 🔥 修改：去除了 animate-bounce，改为用 div 背景图交替实现的动效小人 -->
+        <div class="w-24 h-24 mb-8 bg-contain bg-no-repeat bg-center animate-running-avatar drop-shadow-[0_0_15px_rgba(236,72,153,0.3)]"></div>
+        
+        <!-- 加粗的粉色圆角进度条 -->
+        <div class="w-64 h-2.5 bg-white/10 rounded-full overflow-hidden mb-5 shadow-inner">
+            <div id="loader-progress" class="h-full bg-accent rounded-full w-0 transition-all duration-300 shadow-[0_0_10px_rgba(236,72,153,0.8)] relative">
+                <!-- 进度条上的高光小细节 -->
+                <div class="absolute top-0 right-0 bottom-0 w-10 bg-gradient-to-r from-transparent to-white/40"></div>
+            </div>
+        </div>
+        
+        <!-- 提示文字与百分比 -->
+        <div class="flex items-center gap-3">
+            <div class="text-gray-300 text-[14px] font-medium tracking-wide">网页正在加载哦，稍等一下下！</div>
+            <div id="loader-percentage" class="font-['Oswald'] text-accent font-bold text-[14px] tracking-wider">0%</div>
+        </div>
+    </div>
 
     <div class="fixed inset-0 z-[-1] bg-[#050505] overflow-hidden pointer-events-none flex items-center justify-center">
         <div class="absolute w-[200vw] h-[18vh] bg-gradient-to-r from-transparent via-cyan-400/[0.25] to-transparent filter blur-[80px] mix-blend-screen beam-1"></div>
@@ -303,25 +356,22 @@
             </h1>
         </div>
 
-        <!-- 🔥 已删除向下滑动的指示箭头 -->
     </section>
 
     <!-- 🌟 全新重构的滚动扩散(Scroll Expand) 简介区域 -->
-    <!-- 🔥 修复：将向上偏移从 -40vh 减弱至 -15vh，拉开舒适的间距，同时不至于产生黑边脱节 -->
     <section id="about" class="relative w-full h-[220vh] bg-transparent z-20 -mt-[15vh]">
         <!-- Sticky 容器，在滚动时吸附在视口内 -->
         <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
             
             <div id="about-video-box" class="relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] will-change-transform">
-                <!-- 背景视频 -->
-                <video id="bg-video" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                <video id="bg-video" loop muted playsinline preload="none" class="lazy-video absolute inset-0 w-full h-full object-cover">
                     <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" type="video/mp4">
                 </video>
                 
-                <!-- 由 JS 控制深浅的蒙版，辅助文字阅读 -->
                 <div id="about-video-overlay" class="absolute inset-0 bg-transparent pointer-events-none transition-colors duration-200"></div>
+                
+                <div id="about-bottom-mask" class="absolute bottom-0 inset-x-0 h-48 md:h-64 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent pointer-events-none opacity-0"></div>
 
-                <!-- 内部的文字内容区 (当视频全屏后才通过 is-expanded 类触发动画显示) -->
                 <div id="about-text-content" class="absolute inset-0 flex flex-col items-center text-center justify-center w-full px-4 pt-16 md:pt-20 pointer-events-none">
                     
                     <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-10 md:mb-14 about-text-stagger delay-abt-1 pointer-events-auto">
@@ -360,7 +410,6 @@
     </section>
 
     <!-- 🌟 工作经历模块 -->
-    <!-- 🔥 修复2：恢复原本宽敞的 py-24 边距，不再让工作经历和简介挤在一起 -->
     <section id="experience" class="py-24 relative z-20 overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex items-center gap-3 mb-12 reveal-on-scroll">
@@ -547,7 +596,7 @@
                         ]
                     })'>
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E4%B8%AD%E7%A7%8B%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
                             </video>
                             <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
@@ -591,7 +640,7 @@
                         ]
                     })'>
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://dc-file.leanticket.cn/7AAx481EiCxgtwvstUMdgpzuGgCp9fFs/VznmAkRZ_vip.mp4" type="video/mp4">
                             </video>
                             <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
@@ -630,7 +679,7 @@
                         ]
                     })'>
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
                             </video>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -721,7 +770,7 @@
                         ]
                     })'>
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
                             </video>
                             <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
@@ -941,15 +990,57 @@
     <script>
         let scrollObserver;
         let aboutTicking = false;
+        let videoObserver; 
 
         document.addEventListener('DOMContentLoaded', () => {
             
-            document.fonts.ready.then(() => {
-                document.body.classList.add('fonts-loaded');
-            });
-            setTimeout(() => {
-                document.body.classList.add('fonts-loaded');
-            }, 2500);
+            let progress = 0;
+            const progressEl = document.getElementById('loader-progress');
+            const percentEl = document.getElementById('loader-percentage');
+            const loaderEl = document.getElementById('global-loader');
+            
+            if (document.body && document.body.style) {
+                document.body.style.overflow = 'hidden'; 
+            }
+
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 95) progress = 95; 
+                if (progressEl && progressEl.style) progressEl.style.width = `${progress}%`;
+                if (percentEl) percentEl.innerText = `${Math.floor(progress)}%`;
+            }, 100);
+
+            const finishLoading = () => {
+                clearInterval(loadingInterval);
+                if (progressEl && progressEl.style) progressEl.style.width = '100%';
+                if (percentEl) percentEl.innerText = '100%';
+                
+                setTimeout(() => {
+                    if (loaderEl && loaderEl.style) {
+                        loaderEl.style.opacity = '0';
+                        loaderEl.style.pointerEvents = 'none';
+                    }
+                    if (document.body && document.body.style) {
+                        document.body.style.overflow = ''; 
+                        document.body.classList.add('fonts-loaded'); 
+                    }
+                }, 400);
+            };
+
+            Promise.all([
+                document.fonts.ready,
+                new Promise(resolve => {
+                    const heroVideo = document.getElementById('hero-video');
+                    if (heroVideo && heroVideo.readyState < 3) {
+                        heroVideo.addEventListener('canplay', resolve, { once: true });
+                        setTimeout(resolve, 3000); 
+                    } else {
+                        resolve();
+                    }
+                })
+            ]).then(finishLoading);
+            
+            setTimeout(finishLoading, 5000);
 
             const observerOptions = {
                 root: null,
@@ -960,12 +1051,16 @@
             scrollObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+                        if (entry.target && entry.target.classList) {
+                            entry.target.classList.add('is-visible');
+                        }
                         
-                        if (entry.target.classList.contains('reveal-card-blur')) {
+                        if (entry.target && entry.target.classList && entry.target.classList.contains('reveal-card-blur')) {
                             entry.target.addEventListener('animationend', () => {
-                                entry.target.style.animation = 'none';
-                                entry.target.style.opacity = '1';
+                                if (entry.target.style) {
+                                    entry.target.style.animation = 'none';
+                                    entry.target.style.opacity = '1';
+                                }
                             }, { once: true });
                         }
 
@@ -986,16 +1081,30 @@
                     const span = document.createElement('span');
                     span.innerText = char;
                     span.className = 'char-box';
-                    span.style.transitionDelay = `${400 + i * 20}ms`;
+                    if (span.style) {
+                        span.style.transitionDelay = `${400 + i * 20}ms`;
+                    }
                     descEl.appendChild(span);
                 });
             }
 
-            const bgVideo = document.getElementById('bg-video');
-            if (bgVideo) {
-                bgVideo.muted = true;
-                bgVideo.play().catch(err => console.log("自动播放拦截:", err));
-            }
+            videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target && typeof entry.target.play === 'function') {
+                            entry.target.play().catch(e => console.log("懒加载视频播放拦截:", e));
+                        }
+                    } else {
+                        if (entry.target && typeof entry.target.pause === 'function') {
+                            entry.target.pause();
+                        }
+                    }
+                });
+            }, { rootMargin: '300px' }); 
+
+            document.querySelectorAll('.lazy-video').forEach(video => {
+                if (videoObserver) videoObserver.observe(video);
+            });
             
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
@@ -1011,13 +1120,13 @@
             const aboutTextContent = document.getElementById('about-text-content');
             const aboutOverlay = document.getElementById('about-video-overlay');
 
-            if (!aboutSection || !aboutVideoBox) return;
+            if (!aboutSection || !aboutVideoBox || !document.body) return;
 
             const rect = aboutSection.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            const windowWidth = document.body.clientWidth; // 避免滚动条导致水平溢出
+            // 获取兼容性更强的窗口高度和宽度
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            const windowWidth = document.body.clientWidth || window.innerWidth; 
 
-            // 计算进度 0 -> 1
             let progress = 0;
             if (rect.top > 0) {
                 progress = 0;
@@ -1027,40 +1136,41 @@
                 progress = Math.abs(rect.top) / (rect.height - windowHeight);
             }
 
-            // 定义动画初始和结束状态参数
             const isMobile = windowWidth < 768;
-            const initWidth = isMobile ? windowWidth * 0.85 : windowWidth * 0.35; // 稍微调小初始宽度，让卡片感更精致
-            const initHeight = initWidth * (9/16); // 16:9 比例
-            const initBR = isMobile ? 20 : 32; // 初始圆角
+            const initWidth = isMobile ? windowWidth * 0.85 : windowWidth * 0.35; 
+            const initHeight = initWidth * (9/16); 
+            const initBR = isMobile ? 20 : 32; 
 
-            // 根据滚动进度计算实时数值
             const curWidth = initWidth + (windowWidth - initWidth) * progress;
             const curHeight = initHeight + (windowHeight - initHeight) * progress;
             const curBR = initBR + (0 - initBR) * progress;
 
-            // 应用到视频画框
-            aboutVideoBox.style.width = `${curWidth}px`;
-            aboutVideoBox.style.height = `${curHeight}px`;
-            aboutVideoBox.style.borderRadius = `${curBR}px`;
-            
-            // 背景蒙版随之变暗，以辅助文字阅读
-            aboutOverlay.style.backgroundColor = `rgba(0, 0, 0, ${progress * 0.65})`;
-            
-            // 🔥 修复3：使用高级 CSS mask-image 物理溶解视频底部，完美无缝过渡到下一个板块！
-            let maskSize = Math.max(0, (progress - 0.5) * 2) * 35; // 当进度过半时，底部向上溶解最高 35vh
-            if (maskSize > 0.1) {
-                aboutVideoBox.style.maskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
-                aboutVideoBox.style.webkitMaskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
-            } else {
-                aboutVideoBox.style.maskImage = 'none';
-                aboutVideoBox.style.webkitMaskImage = 'none';
+            // 极其严格的安全判空，杜绝 null reading 'style' 错误
+            if (aboutVideoBox && aboutVideoBox.style) {
+                aboutVideoBox.style.width = `${curWidth}px`;
+                aboutVideoBox.style.height = `${curHeight}px`;
+                aboutVideoBox.style.borderRadius = `${curBR}px`;
+                
+                let maskSize = Math.max(0, (progress - 0.5) * 2) * 35; 
+                if (maskSize > 0.1) {
+                    aboutVideoBox.style.maskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
+                    aboutVideoBox.style.webkitMaskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
+                } else {
+                    aboutVideoBox.style.maskImage = 'none';
+                    aboutVideoBox.style.webkitMaskImage = 'none';
+                }
             }
-
-            // 进度超过 85% 时触发排浪文字入场
-            if (progress > 0.85) {
-                aboutTextContent.classList.add('is-expanded');
-            } else {
-                aboutTextContent.classList.remove('is-expanded');
+            
+            if (aboutOverlay && aboutOverlay.style) {
+                aboutOverlay.style.backgroundColor = `rgba(0, 0, 0, ${progress * 0.65})`;
+            }
+            
+            if (aboutTextContent && aboutTextContent.classList) {
+                if (progress > 0.85) {
+                    aboutTextContent.classList.add('is-expanded');
+                } else {
+                    aboutTextContent.classList.remove('is-expanded');
+                }
             }
         }
 
@@ -1068,15 +1178,17 @@
         const backToTopBtn = document.getElementById('back-to-top'); 
         
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
-                navbar.classList.remove('bg-transparent', 'border-transparent');
-            } else {
-                navbar.classList.remove('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
-                navbar.classList.add('bg-transparent', 'border-transparent');
+            if (navbar && navbar.classList) {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
+                    navbar.classList.remove('bg-transparent', 'border-transparent');
+                } else {
+                    navbar.classList.remove('bg-black/20', 'backdrop-blur-2xl', 'border-white/[0.08]', 'shadow-[0_4px_30px_rgba(0,0,0,0.5)]');
+                    navbar.classList.add('bg-transparent', 'border-transparent');
+                }
             }
 
-            if (backToTopBtn) {
+            if (backToTopBtn && backToTopBtn.classList) {
                 if (window.scrollY > 200) {
                     backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
                     backToTopBtn.classList.add('opacity-100', 'translate-y-0');
@@ -1086,7 +1198,6 @@
                 }
             }
 
-            // 🔥 触发滚动动画计算，使用 requestAnimationFrame 保证丝滑性能
             if (!aboutTicking) {
                 window.requestAnimationFrame(() => {
                     updateAboutAnimation();
@@ -1096,20 +1207,26 @@
             }
         });
 
-        // 页面刚加载时初始化一次
-        updateAboutAnimation();
+        // 确保DOM解析完毕后再初始化，避免极速注入脚本导致 document.body 为空
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            updateAboutAnimation();
+        } else {
+            document.addEventListener('DOMContentLoaded', updateAboutAnimation);
+        }
 
         function toggleExperience(expId, iconId) {
             const expDiv = document.getElementById(expId);
             const icon = document.getElementById(iconId);
-            if (expDiv.classList.contains('grid-rows-[0fr]')) {
-                expDiv.classList.remove('grid-rows-[0fr]');
-                expDiv.classList.add('grid-rows-[1fr]');
-                icon.classList.add('rotate-180');
-            } else {
-                expDiv.classList.add('grid-rows-[0fr]');
-                expDiv.classList.remove('grid-rows-[1fr]');
-                icon.classList.remove('rotate-180');
+            if (expDiv && icon && expDiv.classList && icon.classList) {
+                if (expDiv.classList.contains('grid-rows-[0fr]')) {
+                    expDiv.classList.remove('grid-rows-[0fr]');
+                    expDiv.classList.add('grid-rows-[1fr]');
+                    icon.classList.add('rotate-180');
+                } else {
+                    expDiv.classList.add('grid-rows-[0fr]');
+                    expDiv.classList.remove('grid-rows-[1fr]');
+                    icon.classList.remove('rotate-180');
+                }
             }
         }
 
@@ -1123,69 +1240,80 @@
             const heroContainer = document.getElementById('modal-hero-container');
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
             
-            if (data.hero.type === 'video') {
-                heroContainer.innerHTML = `<video autoplay loop muted playsinline controls class="${heroClass}"><source src="${data.hero.src}" type="video/mp4"></video>`;
-            } else {
-                heroContainer.innerHTML = `<img src="${data.hero.src}" class="${heroClass}">`;
+            if (heroContainer) {
+                if (data.hero.type === 'video') {
+                    heroContainer.innerHTML = `<video autoplay loop muted playsinline controls class="${heroClass}"><source src="${data.hero.src}" type="video/mp4"></video>`;
+                } else {
+                    heroContainer.innerHTML = `<img src="${data.hero.src}" class="${heroClass}">`;
+                }
             }
 
             const infoContainer = document.getElementById('modal-info-container');
-            infoContainer.innerHTML = `
-                <span class="inline-flex items-center px-3.5 py-1.5 bg-white/[0.06] rounded-full text-[12px] font-medium text-gray-300 border border-white/10 backdrop-blur-md relative z-10 translate-y-6 pointer-events-auto shadow-sm">
-                    ${data.category}
-                    <span class="mx-1.5 text-gray-500 font-bold">·</span>
-                    ${data.year}
-                </span>
-            `;
+            if (infoContainer) {
+                infoContainer.innerHTML = `
+                    <span class="inline-flex items-center px-3.5 py-1.5 bg-white/[0.06] rounded-full text-[12px] font-medium text-gray-300 border border-white/10 backdrop-blur-md relative z-10 translate-y-6 pointer-events-auto shadow-sm">
+                        ${data.category}
+                        <span class="mx-1.5 text-gray-500 font-bold">·</span>
+                        ${data.year}
+                    </span>
+                `;
+            }
 
             const imgContainer = document.getElementById('modal-image-container');
-            imgContainer.innerHTML = '';
-            const sources = Array.isArray(data.content) ? data.content : [data.content];
-            
-            sources.forEach(item => {
-                if (Array.isArray(item)) {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.className = 'flex w-full'; 
-                    item.forEach(src => {
+            if (imgContainer) {
+                imgContainer.innerHTML = '';
+                const sources = Array.isArray(data.content) ? data.content : [data.content];
+                
+                sources.forEach(item => {
+                    if (Array.isArray(item)) {
+                        const rowDiv = document.createElement('div');
+                        rowDiv.className = 'flex w-full'; 
+                        item.forEach(src => {
+                            let media;
+                            if (src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm')) {
+                                media = document.createElement('video');
+                                media.src = src;
+                                media.autoplay = true;
+                                media.loop = true;
+                                media.muted = true;
+                                media.setAttribute('playsinline', '');
+                            } else {
+                                media = document.createElement('img');
+                                media.src = src;
+                                media.loading = 'lazy';
+                            }
+                            media.className = 'flex-1 w-1/2 block object-cover border-r border-black last:border-0';
+                            rowDiv.appendChild(media);
+                        });
+                        imgContainer.appendChild(rowDiv);
+                    } else {
                         let media;
-                        if (src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm')) {
+                        if (item.toLowerCase().endsWith('.mp4') || item.toLowerCase().endsWith('.webm')) {
                             media = document.createElement('video');
-                            media.src = src;
+                            media.src = item;
                             media.autoplay = true;
                             media.loop = true;
                             media.muted = true;
                             media.setAttribute('playsinline', '');
                         } else {
                             media = document.createElement('img');
-                            media.src = src;
+                            media.src = item;
                             media.loading = 'lazy';
                         }
-                        media.className = 'flex-1 w-1/2 block object-cover border-r border-black last:border-0';
-                        rowDiv.appendChild(media);
-                    });
-                    imgContainer.appendChild(rowDiv);
-                } else {
-                    let media;
-                    if (item.toLowerCase().endsWith('.mp4') || item.toLowerCase().endsWith('.webm')) {
-                        media = document.createElement('video');
-                        media.src = item;
-                        media.autoplay = true;
-                        media.loop = true;
-                        media.muted = true;
-                        media.setAttribute('playsinline', '');
-                    } else {
-                        media = document.createElement('img');
-                        media.src = item;
-                        media.loading = 'lazy';
+                        media.className = 'w-full block object-cover'; 
+                        imgContainer.appendChild(media);
                     }
-                    media.className = 'w-full block object-cover'; 
-                    imgContainer.appendChild(media);
-                }
-            });
+                });
+            }
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
+            if (modal && modal.classList) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            
+            if (document.body && document.body.style) {
+                document.body.style.overflow = 'hidden';
+            }
 
             if (modalScrollArea) {
                 modalScrollArea.scrollTop = 0;
@@ -1205,23 +1333,31 @@
                 translateY = cardCenterY - windowCenterY;
             }
 
-            content.style.transition = 'none';
-            content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
-            content.style.opacity = '0';
-            void content.offsetWidth;
-            content.style.transition = ''; 
+            if (content && content.style) {
+                content.style.transition = 'none';
+                content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
+                content.style.opacity = '0';
+                void content.offsetWidth;
+                content.style.transition = ''; 
+            }
             
             setTimeout(() => {
-                backdrop.classList.remove('opacity-0');
-                backdrop.classList.add('opacity-100');
-                content.style.transform = `translate(0px, 0px) scale(1)`;
-                content.style.opacity = '1';
+                if (backdrop && backdrop.classList) {
+                    backdrop.classList.remove('opacity-0');
+                    backdrop.classList.add('opacity-100');
+                }
+                if (content && content.style) {
+                    content.style.transform = `translate(0px, 0px) scale(1)`;
+                    content.style.opacity = '1';
+                }
             }, 10);
         }
 
         function closeModal() {
-            backdrop.classList.remove('opacity-100');
-            backdrop.classList.add('opacity-0');
+            if (backdrop && backdrop.classList) {
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0');
+            }
             
             let translateX = 0;
             let translateY = 0;
@@ -1234,20 +1370,31 @@
                 translateY = cardCenterY - windowCenterY;
             }
 
-            content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
-            content.style.opacity = '0';
+            if (content && content.style) {
+                content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
+                content.style.opacity = '0';
+            }
             
             setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.style.overflow = '';
+                if (modal && modal.classList) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+                if (document.body && document.body.style) {
+                    document.body.style.overflow = '';
+                }
                 
-                document.getElementById('modal-hero-container').innerHTML = '';
-                document.getElementById('modal-info-container').innerHTML = '';
-                document.getElementById('modal-image-container').innerHTML = ''; 
+                const heroContainer = document.getElementById('modal-hero-container');
+                const infoContainer = document.getElementById('modal-info-container');
+                const imageContainer = document.getElementById('modal-image-container');
+                if (heroContainer) heroContainer.innerHTML = '';
+                if (infoContainer) infoContainer.innerHTML = '';
+                if (imageContainer) imageContainer.innerHTML = ''; 
                 
-                content.style.transform = '';
-                content.style.opacity = '';
+                if (content && content.style) {
+                    content.style.transform = '';
+                    content.style.opacity = '';
+                }
             }, 450); 
         }
 
@@ -1491,7 +1638,7 @@
                 
                 if (work.featured) {
                     const mediaHtml = isCoverVideo
-                        ? `<video src="${work.src}" autoplay loop muted playsinline class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
+                        ? `<video src="${work.src}" loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
                         : `<img src="${work.src}" loading="lazy" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
                     
                     html += `
@@ -1516,7 +1663,7 @@
                     `;
                 } else {
                     const mediaHtml = isCoverVideo
-                        ? `<video src="${work.src}" autoplay loop muted playsinline class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
+                        ? `<video src="${work.src}" loop muted playsinline preload="none" class="lazy-video w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
                         : `<img src="${work.src}" loading="lazy" class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
                     
                     html += `
@@ -1536,6 +1683,12 @@
             if (typeof scrollObserver !== 'undefined') {
                 document.querySelectorAll('#flash-waterfall-grid .reveal-card-blur').forEach(el => {
                     scrollObserver.observe(el);
+                });
+            }
+            
+            if (typeof videoObserver !== 'undefined') {
+                document.querySelectorAll('#flash-waterfall-grid .lazy-video').forEach(el => {
+                    videoObserver.observe(el);
                 });
             }
         }
