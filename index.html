@@ -69,6 +69,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 1; 
+            /* 🔥 新增：开启 3D 空间，允许子元素在空间内形变 */
+            transform-style: preserve-3d;
             will-change: transform, box-shadow; 
         }
 
@@ -77,11 +79,13 @@
         }
 
         .project-card.is-visible:hover {
-            background: rgba(255, 255, 255, 0.06); 
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(236, 72, 153, 0.35);
-            border-color: rgba(236, 72, 153, 0.3); 
-            transform: translateY(-12px) scale(1.03); 
-            z-index: 20; 
+            background: rgba(255, 255, 255, 0.08) !important; 
+            /* 🔥 修改：大幅增强浮空阴影，并加入顶部内发光(inset)勾勒玻璃高光边缘，厚度感拉满 */
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 1), 0 0 60px rgba(236, 72, 153, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(236, 72, 153, 0.5) !important; 
+            /* 🔥 极其关键：加上 !important 强制解除进场动画的锁定，并加大 10 度倾斜角 */
+            transform: perspective(1000px) rotateX(10deg) translateY(-20px) scale(1.05) !important; 
+            z-index: 20 !important; 
         }
 
         .media-container img, .media-container video {
@@ -89,7 +93,8 @@
         }
         .project-card.is-visible:hover .media-container img,
         .project-card.is-visible:hover .media-container video {
-            transform: scale(1.06);
+            /* 🔥 修改：放大内部图片的拉伸比例，制造景深错觉 */
+            transform: scale(1.12) !important;
         }
 
         .play-btn {
@@ -101,10 +106,11 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .project-card:hover .play-btn {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 30px rgba(236, 72, 153, 0.4);
+            /* 🔥 修改：悬停时中心播放按钮更加往上漂浮 */
+            transform: scale(1.2) translateY(-8px) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.6) !important;
         }
 
         .ios-transition {
@@ -274,6 +280,107 @@
             /* 0.4秒一个循环，速度轻快，像原地走动 */
             animation: running-avatar 0.4s infinite; 
         }
+
+        /* 🔥 新增：金属质感稀有SSR卡片特效 (强反差金属光泽) */
+        .rare-metal-text {
+            background: linear-gradient(
+                90deg, 
+                #9a7322 0%, 
+                #e8c678 15%, 
+                #ffffff 25%, 
+                #d4af37 40%, 
+                #6b4c06 50%, 
+                #d4af37 60%, 
+                #ffffff 75%, 
+                #e8c678 85%, 
+                #9a7322 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            /* 利用明暗锐利的断层色标(40%-50%-60%)，营造金属圆柱反光的硬朗质感 */
+            animation: tech-shine 6s linear infinite; 
+        }
+
+        /* 恢复：非常缓慢舒缓的呼吸式星星闪烁 */
+        @keyframes sparkle-twinkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            10% { transform: scale(1) rotate(45deg); opacity: 0.9; filter: drop-shadow(0 0 3px rgba(253,224,71,0.8)); }
+            20% { transform: scale(0) rotate(90deg); opacity: 0; }
+            100% { transform: scale(0) rotate(90deg); opacity: 0; }
+        }
+        .animate-sparkle-1 { animation: sparkle-twinkle 4s infinite ease-in-out 0s; }
+        .animate-sparkle-2 { animation: sparkle-twinkle 6s infinite ease-in-out 2s; }
+        .animate-sparkle-3 { animation: sparkle-twinkle 5s infinite ease-in-out 3.5s; }
+        
+        /* 🔥 修改：浅蓝、白色、蓝色的清爽科技渐变 */
+        .tech-text-gradient {
+            background: linear-gradient(90deg, #7dd3fc 0%, #ffffff 30%, #3b82f6 50%, #ffffff 70%, #7dd3fc 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: tech-shine 5s linear infinite;
+        }
+        @keyframes tech-shine {
+            to { background-position: 200% center; }
+        }
+
+        /* 🔥 新增：偶尔触发的闪电联动扫光特效 (用于中秋礼盒) */
+        .zap-text-sync {
+            /* 构建一个极宽的背景，只有中间一小段是黄色光带，其余均为纯白 */
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 42%, #fde047 48%, #eab308 50%, #fde047 52%, #ffffff 58%, #ffffff 100%);
+            background-size: 300% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            /* 🔥 修改：将周期调整为3秒，并重新分配关键帧以大幅放慢扫光速度 */
+            animation: text-zap-sweep 3s infinite linear;
+        }
+
+        @keyframes text-zap-sweep {
+            0%, 60% { background-position: 100% center; } /* 保持静止纯白 */
+            85%, 100% { background-position: 0% center; } /* 拉长扫过的时间区间，让光流变得更加舒缓可见 */
+        }
+
+        .zap-icon-sync {
+            color: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            /* 🔥 修改：图标的动画周期同步调整为3秒 */
+            animation: lightning-zap 3s infinite linear;
+            filter: drop-shadow(0 0 0px transparent);
+        }
+
+        @keyframes lightning-zap {
+            0%, 80% { color: rgba(255, 255, 255, 0.2); filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
+            /* 配合放慢的光流，闪电点亮的过程也变得更平滑 */
+            82% { color: #fef08a; filter: drop-shadow(0 0 6px #eab308); transform: scale(1.1); }
+            85% { color: #ffffff; filter: drop-shadow(0 0 10px #fde047) drop-shadow(0 0 20px #eab308); transform: scale(1.2); }
+            89% { color: #fef08a; filter: drop-shadow(0 0 4px #eab308); transform: scale(1); }
+            94%, 100% { color: rgba(255, 255, 255, 0.2); filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
+        }
+
+        /* 逸散的像素马赛克粒子 */
+        .mosaic-particle {
+            position: absolute;
+            background-color: currentColor;
+            opacity: 0;
+            pointer-events: none;
+            border-radius: 1px;
+        }
+        @keyframes mosaic-float {
+            0% { transform: translateY(0) translateX(0) scale(0) rotate(0deg); opacity: 0; }
+            20% { transform: translateY(-5px) translateX(calc(var(--tx) * 0.2)) scale(1) rotate(45deg); opacity: var(--max-op); }
+            80% { transform: translateY(-15px) translateX(calc(var(--tx) * 0.8)) scale(0.8) rotate(90deg); opacity: var(--max-op); }
+            100% { transform: translateY(-25px) translateX(var(--tx)) scale(0) rotate(135deg); opacity: 0; }
+        }
+        /* 🔥 修改：粒子颜色同步为浅蓝、白、蓝色系 */
+        .animate-mosaic-1 { animation: mosaic-float 3s infinite ease-in-out 1s; --tx: -10px; --max-op: 0.8; width: 3px; height: 3px; color: #7dd3fc; } /* 浅蓝 */
+        .animate-mosaic-2 { animation: mosaic-float 4s infinite ease-in-out 1.8s; --tx: 15px; --max-op: 0.6; width: 4px; height: 4px; color: #ffffff; } /* 纯白 */
+        .animate-mosaic-3 { animation: mosaic-float 3.5s infinite ease-in-out 2.5s; --tx: -8px; --max-op: 0.9; width: 2px; height: 2px; color: #3b82f6; } /* 经典蓝 */
+        .animate-mosaic-4 { animation: mosaic-float 4.5s infinite ease-in-out 0.5s; --tx: 12px; --max-op: 0.7; width: 3px; height: 3px; color: #e0f2fe; } /* 极浅蓝 */
+        .animate-mosaic-5 { animation: mosaic-float 3.2s infinite ease-in-out 3s; --tx: 5px; --max-op: 0.8; width: 2.5px; height: 2.5px; color: #60a5fa; } /* 亮蓝 */
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
@@ -577,7 +684,14 @@
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
                                 <p class="text-xs text-gray-400 mb-1.5 font-medium">AI赋能品牌营销设计 · 2025</p>
-                                <h3 class="text-lg font-bold text-white mb-3">遇见博物馆联名：大艺术家团团</h3>
+                                <div class="relative inline-block mb-3">
+                                    <!-- 🔥 恢复为星星特效并赋予纯金金属光泽 -->
+                                    <h3 class="text-lg font-bold rare-metal-text tracking-wide pr-2">遇见博物馆联名：大艺术家团团</h3>
+                                    <!-- 稀有卡片特效：按不同节奏闪烁的小星星 -->
+                                    <svg class="absolute -top-1.5 -left-2 w-2.5 h-2.5 text-yellow-300 animate-sparkle-1 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
+                                    <svg class="absolute top-1.5 -right-1 w-2 h-2 text-yellow-400/80 animate-sparkle-2 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
+                                    <svg class="absolute -bottom-1 left-[30%] w-1.5 h-1.5 text-yellow-200/70 animate-sparkle-3 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
+                                </div>
                             </div>
                             <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
                                 <span>#品牌联名营销</span>
@@ -626,7 +740,11 @@
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
                                 <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2024</p>
-                                <h3 class="text-lg font-bold text-white mb-3">2024美团中秋礼盒</h3>
+                                <!-- 🔥 修改：更换为文字扫光+右侧闪电图标联动的组合 -->
+                                <div class="flex items-center mb-3 group">
+                                    <h3 class="text-lg font-bold zap-text-sync tracking-wide">2024美团中秋礼盒</h3>
+                                    <svg class="w-5 h-5 ml-1.5 zap-icon-sync flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                </div>
                             </div>
                             <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
                                 <span>#文化传播设计</span>
@@ -665,7 +783,21 @@
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
                                 <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2025</p>
-                                <h3 class="text-lg font-bold text-white mb-3">品牌AI资产建设-美团IP LoRA</h3>
+                                <!-- 🔥 修改：前缀普通白色文字，仅对关键后缀应用流光和粒子包裹 -->
+                                <h3 class="text-lg font-bold text-white mb-3">
+                                    品牌AI资产建设-
+                                    <span class="relative inline-block tech-text-gradient pr-1">
+                                        美团IP LoRA
+                                        <!-- 🔥 粒子现在被限定在“美团IP LoRA”这几个字的区域内 -->
+                                        <div class="absolute inset-0 pointer-events-none">
+                                            <span class="mosaic-particle animate-mosaic-1 top-[20%] left-[5%] shadow-[0_0_6px_currentColor]"></span>
+                                            <span class="mosaic-particle animate-mosaic-2 top-[60%] left-[85%] shadow-[0_0_8px_currentColor]"></span>
+                                            <span class="mosaic-particle animate-mosaic-3 bottom-[10%] left-[40%] shadow-[0_0_4px_currentColor]"></span>
+                                            <span class="mosaic-particle animate-mosaic-4 top-[15%] left-[65%] shadow-[0_0_6px_currentColor]"></span>
+                                            <span class="mosaic-particle animate-mosaic-5 bottom-[30%] left-[15%] shadow-[0_0_5px_currentColor]"></span>
+                                        </div>
+                                    </span>
+                                </h3>
                             </div>
                             <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
                                 <span>#创意生产力升级</span>
@@ -682,6 +814,7 @@
                         "desc": "美团马年新春创意动画短片，探索前沿3D动态视觉表达与品牌IP的趣味结合。",
                         "tags": ["企业社会责任", "品牌影响力", "节日礼品周边设计"],
                         "content": [
+                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE0.jpg",
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE1.jpg",
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE2.jpg",
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE3.jpg"
