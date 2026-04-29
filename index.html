@@ -30,6 +30,19 @@
             }
         }
     </script>
+    
+    <!-- 🔥 新增：百度统计基座代码 -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          // 🔥 已经替换为你专属的真实 ID
+          hm.src = "https://hm.baidu.com/hm.js?38621778902ca8352d6739746b6acd17";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
     <style>
         /* 🔥 极其关键：强制网页在第一毫秒就是深黑底色，彻底杜绝默认的白屏闪烁！ */
         html, body {
@@ -435,7 +448,8 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4 relative z-10 animate-nav-item delay-nav-6">
-                    <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%BE%8E%E5%9B%A2-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" class="sweep-light-btn flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/30 hover:shadow-[0_4px_20px_rgba(255,255,255,0.1)] transition-all duration-300 font-medium text-sm group">
+                    <!-- 🔥 修改：在此处加入 onclick="trackResumeDownload()" 触发异步埋点 -->
+                    <a href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%93%81%E7%89%8C%E5%88%9B%E6%84%8F%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%BE%8E%E5%9B%A2-%E6%B1%9F%E5%8D%97%E5%A4%A7%E5%AD%A6-%E5%A4%8F%E9%93%AD%E9%AA%8F.pdf" target="_blank" onclick="trackResumeDownload()" class="sweep-light-btn flex items-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/30 hover:shadow-[0_4px_20px_rgba(255,255,255,0.1)] transition-all duration-300 font-medium text-sm group">
                         <svg class="w-4 h-4 mr-2 text-gray-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         下载简历
                     </a>
@@ -2117,6 +2131,38 @@
                 toast.classList.remove('opacity-100', 'translate-y-0');
                 toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
             }, 3000);
+        }
+
+        // 🔥 修改：融合百度统计的简历下载埋点系统
+        function trackResumeDownload() {
+            // 1. 触发百度统计事件埋点 (_trackEvent)
+            // 百度统计会自动为你记录：下载的精准时间、IP所在城市、访客设备等维度数据
+            if (typeof _hmt !== 'undefined') {
+                // 参数依次为：事件类别(category), 事件操作(action), 事件标签(label)
+                _hmt.push(['_trackEvent', '简历', '点击下载', '顶部导航栏_简历PDF']);
+                console.log('✅ 已向百度统计发送下载事件');
+            }
+
+            // 2. 原有的异步抓取作为备用或控制台测试验证 (这里面本身就带有 precise_time 下载时间)
+            setTimeout(async () => {
+                try {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipResponse.json();
+                    
+                    const trackData = {
+                        event_name: 'resume_download',
+                        ip_address: ipData.ip,
+                        user_agent: navigator.userAgent,
+                        screen_resolution: `${window.screen.width}x${window.screen.height}`,
+                        // 🔥 这里获取的就是被点击瞬间的精确时间
+                        precise_time: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false })
+                    };
+
+                    console.log('🚀【原始数据抓取】有人下载了简历:', trackData);
+                } catch (error) {
+                    console.error('埋点过程出错，已静默拦截', error);
+                }
+            }, 0);
         }
     </script>
 </body>
