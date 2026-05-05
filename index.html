@@ -13,7 +13,8 @@
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&display=block" rel="stylesheet">
+    <!-- 🔥 修改：引入 Playfair Display 顶级衬线花字字体 -->
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=block" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -340,6 +341,48 @@
             to { background-position: 200% center; }
         }
 
+        /* 🔥 修改：打字机文字盒子适配英文花字 */
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0; 
+            vertical-align: bottom;
+            line-height: 1.1; 
+            padding-bottom: 0.05em; /* 保护衬线花字底部的优雅小尾巴不被裁切 */
+        }
+
+        /* 🔥 修改：光标调整得更细、更秀气，匹配优雅的标题尺寸 */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 0.9em; 
+            background-color: #ec4899;
+            margin-left: 4px; 
+            vertical-align: baseline;
+        }
+
+        @keyframes typewriter-typing {
+            from { width: 0; }
+            to { width: 4.8em; } /* 恰好容纳 Portfolio 9个字母的宽度 */
+        }
+
+        @keyframes typewriter-blink {
+            0%, 49% { opacity: 0; }
+            50%, 100% { opacity: 1; } 
+        }
+
+        /* 配合现有的虚化显现机制，等组件可见后触发打字动画 */
+        .reveal-blur-text.is-visible .typewriter-text {
+            /* 🔥 修改：将打字步数(steps) 精准调整为 Portfolio 的 9 个字母 */
+            animation: typewriter-typing 1.2s steps(9, end) 0.8s forwards;
+        }
+        
+        .reveal-blur-text.is-visible .typewriter-cursor {
+            /* 光标保持独立闪烁 */
+            animation: typewriter-blink 0.8s infinite;
+        }
+
         /* 🔥 新增：偶尔触发的闪电联动扫光特效 (用于中秋礼盒) */
         .zap-text-sync {
             /* 构建一个极宽的背景，只有中间一小段是黄色光带，其余均为纯白 */
@@ -355,6 +398,21 @@
         @keyframes text-zap-sweep {
             0%, 60% { background-position: 100% center; } /* 保持静止纯白 */
             85%, 100% { background-position: 0% center; } /* 拉长扫过的时间区间，让光流变得更加舒缓可见 */
+        }
+
+        /* 🔥 新增：作品集标签无缝滚动跑马灯 */
+        .marquee-wrapper {
+            display: flex;
+            width: max-content;
+            animation: marquee-scroll 25s linear infinite;
+            will-change: transform;
+        }
+        .marquee-wrapper:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .zap-icon-sync {
@@ -461,13 +519,15 @@
     <!-- 首屏视频 -->
     <section id="home" class="relative w-full h-screen bg-[#050505] overflow-hidden flex items-center justify-center z-10">
         <div class="absolute inset-0 z-0">
+            <!-- 恢复纯净的首屏视频 -->
             <video id="hero-video" autoplay loop muted playsinline class="w-full h-full object-cover">
                 <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
             </video>
+            
             <!-- 顶部微渐变保护文字可见度 -->
-            <div class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-black/50 via-black/20 to-transparent pointer-events-none"></div>
-            <!-- 🔥 新增：首屏下方过渡到黑色的渐变蒙版，用于自然衔接下方空间 -->
-            <div class="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none"></div>
+            <div class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-black/50 via-black/20 to-transparent pointer-events-none z-10"></div>
+            <!-- 首屏下方过渡到黑色的渐变蒙版，用于自然衔接下方空间 -->
+            <div class="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10"></div>
         </div>
 
         <div class="absolute top-28 md:top-32 left-6 md:left-12 lg:left-16 z-10 text-left pointer-events-none">
@@ -496,10 +556,11 @@
                 <div id="about-text-content" class="absolute inset-0 flex flex-col items-center text-center justify-center w-full px-4 pt-16 md:pt-20 pointer-events-none">
                     
                     <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-10 md:mb-14 about-text-stagger delay-abt-1 pointer-events-auto">
-                        <div class="flex items-baseline whitespace-nowrap">
-                            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-none">夏铭骏</h1>
-                            <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] italic">/</span>
-                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-bold text-white tracking-tight leading-none" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
+                        <!-- 🔥 修改：将“夏铭骏”的字距改为放宽且一致的 tracking-wide -->
+                        <div class="flex items-baseline whitespace-nowrap pt-2">
+                            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-wide leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom">夏铭骏</h1>
+                            <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] transform -skew-x-6 scale-y-[1.15] origin-bottom">/</span>
+                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-black text-white tracking-tight leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
                         </div>
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
                     </div>
@@ -638,13 +699,44 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center mb-16 flex flex-col items-center">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight flex justify-center">
-                    <span class="reveal-blur-text inline-block">我的</span>
-                    <span class="text-accent reveal-blur-text delay-blur-300 inline-block ml-1">作品集</span>
+                <!-- 🔥 修改：缩小标题尺寸，去除了强行倾斜拉伸，采用优雅的基线对齐 -->
+                <h2 class="text-3xl md:text-4xl lg:text-[44px] text-white mb-6 flex justify-center items-baseline">
+                    <!-- 🔥 修改：将 "my" 改为 "My" 并移除 lowercase 类 -->
+                    <span class="reveal-blur-text inline-block drop-shadow-xl pr-2 md:pr-3 font-sans font-black italic tracking-tight">My</span>
+                    
+                    <!-- 🔥 "Portfolio"：应用顶级衬线花字与精准英文打字机效果 -->
+                    <span class="text-accent reveal-blur-text delay-blur-300 inline-block drop-shadow-[0_0_20px_rgba(236,72,153,0.4)] whitespace-nowrap">
+                        <span class="typewriter-text italic font-bold tracking-wide" style="font-family: 'Playfair Display', serif;">Portfolio</span><span class="typewriter-cursor"></span>
+                    </span>
                 </h2>
-                <p id="portfolio-desc" class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base reveal-stagger">
-                    这里展示了我近年来的部分项目，涵盖AIGC应用、品牌文创、空间设计等多个领域
-                </p>
+                
+                <!-- 🔥 修改：全新的两端黑色渐变蒙版 + 无缝滚动文字条 -->
+                <div class="relative w-full max-w-4xl mx-auto overflow-hidden mt-4 reveal-on-scroll delay-100">
+                    <!-- 左侧黑色渐变蒙版，与背景色 #050505 融合 -->
+                    <div class="absolute top-0 left-0 w-20 md:w-32 h-full bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
+                    <!-- 右侧黑色渐变蒙版 -->
+                    <div class="absolute top-0 right-0 w-20 md:w-32 h-full bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
+                    
+                    <!-- 滚动轨道 -->
+                    <div class="marquee-wrapper">
+                        <!-- 第一组数据 -->
+                        <div class="flex items-center gap-8 px-4 text-gray-500 font-medium text-[13px] md:text-[15px] tracking-widest whitespace-nowrap uppercase">
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#AI工作流探索与建设</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#Vibe Coding</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#品牌文创设计</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#空间与体验设计</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#动态影像设计</span>
+                        </div>
+                        <!-- 第二组数据 (完全复制第一组，用于实现首尾无缝相连循环) -->
+                        <div class="flex items-center gap-8 px-4 text-gray-500 font-medium text-[13px] md:text-[15px] tracking-widest whitespace-nowrap uppercase" aria-hidden="true">
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#AI工作流探索与建设</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#Vibe Coding</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#品牌文创设计</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#空间与体验设计</span>
+                            <span class="hover:text-accent transition-colors duration-300 cursor-default">#动态影像设计</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="flex flex-wrap justify-center gap-3 mb-16 reveal-blur-text delay-blur-800" id="portfolio-filters">
@@ -719,7 +811,7 @@
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" },
                         "category": "品牌文创",
                         "year": "2024",
-                        "title": "2024美团中秋礼盒",
+                        "title": "美团中秋礼盒全链路设计",
                         "desc": "以全新视觉理念打造的2024美团中秋礼盒，探索材料与工艺的创新运用。",
                         "tags": ["文化传播设计", "实用产品全链路设计"],
                         "content": [
@@ -756,7 +848,7 @@
                                 <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2024</p>
                                 <!-- 🔥 修改：更换为文字扫光+右侧闪电图标联动的组合 -->
                                 <div class="flex items-center mb-3 group">
-                                    <h3 class="text-lg font-bold zap-text-sync tracking-wide">2024美团中秋礼盒</h3>
+                                    <h3 class="text-lg font-bold zap-text-sync tracking-wide">美团中秋礼盒全链路设计</h3>
                                     <svg class="w-5 h-5 ml-1.5 zap-icon-sync flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                                 </div>
                             </div>
@@ -772,7 +864,7 @@
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png", "autoHeight": true },
                         "category": "AIGC建设与应用",
                         "year": "2025",
-                        "title": "品牌AI资产建设-美团IP LoRA",
+                        "title": "品牌AI资产建设-LoRA & Agent Skill",
                         "desc": "探索AIGC技术在企业内部的落地，通过训练团团IP专属模型，大幅提升设计团队的内容产出效率与视觉统一性。",
                         "tags": ["创意生产力升级", "AI赋能品牌创意"],
                         "content": [
@@ -801,8 +893,8 @@
                                 <h3 class="text-lg font-bold text-white mb-3">
                                     品牌AI资产建设-
                                     <span class="relative inline-block tech-text-gradient pr-1">
-                                        美团IP LoRA
-                                        <!-- 🔥 粒子现在被限定在“美团IP LoRA”这几个字的区域内 -->
+                                        LoRA & Agent Skill
+                                        <!-- 🔥 粒子现在被限定在这几个字的区域内 -->
                                         <div class="absolute inset-0 pointer-events-none">
                                             <span class="mosaic-particle animate-mosaic-1 top-[20%] left-[5%] shadow-[0_0_6px_currentColor]"></span>
                                             <span class="mosaic-particle animate-mosaic-2 top-[60%] left-[85%] shadow-[0_0_8px_currentColor]"></span>
@@ -999,7 +1091,7 @@
 
             <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-20 leading-relaxed font-light tracking-wide reveal-on-scroll delay-100">
                 感谢您浏览我的作品集。<br>
-                无论是项目协作、全职机会，还是纯粹的设计交流，我都非常期待与您取得联系。
+                点击下方联系方式卡片，即可一键复制内容。
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -1229,20 +1321,7 @@
                 scrollObserver.observe(el);
             });
 
-            const descEl = document.getElementById('portfolio-desc');
-            if (descEl) {
-                const text = "这里展示了我近年来的部分项目，涵盖AIGC应用、品牌文创、空间设计等多个领域";
-                descEl.innerHTML = ''; 
-                [...text].forEach((char, i) => {
-                    const span = document.createElement('span');
-                    span.innerText = char;
-                    span.className = 'char-box';
-                    if (span.style) {
-                        span.style.transitionDelay = `${400 + i * 20}ms`;
-                    }
-                    descEl.appendChild(span);
-                });
-            }
+            // 🔥 移除：旧的 portfolio-desc 逐字拆分脚本已清理，保证代码整洁无报错
 
             videoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -2133,17 +2212,12 @@
             }, 3000);
         }
 
-        // 🔥 修改：融合百度统计的简历下载埋点系统
         function trackResumeDownload() {
-            // 1. 触发百度统计事件埋点 (_trackEvent)
-            // 百度统计会自动为你记录：下载的精准时间、IP所在城市、访客设备等维度数据
             if (typeof _hmt !== 'undefined') {
-                // 参数依次为：事件类别(category), 事件操作(action), 事件标签(label)
                 _hmt.push(['_trackEvent', '简历', '点击下载', '顶部导航栏_简历PDF']);
                 console.log('✅ 已向百度统计发送下载事件');
             }
 
-            // 2. 原有的异步抓取作为备用或控制台测试验证 (这里面本身就带有 precise_time 下载时间)
             setTimeout(async () => {
                 try {
                     const ipResponse = await fetch('https://api.ipify.org?format=json');
@@ -2154,7 +2228,6 @@
                         ip_address: ipData.ip,
                         user_agent: navigator.userAgent,
                         screen_resolution: `${window.screen.width}x${window.screen.height}`,
-                        // 🔥 这里获取的就是被点击瞬间的精确时间
                         precise_time: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false })
                     };
 
