@@ -241,7 +241,6 @@ function OriginalCommunityWaterfall() {
   const waterfallStackRef = useRef(null);
   const storyStageRef = useRef(0);
   const isStoryActiveRef = useRef(false);
-  const [pinProgress, setPinProgress] = useState(0);
   const [storyStage, setStoryStage] = useState(0);
   const [typedCharacterCount, setTypedCharacterCount] = useState(0);
 
@@ -290,11 +289,20 @@ function OriginalCommunityWaterfall() {
       freeScrollAnimationFrame = window.requestAnimationFrame(animateFreeScroll);
     }
 
-    function queueFreeScroll(event, maxParentScroll, sensitivity = 1) {
+    function queueFreeScroll(
+      event,
+      maxParentScroll,
+      sensitivity = 1,
+      upperBound = maxParentScroll,
+    ) {
       if (!parentArea) return;
       const forwardedDelta = getModalWheelDelta(event, sensitivity);
       const currentTarget = freeScrollTarget ?? parentArea.scrollTop;
-      const unconstrainedTarget = clamp(currentTarget + forwardedDelta, 0, maxParentScroll);
+      const unconstrainedTarget = clamp(
+        currentTarget + forwardedDelta,
+        0,
+        Math.min(maxParentScroll, upperBound),
+      );
 
       // Bound the pending distance so fast wheels stay responsive and never
       // leave a long, floaty tail after the user has stopped scrolling.
@@ -330,10 +338,7 @@ function OriginalCommunityWaterfall() {
           || storyLockScrollTop === null
           || !isPlatformViewActive()
         ) return;
-        const maxParentScroll = Math.max(1, parentArea.scrollHeight - parentArea.clientHeight);
-        storyLockScrollTop = maxParentScroll * 0.56;
         cancelFreeScroll();
-        cancelQueuedParentScroll();
         parentArea.scrollTop = storyLockScrollTop;
         queueStoryUpdate();
       };
@@ -347,7 +352,6 @@ function OriginalCommunityWaterfall() {
           // Stage 5 is the finished gallery, not another pinned checkpoint.
           // Release as soon as its transition settles so the user's next wheel
           // event is ordinary browsing from its very first pixel.
-          cancelQueuedParentScroll();
           cancelFreeScroll();
           storyLockScrollTop = null;
           isStoryActiveRef.current = false;
@@ -357,14 +361,6 @@ function OriginalCommunityWaterfall() {
         }
         syncVisibleCheckpoint();
       }, 960);
-    }
-
-    function cancelQueuedParentScroll() {
-      window.dispatchEvent(new Event("zaowu:cancel-parent-scroll"));
-      window.postMessage(
-        { type: "zaowu:cancel-parent-scroll" },
-        window.location.origin,
-      );
     }
 
     function updatePinProgress() {
@@ -395,7 +391,7 @@ function OriginalCommunityWaterfall() {
         const sectionHeight = sectionRect.height * frameScale;
         const startLine = areaRect.top + areaRect.height * 0.72;
         const travel = Math.max(areaRect.height * 1.8, sectionHeight - areaRect.height * 0.24);
-        let nextPinProgress = clamp((startLine - sectionTop) / travel, 0, 1);
+        const nextPinProgress = clamp((startLine - sectionTop) / travel, 0, 1);
         const currentStage = storyStageRef.current;
         const maxParentScroll = Math.max(1, parentArea.scrollHeight - parentArea.clientHeight);
         const parentProgress = parentArea.scrollTop / maxParentScroll;
@@ -408,16 +404,10 @@ function OriginalCommunityWaterfall() {
         // and hold it there until every tab state has completed.
         if ((currentStage < 5 && hasReachedCheckpoint) || storyLockScrollTop !== null) {
           cancelFreeScroll();
-          cancelQueuedParentScroll();
-          // The docked gallery and its five-column expansion can increase the
-          // modal's scrollHeight. Recalculate the lock against the new height
-          // so the viewport stays on the same 56% story frame.
-          // Keep the checkpoint attached to the current scroll range even at
-          // stage 0. Late-loading media can change scrollHeight after the
-          // first lock; retaining the old pixel value would leave the story
-          // a few pixels before the activation threshold and make the next
-          // wheel gesture appear unresponsive.
-          storyLockScrollTop = checkpointScrollTop;
+          // Keep one physical lock point for the whole gesture. Recomputing it
+          // from scrollHeight on every scroll frame makes the viewport chase a
+          // moving target while media and responsive layout settle.
+          if (storyLockScrollTop === null) storyLockScrollTop = checkpointScrollTop;
           if (Math.abs(parentArea.scrollTop - storyLockScrollTop) > 1) {
             parentArea.scrollTop = storyLockScrollTop;
           }
@@ -436,7 +426,13 @@ function OriginalCommunityWaterfall() {
         // recompute this transform counteracts part of the parent's movement,
         // so the waterfall appears to hitch even though scrollTop advances.
         if (currentStage !== 5 || storyLockScrollTop !== null) {
-          setPinProgress(nextPinProgress);
+          // This value changes for every trackpad frame. Updating it through
+          // React rerendered the entire masonry tree and produced visible
+          // judder. A CSS custom property is the only visual state we need.
+          section.style.setProperty(
+            "--community-pin-progress",
+            String(Math.round(nextPinProgress * 10000) / 10000),
+          );
         }
         return;
       }
@@ -446,7 +442,10 @@ function OriginalCommunityWaterfall() {
       const travel = Math.max(window.innerHeight * 1.8, rect.height - window.innerHeight * 0.24);
       const nextPinProgress = clamp((startLine - rect.top) / travel, 0, 1);
       isStoryActiveRef.current = nextPinProgress > 0.015 && nextPinProgress < 0.985;
-      setPinProgress(nextPinProgress);
+      section.style.setProperty(
+        "--community-pin-progress",
+        String(Math.round(nextPinProgress * 10000) / 10000),
+      );
     }
 
     function queueStoryUpdate() {
@@ -475,6 +474,7 @@ function OriginalCommunityWaterfall() {
         releaseStoryScrollLock();
         return;
       }
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
       const currentStage = storyStageRef.current;
       const direction = event.deltaY > 0 ? 1 : -1;
       const now = window.performance.now();
@@ -494,13 +494,30 @@ function OriginalCommunityWaterfall() {
         && parentProgress >= STORY_TAKEOVER_PROGRESS
       );
 
+      // One owner handles all ordinary scrolling before the narrative. The
+      // previous implementation queued another eased target in
+      // InspirationShowcase; near the checkpoint the two animation frames
+      // repeatedly pulled scrollTop in opposite directions.
+      if (
+        currentStage === 0
+        && storyLockScrollTop === null
+        && !isStoryActiveRef.current
+        && !isEnteringStoryCheckpoint
+      ) {
+        // Stop the eased target at the story checkpoint. This avoids a visible
+        // overshoot-and-snap when a fast trackpad gesture reaches the handoff.
+        queueFreeScroll(event, maxParentScroll, 1, checkpointScrollTop);
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+
       // Start owning downward input just before the exact checkpoint. Without
       // this handoff buffer, macOS momentum can leave the generic eased scroll
       // target on one side of the boundary while the story lock pulls the
       // viewport to the other, producing a visible up/down jitter.
       if (isEnteringStoryCheckpoint) {
         cancelFreeScroll();
-        cancelQueuedParentScroll();
         storyLockScrollTop = checkpointScrollTop;
         isStoryActiveRef.current = true;
         parentArea.scrollTop = checkpointScrollTop;
@@ -532,7 +549,7 @@ function OriginalCommunityWaterfall() {
       // automatically with the end of the 920ms layout transition, so the
       // finished waterfall never requires a separate "unlock" gesture.
       if (currentStage === 5 && storyLockScrollTop !== null && direction > 0) {
-        cancelQueuedParentScroll();
+        cancelFreeScroll();
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -558,7 +575,7 @@ function OriginalCommunityWaterfall() {
         && parentArea
         && (storyLockScrollTop !== null || isStoryActiveRef.current)
       ) {
-        cancelQueuedParentScroll();
+        cancelFreeScroll();
         storyLockScrollTop = null;
         isStoryActiveRef.current = false;
         transitionLockedUntil = 0;
@@ -580,7 +597,6 @@ function OriginalCommunityWaterfall() {
         );
         if (parentArea.scrollTop <= checkpointScrollTop + reentryBuffer) {
           cancelFreeScroll();
-          cancelQueuedParentScroll();
           storyLockScrollTop = checkpointScrollTop;
           isStoryActiveRef.current = true;
           parentArea.scrollTop = checkpointScrollTop;
@@ -596,7 +612,6 @@ function OriginalCommunityWaterfall() {
       // deltas still pass through a short inertial target so cards accelerate
       // and settle naturally instead of jumping by a fixed amount per tick.
       if (currentStage === 5 && storyLockScrollTop === null && parentArea) {
-        cancelQueuedParentScroll();
         queueFreeScroll(event, maxParentScroll);
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -605,7 +620,7 @@ function OriginalCommunityWaterfall() {
 
       if (!isStoryActiveRef.current) return;
 
-      cancelQueuedParentScroll();
+      cancelFreeScroll();
 
       const isTransitionLocked = now < transitionLockedUntil;
 
@@ -778,7 +793,6 @@ function OriginalCommunityWaterfall() {
       aria-label="灵感造物作品瀑布流"
       data-story-stage={storyStage}
       style={{
-        "--community-pin-progress": pinProgress,
         "--community-story-dock": dockProgress,
         "--community-story-content": contentProgress,
         "--community-story-columns": columnExpansionProgress,
@@ -1397,139 +1411,6 @@ function InspirationShowcase() {
       setCreativeDotCount((count) => (count % 3) + 1);
     }, 520);
     return () => window.clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    let scrollAnimationFrame = 0;
-    let scrollTarget = null;
-    let scrollArea = null;
-
-    function cancelParentScroll() {
-      window.cancelAnimationFrame(scrollAnimationFrame);
-      scrollAnimationFrame = 0;
-      scrollTarget = null;
-      scrollArea = null;
-    }
-
-    function animateParentScroll() {
-      if (!scrollArea || scrollTarget === null) {
-        scrollAnimationFrame = 0;
-        return;
-      }
-
-      const parentModal = scrollArea.ownerDocument?.getElementById("modal-content");
-      if (!parentModal?.classList.contains("is-zaowu-platform-view")) {
-        cancelParentScroll();
-        return;
-      }
-
-      const distance = scrollTarget - scrollArea.scrollTop;
-      if (Math.abs(distance) < 0.5) {
-        scrollArea.scrollTop = scrollTarget;
-        scrollAnimationFrame = 0;
-        scrollTarget = null;
-        scrollArea = null;
-        return;
-      }
-
-      scrollArea.scrollTop += distance * 0.2;
-      scrollAnimationFrame = window.requestAnimationFrame(animateParentScroll);
-    }
-
-    function queueParentScroll(parentArea, deltaY) {
-      const maxScroll = Math.max(0, parentArea.scrollHeight - parentArea.clientHeight);
-      if (scrollArea !== parentArea || scrollTarget === null) {
-        window.cancelAnimationFrame(scrollAnimationFrame);
-        scrollAnimationFrame = 0;
-        scrollArea = parentArea;
-        scrollTarget = parentArea.scrollTop;
-      }
-
-      const unconstrainedTarget = clamp(scrollTarget + deltaY, 0, maxScroll);
-      scrollTarget = clamp(
-        unconstrainedTarget,
-        Math.max(0, parentArea.scrollTop - MODAL_SCROLL_TARGET_LIMIT),
-        Math.min(maxScroll, parentArea.scrollTop + MODAL_SCROLL_TARGET_LIMIT),
-      );
-      if (!scrollAnimationFrame) {
-        scrollAnimationFrame = window.requestAnimationFrame(animateParentScroll);
-      }
-    }
-
-    function forwardVerticalWheel(event) {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      if (window.parent === window) return;
-      // OriginalCommunityWaterfall owns every Stage 5 wheel event, including
-      // the lock release and ordinary gallery browsing. This listener is
-      // registered earlier in React's effect order, so queueing here cannot be
-      // reliably cancelled later: its stale target can pull the modal from the
-      // 56% checkpoint back toward the pre-story 50% position.
-      const communityStoryStage = Number.parseInt(
-        document.querySelector(".community-story-section")?.dataset.storyStage ?? "0",
-        10,
-      );
-      let communityStoryOwnsWheel = communityStoryStage > 0;
-      if (!communityStoryOwnsWheel) {
-        try {
-          const parentArea = window.parent.document.getElementById("modal-scroll-area");
-          const maxParentScroll = parentArea
-            ? Math.max(1, parentArea.scrollHeight - parentArea.clientHeight)
-            : 1;
-          const parentProgress = parentArea
-            ? parentArea.scrollTop / maxParentScroll
-            : 0;
-          communityStoryOwnsWheel = Boolean(
-            parentArea
-            && (
-              parentProgress >= STORY_CHECKPOINT_PROGRESS - 0.004
-              || (
-                event.deltaY > 0
-                && parentProgress >= STORY_TAKEOVER_PROGRESS
-              )
-            ),
-          );
-        } catch {
-          // Cross-origin embeds fall through to the existing message bridge.
-        }
-      }
-      if (communityStoryOwnsWheel) return;
-      const adjustedDelta = getModalWheelDelta(event);
-      let handledDirectly = false;
-
-      try {
-        const parentArea = window.parent.document.getElementById("modal-scroll-area");
-        const parentModal = window.parent.document.getElementById("modal-content");
-        if (parentArea && parentModal?.classList.contains("is-zaowu-platform-view")) {
-          queueParentScroll(parentArea, adjustedDelta);
-          handledDirectly = true;
-        }
-      } catch {
-        // Fall back to postMessage if the showcase is hosted across origins.
-      }
-
-      if (!handledDirectly) {
-        window.parent.postMessage(
-          { type: "zaowu:scroll-parent", deltaY: adjustedDelta },
-          window.location.origin,
-        );
-      }
-      event.preventDefault();
-    }
-
-    function handleParentScrollMessage(event) {
-      if (event.origin !== window.location.origin) return;
-      if (event.data?.type === "zaowu:cancel-parent-scroll") cancelParentScroll();
-    }
-
-    window.addEventListener("wheel", forwardVerticalWheel, { passive: false, capture: true });
-    window.addEventListener("zaowu:cancel-parent-scroll", cancelParentScroll);
-    window.addEventListener("message", handleParentScrollMessage);
-    return () => {
-      window.removeEventListener("wheel", forwardVerticalWheel, { capture: true });
-      window.removeEventListener("zaowu:cancel-parent-scroll", cancelParentScroll);
-      window.removeEventListener("message", handleParentScrollMessage);
-      cancelParentScroll();
-    };
   }, []);
 
   function rotate(direction) {

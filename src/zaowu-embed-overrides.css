@@ -1789,6 +1789,7 @@ body {
    the modal itself owns scrolling, so the pin is compensated with the same
    progress value used by the narrative states. */
 .zaowu-embed-shell .community-story-section {
+  --community-pin-progress: 0;
   --community-section-overhang: 132px;
   left: 50%;
   width: calc(100% + var(--community-section-overhang));
