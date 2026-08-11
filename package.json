@@ -1,0 +1,20 @@
+{
+  "name": "xiamingjun-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@paper-design/shaders-react": "^0.0.77",
+    "@phosphor-icons/react": "^2.1.10",
+    "motion": "^12.43.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "three": "^0.185.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

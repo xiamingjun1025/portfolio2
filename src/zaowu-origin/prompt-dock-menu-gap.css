@@ -1,0 +1,164 @@
+/* 品类弹窗直接锚定提示词岛台顶部，与岛台保持 12px 间距。
+   12px 同当前瀑布流卡片间距，不再通过负外边距补偿。 */
+.prompt-dock-select-menu.is-category-grid {
+  margin-bottom: 0;
+}
+
+/* 首页岛台“图片”标签与相邻品类卡片文字保持一致的视觉字号。 */
+.prompt-dock-editor > .prompt-dock-reference-zone .prompt-dock-upload-label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+/* 默认提示文案与上传组件“图片”标签使用同一字号。 */
+.prompt-dock .prompt-dock-prompt textarea::placeholder {
+  font-size: 14px !important;
+}
+
+/* 空状态上传组件的“+”沿用当前符号线色；分隔线在自身规则中单独降低透明度。 */
+.prompt-dock-editor {
+  --prompt-entry-symbol-color: rgba(61, 70, 86, 0.72);
+}
+
+.prompt-dock-editor > .prompt-dock-reference-zone .prompt-dock-reference-empty-card {
+  color: var(--prompt-entry-symbol-color) !important;
+}
+
+/* 保持原有高度、粗细和位置，仅将分隔线透明度由 72% 降至 46%。 */
+.prompt-dock-editor > .prompt-dock-entry-divider {
+  margin: 20px -3px 0 !important;
+  width: 1.35px !important;
+  min-width: 1.35px !important;
+  background: rgba(61, 70, 86, 0.46) !important;
+  transform: translateX(-2px);
+}
+
+/* 品类弹层打开时，六张卡片沿轻微弧线紧凑地依次进入。 */
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button {
+  animation: prompt-category-card-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(1) {
+  animation-delay: 24ms;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(2) {
+  animation-delay: 58ms;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(3) {
+  animation-delay: 92ms;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(4) {
+  animation-delay: 126ms;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(5) {
+  animation-delay: 160ms;
+}
+
+.prompt-dock-select-menu.is-category-grid:not(.is-closing) > button:nth-child(6) {
+  animation-delay: 194ms;
+}
+
+@keyframes prompt-category-card-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-12px, 15px, 0) scale(0.965) rotate(-1deg);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translate3d(2px, -1px, 0) scale(1.006) rotate(0.12deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prompt-dock-select-menu.is-category-grid:not(.is-closing) > button {
+    animation: none;
+  }
+}
+
+/* 岛台按钮共用同一高度、内边距和图文间距；宽度由各自内容决定。 */
+.prompt-dock-options > .prompt-dock-select.is-style-selector {
+  flex: 0 0 auto !important;
+  width: fit-content !important;
+  min-width: max-content !important;
+}
+
+.prompt-dock-options > .prompt-dock-select.is-style-selector .prompt-dock-select-trigger {
+  width: auto !important;
+  min-width: max-content !important;
+}
+
+/* 三个参数按钮共用同一光学网格：左右安全区、内容间距和箭头位置保持一致。 */
+.prompt-dock-options
+  > .prompt-dock-select:is(.is-model-selector, .is-generation-selector, .is-style-selector)
+  .prompt-dock-select-trigger {
+  display: flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  padding-right: 14px !important;
+  padding-left: 14px !important;
+}
+
+.prompt-dock-options
+  > .prompt-dock-select:is(.is-model-selector, .is-generation-selector, .is-style-selector)
+  .prompt-dock-control-icon {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible;
+  color: inherit !important;
+}
+
+.prompt-dock-options
+  > .prompt-dock-select:is(.is-model-selector, .is-generation-selector, .is-style-selector)
+  .prompt-dock-control-icon > svg,
+.prompt-dock-options
+  > .prompt-dock-select:is(.is-model-selector, .is-generation-selector)
+  .prompt-dock-control-icon > img {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.prompt-dock-options
+  > .prompt-dock-select:is(.is-model-selector, .is-generation-selector, .is-style-selector)
+  .prompt-dock-select-trigger > svg:last-child {
+  width: 12px !important;
+  height: 12px !important;
+  flex: 0 0 12px !important;
+  margin: 0 0 0 5px !important;
+}
+
+/* 风格按钮只保留尺寸占位；图标由统一运行时注入，禁止旧背景再次叠加。 */
+.prompt-dock-options > .prompt-dock-select.is-style-selector .prompt-dock-control-icon {
+  background: none !important;
+  background-image: none !important;
+}
+
+/* 清除旧 SVG/图片；唯一批准的新图标由 data 属性明确放行。 */
+.prompt-dock-options > .prompt-dock-select.is-style-selector .prompt-dock-control-icon > svg,
+.prompt-dock-options > .prompt-dock-select.is-style-selector .prompt-dock-control-icon > img:not([data-approved-style-icon="true"]),
+.prompt-dock-options > .prompt-dock-select.is-style-selector .style-loops-icon {
+  display: none !important;
+}
+
+.prompt-dock-options > .prompt-dock-select.is-style-selector
+  .prompt-dock-control-icon > img[data-approved-style-icon="true"] {
+  display: block !important;
+  width: 12px !important;
+  height: 12px !important;
+  object-fit: contain !important;
+}

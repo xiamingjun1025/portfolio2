@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>夏铭骏 | AI品牌创意设计师</title>
-    
+
     <!-- 🔥 最高优先级预加载首屏核心视频 -->
     <link rel="preload" as="video" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
     <!-- 🔥 新增：最高优先级预加载表情包插画，保证小人瞬间出现 -->
     <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%961.png">
     <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%962.png">
+    <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-default.png">
+    <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-grab.png">
+    <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-text.png">
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,29 +25,29 @@
                         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Microsoft YaHei', 'sans-serif'],
                     },
                     colors: {
-                        brand: '#0a0a0a', 
-                        card: '#15171e', 
-                        accent: '#ec4899', 
+                        brand: '#0a0a0a',
+                        card: '#15171e',
+                        accent: '#ec4899',
                     }
                 }
             }
         }
     </script>
-    
+
     <script>
         var _hmt = _hmt || [];
         (function() {
           var hm = document.createElement("script");
           hm.src = "https://hm.baidu.com/hm.js?38621778902ca8352d6739746b6acd17";
-          var s = document.getElementsByTagName("script")[0]; 
+          var s = document.getElementsByTagName("script")[0];
           s.parentNode.insertBefore(hm, s);
         })();
     </script>
 
     <style>
         html, body {
-            background-color: #050505 !important; 
-            color: #F9FAFB; 
+            background-color: #050505 !important;
+            color: #F9FAFB;
             margin: 0;
             padding: 0;
         }
@@ -71,15 +74,20 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
 
+        html.is-project-modal-open,
+        body.is-project-modal-open {
+            overflow: hidden !important;
+        }
+
         .project-card {
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(24px); 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
-            z-index: 1; 
+            z-index: 1;
             transform-style: preserve-3d;
-            will-change: transform, box-shadow; 
+            will-change: transform, box-shadow;
         }
 
         .project-card.is-visible {
@@ -87,15 +95,15 @@
         }
 
         .project-card.is-visible:hover {
-            background: rgba(255, 255, 255, 0.08) !important; 
+            background: rgba(255, 255, 255, 0.08) !important;
             box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 1), 0 0 60px rgba(236, 72, 153, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
-            border-color: rgba(236, 72, 153, 0.5) !important; 
-            transform: perspective(1000px) rotateX(10deg) translateY(-20px) scale(1.05) !important; 
-            z-index: 20 !important; 
+            border-color: rgba(236, 72, 153, 0.5) !important;
+            transform: perspective(1000px) rotateX(10deg) translateY(-20px) scale(1.05) !important;
+            z-index: 20 !important;
         }
 
         .media-container img, .media-container video {
-            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .project-card.is-visible:hover .media-container img,
         .project-card.is-visible:hover .media-container video {
@@ -190,7 +198,7 @@
             0% { opacity: 0; filter: blur(24px); transform: translateY(60px) scale(0.95); }
             100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
         }
-        
+
         .glow-text-portfolio {
             text-shadow: 0 0 12px rgba(255,255,255,0.4), 0 0 24px rgba(236,72,153,0.15);
         }
@@ -199,7 +207,7 @@
             0% { opacity: 0; filter: blur(40px); transform: translateY(120px) scale(0.95); }
             100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
         }
-        
+
         .animate-super-blur-1, .animate-super-blur-2 { opacity: 0; will-change: transform, opacity, filter; }
         .fonts-loaded .animate-super-blur-1 { animation: super-blur-fade-up 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.2s; }
         .fonts-loaded .animate-super-blur-2 { animation: super-blur-fade-up 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.5s; }
@@ -265,7 +273,7 @@
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
-        .delay-blur-300 { transition-delay: 150ms; } 
+        .delay-blur-300 { transition-delay: 150ms; }
         .delay-blur-800 { transition-delay: 450ms; }
 
         @keyframes running-avatar {
@@ -273,27 +281,27 @@
             50%, 100% { background-image: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%962.png'); }
         }
         .animate-running-avatar {
-            animation: running-avatar 0.4s infinite; 
+            animation: running-avatar 0.4s infinite;
         }
 
         .rare-metal-text {
             background: linear-gradient(
-                90deg, 
-                #9a7322 0%, 
-                #e8c678 15%, 
-                #ffffff 25%, 
-                #d4af37 40%, 
-                #6b4c06 50%, 
-                #d4af37 60%, 
-                #ffffff 75%, 
-                #e8c678 85%, 
+                90deg,
+                #9a7322 0%,
+                #e8c678 15%,
+                #ffffff 25%,
+                #d4af37 40%,
+                #6b4c06 50%,
+                #d4af37 60%,
+                #ffffff 75%,
+                #e8c678 85%,
                 #9a7322 100%
             );
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: tech-shine 6s linear infinite; 
+            animation: tech-shine 6s linear infinite;
         }
 
         @keyframes sparkle-twinkle {
@@ -305,7 +313,7 @@
         .animate-sparkle-1 { animation: sparkle-twinkle 4s infinite ease-in-out 0s; }
         .animate-sparkle-2 { animation: sparkle-twinkle 6s infinite ease-in-out 2s; }
         .animate-sparkle-3 { animation: sparkle-twinkle 5s infinite ease-in-out 3.5s; }
-        
+
         .tech-text-gradient {
             background: linear-gradient(90deg, #7dd3fc 0%, #ffffff 30%, #3b82f6 50%, #ffffff 70%, #7dd3fc 100%);
             background-size: 200% auto;
@@ -322,35 +330,35 @@
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            width: 0; 
+            width: 0;
             vertical-align: bottom;
-            line-height: 1.1; 
-            padding-bottom: 0.05em; 
+            line-height: 1.1;
+            padding-bottom: 0.05em;
         }
 
         .typewriter-cursor {
             display: inline-block;
             width: 3px;
-            height: 0.9em; 
+            height: 0.9em;
             background-color: #ec4899;
-            margin-left: 4px; 
+            margin-left: 4px;
             vertical-align: baseline;
         }
 
         @keyframes typewriter-typing {
             from { width: 0; }
-            to { width: 4.8em; } 
+            to { width: 4.8em; }
         }
 
         @keyframes typewriter-blink {
             0%, 49% { opacity: 0; }
-            50%, 100% { opacity: 1; } 
+            50%, 100% { opacity: 1; }
         }
 
         .reveal-blur-text.is-visible .typewriter-text {
             animation: typewriter-typing 1.2s steps(9, end) 0.8s forwards;
         }
-        
+
         .reveal-blur-text.is-visible .typewriter-cursor {
             animation: typewriter-blink 0.8s infinite;
         }
@@ -365,8 +373,8 @@
         }
 
         @keyframes text-zap-sweep {
-            0%, 60% { background-position: 100% center; } 
-            85%, 100% { background-position: 0% center; } 
+            0%, 60% { background-position: 100% center; }
+            85%, 100% { background-position: 0% center; }
         }
 
         .marquee-wrapper {
@@ -411,15 +419,630 @@
             80% { transform: translateY(-15px) translateX(calc(var(--tx) * 0.8)) scale(0.8) rotate(90deg); opacity: var(--max-op); }
             100% { transform: translateY(-25px) translateX(var(--tx)) scale(0) rotate(135deg); opacity: 0; }
         }
-        .animate-mosaic-1 { animation: mosaic-float 3s infinite ease-in-out 1s; --tx: -10px; --max-op: 0.8; width: 3px; height: 3px; color: #7dd3fc; } 
-        .animate-mosaic-2 { animation: mosaic-float 4s infinite ease-in-out 1.8s; --tx: 15px; --max-op: 0.6; width: 4px; height: 4px; color: #ffffff; } 
-        .animate-mosaic-3 { animation: mosaic-float 3.5s infinite ease-in-out 2.5s; --tx: -8px; --max-op: 0.9; width: 2px; height: 2px; color: #3b82f6; } 
-        .animate-mosaic-4 { animation: mosaic-float 4.5s infinite ease-in-out 0.5s; --tx: 12px; --max-op: 0.7; width: 3px; height: 3px; color: #e0f2fe; } 
-        .animate-mosaic-5 { animation: mosaic-float 3.2s infinite ease-in-out 3s; --tx: 5px; --max-op: 0.8; width: 2.5px; height: 2.5px; color: #60a5fa; } 
+        .animate-mosaic-1 { animation: mosaic-float 3s infinite ease-in-out 1s; --tx: -10px; --max-op: 0.8; width: 3px; height: 3px; color: #7dd3fc; }
+        .animate-mosaic-2 { animation: mosaic-float 4s infinite ease-in-out 1.8s; --tx: 15px; --max-op: 0.6; width: 4px; height: 4px; color: #ffffff; }
+        .animate-mosaic-3 { animation: mosaic-float 3.5s infinite ease-in-out 2.5s; --tx: -8px; --max-op: 0.9; width: 2px; height: 2px; color: #3b82f6; }
+        .animate-mosaic-4 { animation: mosaic-float 4.5s infinite ease-in-out 0.5s; --tx: 12px; --max-op: 0.7; width: 3px; height: 3px; color: #e0f2fe; }
+        .animate-mosaic-5 { animation: mosaic-float 3.2s infinite ease-in-out 3s; --tx: 5px; --max-op: 0.8; width: 2.5px; height: 2.5px; color: #60a5fa; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+        /* 只有“灵感造物平台”视图展开；固定右边缘可保持项目 Tab 原位。 */
+        @media (min-width: 1280px) {
+            #modal-content.is-zaowu-dual-project {
+                left: 0;
+                width: min(95%, 1024px);
+                max-width: none;
+                transition:
+                    opacity 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                    transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                    width 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                    left 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 360ms ease,
+                    box-shadow 450ms ease;
+            }
+
+            #modal-content.is-zaowu-platform-view {
+                left: 0;
+                width: min(95%, 1400px);
+            }
+
+            #modal-project-tabs {
+                transition:
+                    left 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 500ms ease,
+                    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            #modal-project-tabs.is-zaowu-platform-view {
+                left: max(
+                    1rem,
+                    min(
+                        calc(
+                            50% + min(47.5vw, 700px) + 16px
+                        ),
+                        calc(100vw - 196px)
+                    )
+                );
+            }
+        }
+
+        #zaowu-construction-bubble {
+            position: fixed;
+            top: 8vh;
+            left: 24px;
+            z-index: 160;
+            width: 220px;
+            padding: 18px 20px;
+            border-radius: 20px;
+            color: #202126;
+            background: #fff;
+            box-shadow:
+                inset 0 0 0 1px rgba(20, 22, 28, 0.035),
+                0 18px 50px rgba(0, 0, 0, 0.28),
+                0 4px 14px rgba(0, 0, 0, 0.12);
+            font-size: 15px;
+            font-weight: 650;
+            line-height: 1.65;
+            letter-spacing: 0.01em;
+            opacity: 0;
+            transform: translateX(30px);
+            transform-origin: right center;
+            pointer-events: none;
+            visibility: hidden;
+            transition:
+                left 560ms cubic-bezier(0.22, 1, 0.36, 1),
+                width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 380ms ease,
+                transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0s linear 520ms;
+        }
+
+        #zaowu-construction-bubble::before {
+            content: '';
+            position: absolute;
+            top: 26px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 4px -4px 10px rgba(0, 0, 0, 0.025);
+            transform: rotate(45deg);
+        }
+
+        #zaowu-construction-bubble.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+            transition-delay: 0s;
+            animation: zaowu-bubble-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        #zaowu-tab-switch-hint {
+            position: absolute;
+            top: 8px;
+            left: calc(100% + 22px);
+            z-index: 2;
+            width: 270px;
+            padding: 18px 22px;
+            border-radius: 20px;
+            color: #202126;
+            background: #fff;
+            box-shadow:
+                inset 0 0 0 1px rgba(20, 22, 28, 0.035),
+                0 18px 50px rgba(0, 0, 0, 0.28),
+                0 4px 14px rgba(0, 0, 0, 0.12);
+            font-size: 15px;
+            font-weight: 650;
+            line-height: 1.65;
+            letter-spacing: 0.01em;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate3d(-18px, 0, 0);
+            transform-origin: left center;
+            pointer-events: none;
+            transition:
+                opacity 320ms ease,
+                transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0s linear 480ms;
+        }
+
+        #zaowu-tab-switch-hint::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -16px;
+            width: 18px;
+            height: 26px;
+            background: #fff;
+            clip-path: polygon(0 50%, 100% 0, 100% 100%);
+            filter: drop-shadow(-3px 4px 4px rgba(0, 0, 0, 0.05));
+            transform: translateY(-50%);
+        }
+
+        #zaowu-tab-switch-hint.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translate3d(0, 0, 0);
+            transition-delay: 0s;
+        }
+
+        #modal-project-tabs .project-tab {
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            transition:
+                transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+                filter 220ms ease;
+        }
+
+        #modal-project-tabs .project-tab:hover,
+        #modal-project-tabs .project-tab:focus-visible {
+            transform: translateY(-3px) scale(1.018);
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.24));
+            outline: none;
+        }
+
+        #modal-project-tabs .project-tab-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        #modal-scroll-progress-bar,
+        #zaowu-scroll-progress-bar {
+            transition: width 120ms linear, opacity 220ms ease;
+        }
+
+        /* Portfolio-wide semantic cursors. */
+        html,
+        body,
+        body * {
+            cursor: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-default.png') 1 1, auto !important;
+        }
+
+        body *::before,
+        body *::after {
+            cursor: inherit !important;
+        }
+
+        :is(p, h1, h2, h3, h4, h5, h6, blockquote, figcaption, label, li),
+        :is(p, h1, h2, h3, h4, h5, h6, blockquote, figcaption, label, li) *,
+        input,
+        textarea,
+        [contenteditable='true'],
+        [contenteditable='true'] * {
+            cursor: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-text.png') 7 16, text !important;
+        }
+
+        :is(a, button, [role='button'], .cursor-pointer, .cursor-zoom-in, .cursor-zoom-out),
+        :is(a, button, [role='button'], .cursor-pointer, .cursor-zoom-in, .cursor-zoom-out) * {
+            cursor: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-default.png') 1 1, pointer !important;
+        }
+
+        :is([draggable='true'], .cursor-grab, .is-draggable),
+        :is([draggable='true'], .cursor-grab, .is-draggable) * {
+            cursor: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-grab.png') 16 16, grab !important;
+        }
+
+        :is(.cursor-grabbing, .is-dragging),
+        :is(.cursor-grabbing, .is-dragging) * {
+            cursor: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/cursors/cursor-grab.png') 16 16, grabbing !important;
+        }
+
+        #modal-scroll-area {
+            overflow-anchor: none;
+        }
+
+        #modal-scroll-area > * {
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 210ms ease,
+                transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #modal-scroll-area.is-project-content-fading > * {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        #zaowu-scroll-progress-bar {
+            opacity: 0;
+        }
+
+        #modal-content.is-zaowu-platform-view #modal-scroll-progress-bar {
+            opacity: 0;
+        }
+
+        #modal-content.is-zaowu-platform-view #zaowu-scroll-progress-bar {
+            opacity: 1;
+        }
+
+        @keyframes zaowu-bubble-enter {
+            0% {
+                opacity: 0;
+                transform: translate3d(30px, 0, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @media (max-width: 1279px) {
+            #zaowu-construction-bubble,
+            #zaowu-tab-switch-hint { display: none; }
+        }
+
+        @media (min-width: 1280px) and (max-width: 1599px) {
+            #zaowu-tab-switch-hint {
+                right: calc(100% + 22px);
+                left: auto;
+                transform-origin: right center;
+            }
+
+            #zaowu-tab-switch-hint::before {
+                right: -16px;
+                left: auto;
+                clip-path: polygon(100% 50%, 0 0, 0 100%);
+                filter: drop-shadow(3px 4px 4px rgba(0, 0, 0, 0.05));
+            }
+        }
+
+        /* 灵感造物平台：弹层内自包含动态品类展示 */
+        #zaowu-showcase {
+            --zaowu-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            display: none;
+            width: 100%;
+            min-height: 760px;
+            overflow: hidden;
+            color: #111319;
+            background:
+                radial-gradient(54% 43% at 50% 74%, rgba(205, 148, 255, 0.33), transparent 68%),
+                radial-gradient(34% 30% at 63% 70%, rgba(255, 163, 222, 0.20), transparent 72%),
+                radial-gradient(30% 26% at 37% 67%, rgba(157, 194, 255, 0.17), transparent 72%),
+                #f8f8f9;
+            isolation: isolate;
+        }
+        #zaowu-showcase::after {
+            content: '';
+            position: absolute;
+            inset: 185px -12% 34px;
+            z-index: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(255,255,255,.74) 0 1px, transparent 1.7px);
+            background-size: 22px 22px;
+            opacity: .34;
+            animation: zaowu-dot-drift 18s linear infinite;
+            mask-image: radial-gradient(ellipse 52% 56% at center, #000, transparent 78%);
+        }
+        @keyframes zaowu-dot-drift {
+            from { transform: translate3d(-10px, 4px, 0); background-position: 0 0; }
+            to { transform: translate3d(12px, -6px, 0); background-position: 44px 22px; }
+        }
+        .zaowu-hero-copy {
+            position: relative;
+            z-index: 3;
+            padding: 62px 40px 0;
+            text-align: center;
+        }
+        .zaowu-hero-copy h2 {
+            margin: 0;
+            color: #101217;
+            font-size: clamp(34px, 4.4vw, 52px);
+            font-weight: 900;
+            letter-spacing: -0.055em;
+            line-height: 1.06;
+        }
+        .zaowu-hero-copy p {
+            margin: 18px 0 0;
+            color: #858b97;
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: .025em;
+        }
+        .zaowu-stage {
+            position: relative;
+            z-index: 2;
+            height: 560px;
+            margin-top: 16px;
+            perspective: 900px;
+            perspective-origin: 50% 48%;
+        }
+        .zaowu-track {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+        }
+        .zaowu-card {
+            --zaowu-pos: 0;
+            --zaowu-depth: 0;
+            position: absolute;
+            left: 50%;
+            top: 54px;
+            width: 224px;
+            height: 326px;
+            padding: 24px 18px 22px;
+            border: 1px solid rgba(255,255,255,.72);
+            border-radius: 26px;
+            color: #111319;
+            background:
+                radial-gradient(110% 76% at 24% 0%, rgba(255,255,255,.82), transparent 56%),
+                linear-gradient(145deg, rgba(255,255,255,.56), rgba(255,255,255,.16));
+            box-shadow:
+                inset 0 1px 1px rgba(255,255,255,.96),
+                0 22px 52px rgba(51,35,77,.09),
+                0 0 34px rgba(203,148,255,.08);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            transform-origin: center center;
+            transform:
+                translateX(calc(-50% + (var(--zaowu-pos) * 232px)))
+                translateY(calc(var(--zaowu-abs) * 16px))
+                translateZ(calc(var(--zaowu-abs) * -46px))
+                rotateY(calc(var(--zaowu-pos) * 13deg))
+                scale(calc(1 - (var(--zaowu-abs) * .08)));
+            opacity: calc(1 - (var(--zaowu-abs) * .24));
+            transition: transform 780ms var(--zaowu-ease), opacity 560ms ease, width 680ms var(--zaowu-ease), height 680ms var(--zaowu-ease), top 680ms var(--zaowu-ease), box-shadow 680ms ease, background 680ms ease;
+            will-change: transform, opacity;
+        }
+        .zaowu-card[data-position='-2'],
+        .zaowu-card[data-position='2'] {
+            top: 80px;
+            width: 174px;
+            height: 270px;
+        }
+        .zaowu-card.is-active {
+            top: 24px;
+            width: 270px;
+            height: 390px;
+            border-color: rgba(255,255,255,.88);
+            background:
+                radial-gradient(106% 82% at 34% 0%, rgba(223,204,255,.82), transparent 60%),
+                radial-gradient(84% 68% at 86% 12%, rgba(255,207,238,.58), transparent 58%),
+                linear-gradient(150deg, rgba(255,255,255,.78), rgba(255,255,255,.25));
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,1),
+                0 30px 70px rgba(147,86,211,.20),
+                0 0 72px rgba(212,156,255,.22);
+        }
+        .zaowu-product-media {
+            position: relative;
+            width: 100%;
+            height: 205px;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+        }
+        .zaowu-card.is-active .zaowu-product-media { height: 250px; }
+        .zaowu-product-media > img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 18px 22px rgba(65,54,75,.13));
+            transition: transform 720ms var(--zaowu-ease), filter 720ms ease;
+        }
+        .zaowu-card:hover .zaowu-product-media > img { transform: translateY(-4px) scale(1.025); }
+        .zaowu-card[data-id='tshirt'] .zaowu-product-media > img {
+            width: 138%;
+            height: 138%;
+            max-width: none;
+        }
+        .zaowu-card[data-id='hoodie'] .zaowu-product-media > img,
+        .zaowu-card[data-id='tote'] .zaowu-product-media > img,
+        .zaowu-card[data-id='mug'] .zaowu-product-media > img,
+        .zaowu-card[data-id='print3d'] .zaowu-product-media > img {
+            position: absolute;
+            left: -6%;
+            width: 182%;
+            max-width: none;
+            object-position: left center;
+        }
+        .zaowu-card[data-id='mug'] .zaowu-product-media > img { left: -16%; width: 190%; }
+        .zaowu-print-art {
+            position: absolute !important;
+            z-index: 2;
+            left: 31% !important;
+            top: 30%;
+            width: 38% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            filter: none !important;
+            opacity: 0;
+            transform: scale(.9);
+        }
+        .zaowu-card.is-active[data-id='hoodie'] .zaowu-print-art {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .zaowu-meta {
+            position: relative;
+            z-index: 3;
+            margin-top: 8px;
+            text-align: center;
+        }
+        .zaowu-title-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .zaowu-name { font-size: 21px; font-weight: 850; letter-spacing: -.04em; }
+        .zaowu-price { font-size: 18px; font-weight: 760; }
+        .zaowu-price small { font-size: 11px; color: #666c77; margin-left: 2px; }
+        .zaowu-caption {
+            display: block;
+            min-height: 22px;
+            margin-top: 10px;
+            color: #8b909a;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 380ms ease 160ms, transform 480ms var(--zaowu-ease) 160ms;
+        }
+        .zaowu-card.is-active .zaowu-name { font-size: 29px; }
+        .zaowu-card.is-active .zaowu-price { font-size: 24px; }
+        .zaowu-card.is-active .zaowu-caption { opacity: 1; transform: translateY(0); }
+        .zaowu-arrow {
+            position: absolute;
+            z-index: 20;
+            top: 244px;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.7);
+            border-radius: 50%;
+            color: #17191e;
+            background: rgba(255,255,255,.48);
+            box-shadow: 0 14px 34px rgba(38,34,48,.08), inset 0 1px 1px rgba(255,255,255,.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            cursor: pointer;
+            transition: transform 260ms var(--zaowu-ease), background 220ms ease, box-shadow 220ms ease;
+        }
+        .zaowu-arrow:hover { transform: scale(1.08); background: rgba(255,255,255,.82); box-shadow: 0 16px 40px rgba(141,89,198,.18); }
+        .zaowu-arrow:active { transform: scale(.94); }
+        .zaowu-arrow-left { left: 32px; }
+        .zaowu-arrow-right { right: 32px; }
+        .zaowu-arrow svg { width: 24px; height: 24px; }
+        .zaowu-cta {
+            position: absolute;
+            z-index: 20;
+            left: 50%;
+            top: 455px;
+            min-width: 150px;
+            height: 52px;
+            padding: 0 28px;
+            border: 0;
+            border-radius: 999px;
+            color: #fff;
+            background: #202124;
+            box-shadow: 0 16px 32px rgba(32,33,36,.18);
+            transform: translateX(-50%);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 220ms var(--zaowu-ease), background 220ms ease, box-shadow 220ms ease;
+        }
+        .zaowu-cta:hover { transform: translateX(-50%) translateY(-2px); background: #35363a; box-shadow: 0 18px 40px rgba(91,54,119,.22); }
+        .zaowu-cta:active { transform: translateX(-50%) translateY(1px) scale(.97); }
+        .zaowu-cta-label { display: inline-block; font-size: 17px; font-weight: 800; transition: transform 360ms var(--zaowu-ease), opacity 220ms ease; }
+        .zaowu-cta::after {
+            content: '→';
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            opacity: 0;
+            transform: translateY(80%);
+            transition: transform 360ms var(--zaowu-ease), opacity 220ms ease;
+        }
+        .zaowu-cta:hover .zaowu-cta-label { opacity: 0; transform: translateY(-100%); }
+        .zaowu-cta:hover::after { opacity: 1; transform: translateY(0); }
+        .zaowu-cta.is-confirmed { background: #6e43aa; }
+        .zaowu-dots {
+            position: absolute;
+            z-index: 20;
+            left: 50%;
+            top: 526px;
+            display: none;
+            gap: 7px;
+            transform: translateX(-50%);
+        }
+        .zaowu-dot {
+            width: 6px;
+            height: 6px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(25,27,31,.18);
+            transition: width 300ms var(--zaowu-ease), background 220ms ease;
+            cursor: pointer;
+        }
+        .zaowu-dot.is-active { width: 22px; border-radius: 999px; background: #232428; }
+        @media (max-width: 760px) {
+            #zaowu-showcase { min-height: 660px; }
+            .zaowu-hero-copy { padding: 62px 22px 0; }
+            .zaowu-hero-copy h2 { font-size: 34px; }
+            .zaowu-hero-copy p { font-size: 14px; }
+            .zaowu-stage { height: 480px; margin-top: 20px; }
+            .zaowu-card { width: 190px; height: 300px; transform: translateX(calc(-50% + (var(--zaowu-pos) * 178px))) translateY(calc(var(--zaowu-abs) * 14px)) translateZ(calc(var(--zaowu-abs) * -40px)) rotateY(calc(var(--zaowu-pos) * 11deg)) scale(calc(1 - (var(--zaowu-abs) * .09))); }
+            .zaowu-card.is-active { width: 232px; height: 350px; }
+            .zaowu-card[data-position='-2'], .zaowu-card[data-position='2'] { opacity: 0; pointer-events: none; }
+            .zaowu-product-media { height: 185px; }
+            .zaowu-card.is-active .zaowu-product-media { height: 220px; }
+            .zaowu-arrow { top: 214px; width: 48px; height: 48px; }
+            .zaowu-arrow-left { left: 14px; }
+            .zaowu-arrow-right { right: 14px; }
+            .zaowu-cta { top: 414px; }
+            .zaowu-dots { top: 482px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #zaowu-showcase::after { animation: none; }
+            .zaowu-card, .zaowu-product-media > img { transition-duration: .01ms !important; }
+        }
+
+        /* 灵感造物：真实首页组件以 1920×1700 延展画布嵌入，再按弹层宽度等比缩放。 */
+        #zaowu-showcase {
+            --zaowu-source-height: 6200;
+            min-height: 0;
+            height: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(48% 34% at 50% 76%, rgba(205, 148, 255, 0.13), transparent 76%),
+                radial-gradient(30% 26% at 61% 74%, rgba(255, 163, 222, 0.08), transparent 78%),
+                radial-gradient(28% 24% at 39% 73%, rgba(157, 194, 255, 0.07), transparent 78%),
+                #f8f8f9;
+        }
+        #zaowu-showcase::after {
+            display: none;
+        }
+        #zaowu-showcase-frame {
+            display: block;
+            width: 1920px;
+            height: 6200px;
+            border: 0;
+            background: #f8f8f9;
+            transform: scale(var(--zaowu-frame-scale, .5));
+            transform-origin: left top;
+            -webkit-mask-image: linear-gradient(
+                180deg,
+                #000 0%,
+                #000 86%,
+                rgba(0, 0, 0, 0.96) 89%,
+                rgba(0, 0, 0, 0.76) 93%,
+                rgba(0, 0, 0, 0.38) 97%,
+                transparent 100%
+            );
+            mask-image: linear-gradient(
+                180deg,
+                #000 0%,
+                #000 86%,
+                rgba(0, 0, 0, 0.96) 89%,
+                rgba(0, 0, 0, 0.76) 93%,
+                rgba(0, 0, 0, 0.38) 97%,
+                transparent 100%
+            );
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-accent selection:text-white relative">
@@ -450,7 +1073,7 @@
                         HELLO ：）
                     </span>
                 </div>
-                
+
                 <div class="hidden md:flex space-x-10 absolute left-1/2 transform -translate-x-1/2 w-full justify-center pointer-events-none">
                     <div class="flex space-x-10 pointer-events-auto">
                         <a href="#home" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-[15px] animate-nav-item delay-nav-2">首页</a>
@@ -525,7 +1148,7 @@
                     </div>
 
                     <button onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})" class="inline-flex items-center px-8 md:px-10 py-3.5 md:py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-[14px] md:text-[15px] hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] hover:scale-105 transition-all duration-300 about-text-stagger delay-abt-3 pointer-events-auto">
-                        探索作品集 
+                        探索作品集
                         <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </button>
                 </div>
@@ -640,7 +1263,7 @@
                         <span class="typewriter-text italic font-bold tracking-wide" style="font-family: 'Playfair Display', serif;">Portfolio</span><span class="typewriter-cursor"></span>
                     </span>
                 </h2>
-                
+
                 <div class="relative w-full max-w-4xl mx-auto overflow-hidden mt-4 reveal-on-scroll delay-100">
                     <div class="absolute top-0 left-0 w-20 md:w-32 h-full bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
                     <div class="absolute top-0 right-0 w-20 md:w-32 h-full bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
@@ -669,9 +1292,9 @@
             </div>
 
             <div id="main-portfolio-view" class="transition-opacity duration-500 opacity-100 block">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100" onclick='openProjectModal(event, {
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100 order-1 lg:col-span-3" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/%E8%A7%86%E9%A2%91.mp4" },
                         "category": "AI赋能品牌营销设计",
                         "year": "2025",
@@ -703,7 +1326,7 @@
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%A7%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%9B%A2%E5%9B%A2%E5%88%9B%E6%84%8F%E7%9F%AD%E7%89%87/13.jpg"
                         ]
                     })'>
-                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
+                        <div class="media-container relative aspect-[16/9] overflow-hidden bg-gray-800">
                             <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://dc-file.leanticket.cn/7AAx481EiCxgtwvstUMdgpzuGgCp9fFs/VznmAkRZ_vip.mp4" type="video/mp4">
                             </video>
@@ -734,8 +1357,8 @@
                         </div>
                     </div>
 
-                    <!-- 第 2 位保持不变：2024美团中秋礼盒 (使用 delay-200) -->
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200" onclick='openProjectModal(event, {
+                    <!-- 第二排第 1 位：2024美团中秋礼盒 -->
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100 order-3 lg:col-span-2" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E9%A1%B6%E9%83%A8%E8%A7%86%E9%A2%91.mp4" },
                         "category": "品牌文创",
                         "year": "2024",
@@ -793,11 +1416,11 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-300" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200 order-2 lg:col-span-3" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png", "autoHeight": true },
-                        "category": "AIGC建设与应用",
-                        "year": "2025",
-                        "title": "品牌AI资产建设-LoRA & Agent Skill",
+                        "category": "产品建设与AI应用",
+                        "year": "2026",
+                        "title": "灵感造物平台& 品牌AI资产建设",
                         "desc": "探索AIGC技术在企业内部的落地，通过训练团团IP专属模型，大幅提升设计团队的内容产出效率与视觉统一性。",
                         "tags": ["创意生产力升级", "AI赋能品牌创意"],
                         "navTags": [
@@ -820,8 +1443,8 @@
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E5%9B%BE9.jpg"
                         ]
                     })'>
-                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png" alt="品牌AI资产建设-美团IP LoRA" class="w-full h-full object-cover">
+                        <div class="media-container relative aspect-[16/9] overflow-hidden bg-gray-800">
+                            <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png" alt="灵感造物平台& 品牌AI资产建设" class="w-full h-full object-cover">
                             <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
                                 <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
                                 <span class="text-[12px] font-extrabold text-black tracking-wide">设计部创新实践奖</span>
@@ -829,11 +1452,11 @@
                         </div>
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2025</p>
+                                <p class="text-xs text-gray-400 mb-1.5 font-medium">产品建设与AI应用 · 2026</p>
                                 <h3 class="text-lg font-bold text-white mb-3">
-                                    品牌AI资产建设-
+                                    灵感造物平台
                                     <span class="relative inline-block tech-text-gradient pr-1">
-                                        LoRA & Agent Skill
+                                        & 品牌AI资产建设
                                         <div class="absolute inset-0 pointer-events-none">
                                             <span class="mosaic-particle animate-mosaic-1 top-[20%] left-[5%] shadow-[0_0_6px_currentColor]"></span>
                                             <span class="mosaic-particle animate-mosaic-2 top-[60%] left-[85%] shadow-[0_0_8px_currentColor]"></span>
@@ -851,7 +1474,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-100" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-300 order-5 lg:col-span-2" onclick='openProjectModal(event, {
                         "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E9%A9%AC%E5%B9%B4%E8%A7%86%E9%A2%91.mp4" },
                         "category": "AIGC建设与应用",
                         "year": "2026",
@@ -888,7 +1511,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200" onclick='openProjectModal(event, {
+                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-200 order-4 lg:col-span-2" onclick='openProjectModal(event, {
                         "hero": { "type": "image", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update", "autoHeight": true },
                         "category": "品牌空间体验",
                         "year": "2025",
@@ -919,70 +1542,6 @@
                         </div>
                     </div>
 
-                    <div class="project-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col reveal-card-blur delay-300" onclick='openProjectModal(event, {
-                        "hero": { "type": "video", "src": "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2023%E4%B8%AD%E7%A7%8B.mp4" },
-                        "category": "品牌文创",
-                        "year": "2023",
-                        "title": "2023美团中秋礼盒",
-                        "desc": "美团2023年中秋礼盒全链路设计，将可持续环保理念与业务深度结合，首创“太空舱”产品形态。",
-                        "tags": ["全链路文创设计", "周边手办", "美团公益"],
-                        "content": [
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/1.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/3.jpg",
-                            [
-                                "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4a.mp4",
-                                "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4b.mp4"
-                            ],
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/5.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/6.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/7.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/8.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/9.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/10.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/11.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/12.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/13.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/14.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/15.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/16.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/17.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/18.jpg",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/19.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/20.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/21.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/22.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/23.mp4",
-                            "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/24.jpg"
-                        ]
-                    })'>
-                        <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
-                            <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
-                                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
-                            </video>
-                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
-                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
-                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
-                            </div>
-                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white -translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7.5 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7.5 5.5z"/></svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2023</p>
-                                <h3 class="text-lg font-bold text-white mb-3">2023美团中秋礼盒</h3>
-                            </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#全链路文创设计</span>
-                                <span>#周边手办</span>
-                                <span>#美团公益</span>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="flex justify-center mt-12 mb-8">
@@ -995,7 +1554,7 @@
                         </div>
                     </button>
                 </div>
-            </div> 
+            </div>
 
             <div id="flash-portfolio-view" class="transition-opacity duration-500 hidden opacity-0">
                 <div class="flex justify-center mb-10">
@@ -1060,7 +1619,7 @@
     <footer class="border-t border-white/5 py-10 text-center relative z-20 bg-black/40 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
             <p class="text-gray-600 text-sm mb-4">
-                &copy; 2026 夏铭骏 Portfolio. All rights reserved. 
+                &copy; 2026 夏铭骏 Portfolio. All rights reserved.
             </p>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="group flex flex-col items-center text-gray-500 hover:text-accent transition-colors duration-300 mt-2">
                 <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2 group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-300">
@@ -1074,28 +1633,37 @@
     <!-- 全屏长图浏览弹窗 -->
     <div id="project-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
         <div id="modal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300 cursor-pointer" onclick="closeModal()"></div>
-        
+
         <!-- 🔥 恢复补全：侧边电梯导航栏 -->
         <div id="modal-nav-sidebar" class="fixed left-4 lg:left-8 xl:left-12 top-1/2 transform -translate-y-1/2 z-[150] hidden lg:flex flex-col gap-3 opacity-0 transition-all duration-500 translate-x-[-30px] pointer-events-none">
             <!-- 导航标签将由 JS 动态生成填充在这里 -->
         </div>
 
+        <aside id="zaowu-construction-bubble" role="status" aria-hidden="true">
+            此项目还未完全整理好，正在努力施工中💪
+        </aside>
+
         <div id="modal-content" class="relative z-10 w-[95%] max-w-5xl h-[90vh] bg-[#0f1117] rounded-[24px] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden ios-transition" style="opacity: 0; transform: scale(0.15);">
-            
+
             <!-- 🔥 新增：顶部视觉进度条 -->
             <div id="modal-scroll-progress-bar" class="absolute top-0 left-0 h-1.5 bg-accent z-[200] w-0 pointer-events-none shadow-[0_0_10px_rgba(236,72,153,0.8)]"></div>
-            
-            <!-- 🔥 新增：供你调试的右下角“实时进度探测器” -->
-            <div id="modal-scroll-debug" class="absolute bottom-6 right-6 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-mono z-[200] shadow-[0_0_15px_rgba(236,72,153,0.5)] pointer-events-none">
-                进度: 0.0%
-            </div>
+            <div id="zaowu-scroll-progress-bar" class="absolute top-0 left-0 h-1.5 bg-[#FF86CF] z-[201] w-0 pointer-events-none shadow-[0_0_10px_rgba(255,134,207,0.72)]"></div>
 
             <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/40 hover:bg-black/80 text-white p-3 rounded-full backdrop-blur-md transition-colors border border-white/10 shadow-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- 🔥 添加了 scroll-smooth，让导航跳转极其平滑丝滑 -->
-            <div id="modal-scroll-area" class="flex-1 w-full overflow-y-auto bg-[#0a0a0a] scroll-smooth">
+            <div id="modal-scroll-area" tabindex="0" aria-label="项目内容" class="flex-1 w-full overflow-y-auto bg-[#0a0a0a]">
+                <section id="zaowu-showcase" aria-label="灵感造物动态品类展示">
+                    <iframe
+                        id="zaowu-showcase-frame"
+                        src="/zaowu-showcase.html"
+                        title="灵感造物首页动态展示"
+                        scrolling="no"
+                        loading="eager"
+                        onload="fitZaowuShowcaseFrame(); playZaowuTitleIntro()"
+                    ></iframe>
+                </section>
                 <div id="modal-hero-container" class="w-full relative"></div>
                 <div id="modal-info-container" class="w-full px-8 py-12 md:px-16 max-w-5xl mx-auto flex flex-col items-start text-left bg-[#0f1117]"></div>
 
@@ -1106,14 +1674,47 @@
                 </div>
             </div>
         </div>
+
+        <!-- 🔥 双子项目切换 Tab（仅“灵感造物平台&品牌AI资产建设”项目弹窗显示） -->
+        <div id="modal-project-tabs" class="fixed left-[max(1rem,_min(calc(50%_+_min(47.5vw,_32rem)_+_16px),_calc(100vw_-_196px)))] top-[5vh] z-[150] hidden lg:flex flex-col gap-4 opacity-0 translate-x-[30px] pointer-events-none transition-all duration-500">
+            <!-- TODO: 灵感造物平台封面图待替换 -->
+            <button onclick="switchModalProject('platform')" data-subproject="platform" class="project-tab group relative w-[180px] h-[100px] cursor-pointer" aria-label="切换到灵感造物" aria-pressed="false">
+                <img
+                    class="project-tab-image"
+                    src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/platform-unselected.png"
+                    data-selected-src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/platform-selected.png"
+                    data-unselected-src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/platform-unselected.png"
+                    alt="灵感造物"
+                    draggable="false"
+                >
+            </button>
+            <aside id="zaowu-tab-switch-hint" role="status" aria-hidden="true">
+                可点击项目tab切换系列项目哦~
+            </aside>
+            <button onclick="switchModalProject('lora')" data-subproject="lora" class="project-tab group relative w-[180px] h-[100px] cursor-pointer" aria-label="切换到AI品牌资产" aria-pressed="true">
+                <img
+                    class="project-tab-image"
+                    src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/brand-selected.png"
+                    data-selected-src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/brand-selected.png"
+                    data-unselected-src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu-tabs/brand-unselected.png"
+                    alt="AI品牌资产"
+                    draggable="false"
+                >
+            </button>
+        </div>
+
+        <!-- 🔥 右下角“实时进度探测器”：移出弹层，固定到视口右下角 -->
+        <div id="modal-scroll-debug" class="fixed bottom-4 right-4 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-mono z-[200] pointer-events-none">
+            进度: 0.0%
+        </div>
     </div>
 
     <!-- 闪作专属弹窗 -->
     <div id="flash-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-8">
         <div id="flash-modal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-400 cursor-pointer" onclick="closeFlashModal()"></div>
-        
+
         <div id="flash-modal-content" class="relative z-10 w-full max-w-5xl h-[85vh] md:h-[80vh] bg-[#15171e] rounded-[24px] md:rounded-[32px] flex flex-col md:flex-row overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] transition-all duration-400 transform scale-95 opacity-0">
-            
+
             <button onclick="closeFlashModal()" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 bg-black/40 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-md transition-colors border border-white/10 shadow-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
@@ -1139,7 +1740,7 @@
                     <p id="flash-modal-desc" class="text-gray-300 text-[14px] leading-relaxed mb-6 font-light">描述内容</p>
                     <div id="flash-modal-tags" class="flex flex-wrap gap-2 mb-8 text-accent text-[13px] font-medium"></div>
                     <div id="flash-modal-date" class="text-[12px] text-gray-600 font-medium">发布于 2026-03-24</div>
-                    
+
                     <div id="flash-modal-comments-container" class="mt-8 pt-6 border-t border-white/5 hidden">
                         <h3 class="text-[14px] font-bold text-white mb-4">共 <span id="flash-modal-comments-count">0</span> 条评论</h3>
                         <div id="flash-modal-comments-list" class="flex flex-col gap-5"></div>
@@ -1187,21 +1788,21 @@
     <script>
         let scrollObserver;
         let aboutTicking = false;
-        let videoObserver; 
+        let videoObserver;
 
         document.addEventListener('DOMContentLoaded', () => {
             let progress = 0;
             const progressEl = document.getElementById('loader-progress');
             const percentEl = document.getElementById('loader-percentage');
             const loaderEl = document.getElementById('global-loader');
-            
+
             if (document.body && document.body.style) {
-                document.body.style.overflow = 'hidden'; 
+                document.body.style.overflow = 'hidden';
             }
 
             const loadingInterval = setInterval(() => {
                 progress += Math.random() * 15;
-                if (progress > 95) progress = 95; 
+                if (progress > 95) progress = 95;
                 if (progressEl && progressEl.style) progressEl.style.width = `${progress}%`;
                 if (percentEl) percentEl.innerText = `${Math.floor(progress)}%`;
             }, 100);
@@ -1210,15 +1811,15 @@
                 clearInterval(loadingInterval);
                 if (progressEl && progressEl.style) progressEl.style.width = '100%';
                 if (percentEl) percentEl.innerText = '100%';
-                
+
                 setTimeout(() => {
                     if (loaderEl && loaderEl.style) {
                         loaderEl.style.opacity = '0';
                         loaderEl.style.pointerEvents = 'none';
                     }
                     if (document.body && document.body.style) {
-                        document.body.style.overflow = ''; 
-                        document.body.classList.add('fonts-loaded'); 
+                        document.body.style.overflow = '';
+                        document.body.classList.add('fonts-loaded');
                     }
                 }, 400);
             };
@@ -1229,19 +1830,19 @@
                     const heroVideo = document.getElementById('hero-video');
                     if (heroVideo && heroVideo.readyState < 3) {
                         heroVideo.addEventListener('canplay', resolve, { once: true });
-                        setTimeout(resolve, 3000); 
+                        setTimeout(resolve, 3000);
                     } else {
                         resolve();
                     }
                 })
             ]).then(finishLoading);
-            
+
             setTimeout(finishLoading, 5000);
 
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15 
+                threshold: 0.15
             };
 
             scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -1250,7 +1851,7 @@
                         if (entry.target && entry.target.classList) {
                             entry.target.classList.add('is-visible');
                         }
-                        
+
                         if (entry.target && entry.target.classList && entry.target.classList.contains('reveal-card-blur')) {
                             entry.target.addEventListener('animationend', () => {
                                 if (entry.target.style) {
@@ -1260,7 +1861,7 @@
                             }, { once: true });
                         }
 
-                        observer.unobserve(entry.target); 
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
@@ -1281,12 +1882,12 @@
                         }
                     }
                 });
-            }, { rootMargin: '300px' }); 
+            }, { rootMargin: '300px' });
 
             document.querySelectorAll('.lazy-video').forEach(video => {
                 if (videoObserver) videoObserver.observe(video);
             });
-            
+
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
                 heroVideo.muted = true;
@@ -1296,15 +1897,7 @@
             // 🔥 新增：监听弹窗内部的滚动事件，实时更新进度条和百分比数字
             const modalScrollArea = document.getElementById('modal-scroll-area');
             if (modalScrollArea) {
-                modalScrollArea.addEventListener('scroll', () => {
-                    const maxScroll = modalScrollArea.scrollHeight - modalScrollArea.clientHeight;
-                    if (maxScroll <= 0) return;
-                    const pct = (modalScrollArea.scrollTop / maxScroll) * 100;
-                    const bar = document.getElementById('modal-scroll-progress-bar');
-                    const debug = document.getElementById('modal-scroll-debug');
-                    if (bar) bar.style.width = `${pct}%`;
-                    if (debug) debug.innerText = `进度: ${pct.toFixed(1)}%`;
-                });
+                modalScrollArea.addEventListener('scroll', updateModalProjectProgress);
             }
         });
 
@@ -1318,7 +1911,7 @@
 
             const rect = aboutSection.getBoundingClientRect();
             const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-            const windowWidth = document.body.clientWidth || window.innerWidth; 
+            const windowWidth = document.body.clientWidth || window.innerWidth;
 
             let progress = 0;
             if (rect.top > 0) {
@@ -1330,9 +1923,9 @@
             }
 
             const isMobile = windowWidth < 768;
-            const initWidth = isMobile ? windowWidth * 0.85 : windowWidth * 0.35; 
-            const initHeight = initWidth * (9/16); 
-            const initBR = isMobile ? 20 : 32; 
+            const initWidth = isMobile ? windowWidth * 0.85 : windowWidth * 0.35;
+            const initHeight = initWidth * (9/16);
+            const initBR = isMobile ? 20 : 32;
 
             const curWidth = initWidth + (windowWidth - initWidth) * progress;
             const curHeight = initHeight + (windowHeight - initHeight) * progress;
@@ -1342,8 +1935,8 @@
                 aboutVideoBox.style.width = `${curWidth}px`;
                 aboutVideoBox.style.height = `${curHeight}px`;
                 aboutVideoBox.style.borderRadius = `${curBR}px`;
-                
-                let maskSize = Math.max(0, (progress - 0.5) * 2) * 35; 
+
+                let maskSize = Math.max(0, (progress - 0.5) * 2) * 35;
                 if (maskSize > 0.1) {
                     aboutVideoBox.style.maskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
                     aboutVideoBox.style.webkitMaskImage = `linear-gradient(to bottom, black calc(100% - ${maskSize}vh), transparent 100%)`;
@@ -1352,11 +1945,11 @@
                     aboutVideoBox.style.webkitMaskImage = 'none';
                 }
             }
-            
+
             if (aboutOverlay && aboutOverlay.style) {
                 aboutOverlay.style.backgroundColor = `rgba(0, 0, 0, ${progress * 0.65})`;
             }
-            
+
             if (aboutTextContent && aboutTextContent.classList) {
                 if (progress > 0.85) {
                     aboutTextContent.classList.add('is-expanded');
@@ -1367,8 +1960,8 @@
         }
 
         const navbar = document.getElementById('navbar');
-        const backToTopBtn = document.getElementById('back-to-top'); 
-        
+        const backToTopBtn = document.getElementById('back-to-top');
+
         window.addEventListener('scroll', () => {
             if (navbar && navbar.classList) {
                 if (window.scrollY > 20) {
@@ -1424,8 +2017,33 @@
         const modal = document.getElementById('project-modal');
         const backdrop = document.getElementById('modal-backdrop');
         const content = document.getElementById('modal-content');
-        const modalScrollArea = document.getElementById('modal-scroll-area'); 
+        const modalScrollArea = document.getElementById('modal-scroll-area');
         let lastClickedCardRect = null;
+
+        function updateModalProjectProgress(eventOrPersist = true) {
+            const area = document.getElementById('modal-scroll-area');
+            const modalContent = document.getElementById('modal-content');
+            if (!area || !modalContent) return;
+
+            const key = activeModalProjectKey === 'platform' ? 'platform' : 'lora';
+            const maxScroll = Math.max(0, area.scrollHeight - area.clientHeight);
+            const pct = maxScroll > 0 ? (area.scrollTop / maxScroll) * 100 : 0;
+            const shouldPersist = eventOrPersist !== false && !isRestoringModalProjectScroll;
+            if (shouldPersist) {
+                modalProjectScrollState[key] = {
+                    scrollTop: area.scrollTop,
+                    pct
+                };
+            }
+
+            const loraBar = document.getElementById('modal-scroll-progress-bar');
+            const platformBar = document.getElementById('zaowu-scroll-progress-bar');
+            const debug = document.getElementById('modal-scroll-debug');
+            if (loraBar) loraBar.style.width = `${modalProjectScrollState.lora.pct}%`;
+            if (platformBar) platformBar.style.width = `${modalProjectScrollState.platform.pct}%`;
+            if (debug) debug.innerText = `进度: ${modalProjectScrollState[key].pct.toFixed(1)}%`;
+
+        }
 
         // 🔥 新增：全局绝对百分比平滑滚动引擎（无视切图，只看总长度）
         function scrollToModalPercentage(pctVal) {
@@ -1455,10 +2073,421 @@
             }
         }
 
+        const zaowuCategories = [
+            { id: 'print3d', name: '3D打印', price: 85, suffix: '起', caption: '异形打样，质感成型', image: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/category-card-print3d-selected.png' },
+            { id: 'tshirt', name: 'T恤', price: 59, caption: '布料透气，凉感舒爽', image: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/product-tshirt.png' },
+            { id: 'hoodie', name: '卫衣', price: 89, caption: '柔软抓绒，亲肤保暖', image: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/category-card-hoodie-selected.png', print: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/custom-print-rabbit.png' },
+            { id: 'tote', name: '帆布包', price: 19, caption: '厚实帆布，承重耐磨', image: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/category-card-tote-selected.png' },
+            { id: 'mug', name: '马克杯', price: 19, caption: '高温陶瓷，手感温润', image: 'https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%81%B5%E6%84%9F%E9%80%A0%E7%89%A9/assets/zaowu/category-card-mug-selected.png' }
+        ];
+        let zaowuActiveIndex = 2;
+        let zaowuAutoplayTimer = null;
+        let zaowuConfirmTimer = null;
+        let zaowuShowcaseReady = false;
+
+        function getZaowuPosition(index) {
+            let difference = index - zaowuActiveIndex;
+            const half = Math.floor(zaowuCategories.length / 2);
+            if (difference > half) difference -= zaowuCategories.length;
+            if (difference < -half) difference += zaowuCategories.length;
+            return difference;
+        }
+
+        function initializeZaowuShowcase() {
+            if (zaowuShowcaseReady) return;
+            const track = document.getElementById('zaowu-track');
+            const dots = document.getElementById('zaowu-dots');
+            const stage = document.querySelector('#zaowu-showcase .zaowu-stage');
+            if (!track || !dots || !stage) return;
+
+            zaowuCategories.forEach((item, index) => {
+                const card = document.createElement('article');
+                card.className = 'zaowu-card';
+                card.dataset.id = item.id;
+                card.dataset.categoryIndex = String(index);
+                card.setAttribute('aria-label', `${item.name}，¥${item.price}`);
+                card.innerHTML = `
+                    <div class="zaowu-product-media">
+                        <img src="${item.image}" alt="${item.name}" draggable="false">
+                        ${item.print ? `<img class="zaowu-print-art" src="${item.print}" alt="" aria-hidden="true" draggable="false">` : ''}
+                    </div>
+                    <div class="zaowu-meta">
+                        <div class="zaowu-title-row">
+                            <span class="zaowu-name">${item.name}</span>
+                            <span class="zaowu-price">¥${item.price}${item.suffix ? `<small>${item.suffix}</small>` : ''}</span>
+                        </div>
+                        <span class="zaowu-caption">${item.caption}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    if (zaowuActiveIndex !== index) {
+                        zaowuActiveIndex = index;
+                        updateZaowuShowcase();
+                        restartZaowuAutoplay();
+                    }
+                });
+                track.appendChild(card);
+
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'zaowu-dot';
+                dot.setAttribute('aria-label', `查看${item.name}`);
+                dot.addEventListener('click', () => {
+                    zaowuActiveIndex = index;
+                    updateZaowuShowcase();
+                    restartZaowuAutoplay();
+                });
+                dots.appendChild(dot);
+            });
+
+            stage.addEventListener('mouseenter', stopZaowuAutoplay);
+            stage.addEventListener('mouseleave', startZaowuAutoplay);
+            zaowuShowcaseReady = true;
+            updateZaowuShowcase();
+        }
+
+        function updateZaowuShowcase() {
+            document.querySelectorAll('#zaowu-track .zaowu-card').forEach((card, index) => {
+                const position = getZaowuPosition(index);
+                card.style.setProperty('--zaowu-pos', position);
+                card.style.setProperty('--zaowu-abs', Math.abs(position));
+                card.dataset.position = String(position);
+                card.classList.toggle('is-active', position === 0);
+                card.style.zIndex = String(10 - Math.abs(position));
+                card.setAttribute('aria-hidden', position === 0 ? 'false' : 'true');
+            });
+            document.querySelectorAll('#zaowu-dots .zaowu-dot').forEach((dot, index) => {
+                dot.classList.toggle('is-active', index === zaowuActiveIndex);
+            });
+            const cta = document.getElementById('zaowu-cta');
+            if (cta) {
+                cta.classList.remove('is-confirmed');
+                const label = cta.querySelector('.zaowu-cta-label');
+                if (label) label.textContent = '立即定制';
+                cta.setAttribute('aria-label', `立即定制${zaowuCategories[zaowuActiveIndex].name}`);
+            }
+        }
+
+        function rotateZaowuShowcase(direction) {
+            zaowuActiveIndex = (zaowuActiveIndex + direction + zaowuCategories.length) % zaowuCategories.length;
+            updateZaowuShowcase();
+            restartZaowuAutoplay();
+        }
+
+        function confirmZaowuCategory() {
+            const cta = document.getElementById('zaowu-cta');
+            if (!cta) return;
+            window.clearTimeout(zaowuConfirmTimer);
+            const label = cta.querySelector('.zaowu-cta-label');
+            cta.classList.add('is-confirmed');
+            if (label) label.textContent = `已选择${zaowuCategories[zaowuActiveIndex].name}`;
+            zaowuConfirmTimer = window.setTimeout(() => {
+                cta.classList.remove('is-confirmed');
+                if (label) label.textContent = '立即定制';
+            }, 1200);
+        }
+
+        function stopZaowuAutoplay() {
+            window.clearTimeout(zaowuAutoplayTimer);
+            zaowuAutoplayTimer = null;
+        }
+
+        function startZaowuAutoplay() {
+            stopZaowuAutoplay();
+            const showcase = document.getElementById('zaowu-showcase');
+            if (!showcase || showcase.style.display === 'none') return;
+            zaowuAutoplayTimer = window.setTimeout(() => {
+                zaowuActiveIndex = (zaowuActiveIndex + 1) % zaowuCategories.length;
+                updateZaowuShowcase();
+                startZaowuAutoplay();
+            }, 2600);
+        }
+
+        function restartZaowuAutoplay() {
+            startZaowuAutoplay();
+        }
+
+        function fitZaowuShowcaseFrame() {
+            const showcase = document.getElementById('zaowu-showcase');
+            if (!showcase) return;
+            const scale = Math.max(0.24, showcase.clientWidth / 1920);
+            const sourceHeight = Number.parseFloat(getComputedStyle(showcase).getPropertyValue('--zaowu-source-height')) || 6200;
+            showcase.style.setProperty('--zaowu-frame-scale', String(scale));
+            showcase.style.height = `${Math.round(sourceHeight * scale)}px`;
+        }
+
+        function playZaowuTitleIntro() {
+            const frame = document.getElementById('zaowu-showcase-frame');
+            if (!frame || !frame.contentWindow) return;
+            frame.contentWindow.postMessage({ type: 'zaowu:play-title-intro' }, window.location.origin);
+        }
+
+        function handleZaowuFrameScroll(event) {
+            if (event.origin !== window.location.origin || event.data?.type !== 'zaowu:scroll-parent') return;
+            const frame = document.getElementById('zaowu-showcase-frame');
+            const modalContent = document.getElementById('modal-content');
+            const area = document.getElementById('modal-scroll-area');
+            const deltaY = Number(event.data.deltaY);
+            if (!frame || event.source !== frame.contentWindow || !modalContent?.classList.contains('is-zaowu-platform-view')) return;
+            if (!area || !Number.isFinite(deltaY)) return;
+            area.scrollTop += deltaY;
+        }
+
+        window.addEventListener('message', handleZaowuFrameScroll);
+
+        function showZaowuShowcase() {
+            const showcase = document.getElementById('zaowu-showcase');
+            if (showcase) showcase.style.display = 'block';
+            window.requestAnimationFrame(() => {
+                fitZaowuShowcaseFrame();
+                playZaowuTitleIntro();
+            });
+        }
+
+        window.addEventListener('resize', fitZaowuShowcaseFrame);
+
+        if ('ResizeObserver' in window) {
+            const zaowuShowcaseResizeObserver = new ResizeObserver(() => fitZaowuShowcaseFrame());
+            const zaowuShowcaseElement = document.getElementById('zaowu-showcase');
+            if (zaowuShowcaseElement) zaowuShowcaseResizeObserver.observe(zaowuShowcaseElement);
+        }
+
+        let zaowuBubbleRevealTimer = null;
+        let modalProjectContentSwapTimer = null;
+        let activeModalProjectKey = 'lora';
+        let isRestoringModalProjectScroll = false;
+        let modalProjectScrollState = {
+            lora: { scrollTop: 0, pct: 0 },
+            platform: { scrollTop: 0, pct: 0 }
+        };
+
+        // 🔥 双子项目 Tab：灵感造物平台 / 品牌AI资产（同一卡片，分开展示）
+        function setupProjectTabs(data) {
+            const tabsWrap = document.getElementById('modal-project-tabs');
+            if (!tabsWrap) return;
+
+            const constructionBubble = document.getElementById('zaowu-construction-bubble');
+            const tabSwitchHint = document.getElementById('zaowu-tab-switch-hint');
+            if (modalProjectContentSwapTimer) {
+                clearTimeout(modalProjectContentSwapTimer);
+                modalProjectContentSwapTimer = null;
+            }
+            activeModalProjectKey = 'lora';
+            isRestoringModalProjectScroll = false;
+            modalProjectScrollState = {
+                lora: { scrollTop: 0, pct: 0 },
+                platform: { scrollTop: 0, pct: 0 }
+            };
+            const loraProgressBar = document.getElementById('modal-scroll-progress-bar');
+            const platformProgressBar = document.getElementById('zaowu-scroll-progress-bar');
+            if (loraProgressBar) loraProgressBar.style.width = '0%';
+            if (platformProgressBar) platformProgressBar.style.width = '0%';
+            const modalScrollArea = document.getElementById('modal-scroll-area');
+            if (modalScrollArea) modalScrollArea.classList.remove('is-project-content-fading');
+            if (zaowuBubbleRevealTimer) {
+                clearTimeout(zaowuBubbleRevealTimer);
+                zaowuBubbleRevealTimer = null;
+            }
+            if (constructionBubble) {
+                constructionBubble.classList.remove('is-visible');
+                constructionBubble.setAttribute('aria-hidden', 'true');
+            }
+            if (tabSwitchHint) {
+                tabSwitchHint.classList.remove('is-visible');
+                tabSwitchHint.setAttribute('aria-hidden', 'true');
+            }
+            tabsWrap.classList.remove('is-zaowu-platform-view');
+
+            // 每次打开先重置内容可见性（防止上次停在空白态）
+            const scrollArea = document.getElementById('modal-scroll-area');
+            if (scrollArea) Array.from(scrollArea.children).forEach(el => { el.style.display = ''; });
+            const navSidebar = document.getElementById('modal-nav-sidebar');
+            if (navSidebar) {
+                navSidebar.style.removeProperty('visibility');
+                navSidebar.inert = false;
+                navSidebar.removeAttribute('aria-hidden');
+            }
+            // 重置弹层背景色（防止上次停在灵感造物平台的浅色空白态）
+            const modalContent = document.getElementById('modal-content');
+            if (modalContent) modalContent.style.background = '';
+            if (scrollArea) scrollArea.style.background = '';
+
+            const isDualProject = data && data.title === '灵感造物平台& 品牌AI资产建设';
+            if (modalContent) {
+                modalContent.classList.toggle('is-zaowu-dual-project', isDualProject);
+                modalContent.classList.remove('is-zaowu-platform-view');
+            }
+            if (isDualProject) {
+                switchModalProject('lora'); // 默认展示“品牌AI资产”
+                tabsWrap.classList.remove('hidden');
+                setTimeout(() => {
+                    tabsWrap.classList.remove('opacity-0', 'translate-x-[30px]', 'pointer-events-none');
+                    tabsWrap.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                }, 100);
+            } else {
+                tabsWrap.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                tabsWrap.classList.add('opacity-0', 'translate-x-[30px]', 'pointer-events-none', 'hidden');
+            }
+        }
+
+        function positionZaowuConstructionBubble() {
+            const constructionBubble = document.getElementById('zaowu-construction-bubble');
+            const modalContent = document.getElementById('modal-content');
+            if (!constructionBubble || !modalContent || window.innerWidth < 1280 || !modalContent.classList.contains('is-zaowu-platform-view')) return;
+
+            const modalRect = modalContent.getBoundingClientRect();
+            const bubbleWidth = Math.min(236, Math.max(156, modalRect.left - 48));
+            constructionBubble.style.width = `${bubbleWidth}px`;
+            constructionBubble.style.left = `${Math.max(16, modalRect.left - bubbleWidth - 30)}px`;
+            constructionBubble.style.top = `${Math.max(0, modalRect.top)}px`;
+        }
+
+        window.addEventListener('resize', positionZaowuConstructionBubble);
+        if ('ResizeObserver' in window) {
+            const constructionBubbleObserver = new ResizeObserver(positionZaowuConstructionBubble);
+            const observedModalContent = document.getElementById('modal-content');
+            if (observedModalContent) constructionBubbleObserver.observe(observedModalContent);
+        }
+
+        function switchModalProject(key) {
+            // 高亮当前 Tab
+            document.querySelectorAll('#modal-project-tabs .project-tab').forEach(tab => {
+                const isActive = tab.dataset.subproject === key;
+                const image = tab.querySelector('.project-tab-image');
+                tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                if (image) {
+                    image.src = isActive
+                        ? image.dataset.selectedSrc
+                        : image.dataset.unselectedSrc;
+                }
+            });
+
+            const scrollArea = document.getElementById('modal-scroll-area');
+            const navSidebar = document.getElementById('modal-nav-sidebar');
+            const modalContent = document.getElementById('modal-content');
+            const tabsWrap = document.getElementById('modal-project-tabs');
+            const constructionBubble = document.getElementById('zaowu-construction-bubble');
+            const tabSwitchHint = document.getElementById('zaowu-tab-switch-hint');
+            const previousProjectKey = activeModalProjectKey;
+            const shouldAnimateContent = previousProjectKey !== key;
+            const zaowuFrame = document.getElementById('zaowu-showcase-frame');
+            if (shouldAnimateContent && zaowuFrame?.contentWindow) {
+                zaowuFrame.contentWindow.postMessage(
+                    { type: 'zaowu:cancel-parent-scroll' },
+                    window.location.origin
+                );
+            }
+            if (scrollArea && shouldAnimateContent && !isRestoringModalProjectScroll) {
+                const previousMaxScroll = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+                modalProjectScrollState[previousProjectKey] = {
+                    scrollTop: scrollArea.scrollTop,
+                    pct: previousMaxScroll > 0 ? (scrollArea.scrollTop / previousMaxScroll) * 100 : 0
+                };
+            }
+            // “灵感造物”是一段从顶部开始的浏览叙事：每次进入都重新开始。
+            if (key === 'platform') {
+                modalProjectScrollState.platform = { scrollTop: 0, pct: 0 };
+                if (scrollArea) scrollArea.scrollTop = 0;
+            }
+            isRestoringModalProjectScroll = shouldAnimateContent;
+            activeModalProjectKey = key;
+            if (modalProjectContentSwapTimer) {
+                clearTimeout(modalProjectContentSwapTimer);
+                modalProjectContentSwapTimer = null;
+            }
+            if (scrollArea && shouldAnimateContent) {
+                scrollArea.classList.add('is-project-content-fading');
+            }
+            if (zaowuBubbleRevealTimer) {
+                clearTimeout(zaowuBubbleRevealTimer);
+                zaowuBubbleRevealTimer = null;
+            }
+            if (modalContent) modalContent.classList.toggle('is-zaowu-platform-view', key === 'platform');
+            if (tabsWrap) tabsWrap.classList.toggle('is-zaowu-platform-view', key === 'platform');
+            if (constructionBubble) {
+                constructionBubble.setAttribute('aria-hidden', key === 'platform' ? 'false' : 'true');
+                if (key !== 'platform') constructionBubble.classList.remove('is-visible');
+            }
+            if (tabSwitchHint) {
+                const shouldShowTabHint = key === 'lora';
+                tabSwitchHint.classList.toggle('is-visible', shouldShowTabHint);
+                tabSwitchHint.setAttribute('aria-hidden', shouldShowTabHint ? 'false' : 'true');
+            }
+
+            const commitContentSwap = () => {
+                if (!scrollArea || activeModalProjectKey !== key) return;
+                if (key === 'platform') {
+                    modalProjectScrollState.platform = { scrollTop: 0, pct: 0 };
+                    scrollArea.scrollTop = 0;
+                    Array.from(scrollArea.children).forEach(el => { el.style.display = 'none'; });
+                    showZaowuShowcase();
+                    scrollArea.style.background = '#F8F8F9';
+                    if (modalContent) modalContent.style.background = '#F8F8F9';
+                } else {
+                    Array.from(scrollArea.children).forEach(el => {
+                        el.style.display = el.id === 'zaowu-showcase' ? 'none' : '';
+                    });
+                    scrollArea.style.background = '';
+                    if (modalContent) modalContent.style.background = '';
+                }
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        const savedState = key === 'platform'
+                            ? { scrollTop: 0, pct: 0 }
+                            : (modalProjectScrollState[key] || { scrollTop: 0, pct: 0 });
+                        const maxScroll = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+                        const restoredTop = Math.min(savedState.scrollTop, maxScroll);
+                        scrollArea.scrollTop = restoredTop;
+                        modalProjectScrollState[key] = {
+                            scrollTop: restoredTop,
+                            pct: maxScroll > 0 ? (restoredTop / maxScroll) * 100 : 0
+                        };
+                        updateModalProjectProgress(false);
+                        isRestoringModalProjectScroll = false;
+                        scrollArea.classList.remove('is-project-content-fading');
+                    });
+                });
+                modalProjectContentSwapTimer = null;
+            };
+
+            if (shouldAnimateContent) {
+                modalProjectContentSwapTimer = setTimeout(commitContentSwap, 210);
+            } else {
+                commitContentSwap();
+            }
+
+            if (key === 'platform') {
+                positionZaowuConstructionBubble();
+                zaowuBubbleRevealTimer = setTimeout(() => {
+                    positionZaowuConstructionBubble();
+                    if (constructionBubble && modalContent?.classList.contains('is-zaowu-platform-view')) {
+                        constructionBubble.classList.add('is-visible');
+                    }
+                    zaowuBubbleRevealTimer = null;
+                }, 300);
+                if (navSidebar) {
+                    navSidebar.style.removeProperty('visibility');
+                    navSidebar.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                    navSidebar.classList.add('opacity-0', 'translate-x-[-30px]', 'pointer-events-none');
+                    navSidebar.inert = true;
+                    navSidebar.setAttribute('aria-hidden', 'true');
+                }
+            } else {
+                stopZaowuAutoplay();
+                if (navSidebar) {
+                    navSidebar.style.removeProperty('visibility');
+                    navSidebar.classList.remove('opacity-0', 'translate-x-[-30px]', 'pointer-events-none');
+                    navSidebar.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                    navSidebar.inert = false;
+                    navSidebar.removeAttribute('aria-hidden');
+                }
+            }
+        }
+
         function openProjectModal(event, data) {
             const heroContainer = document.getElementById('modal-hero-container');
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
-            
+
             if (heroContainer) {
                 // 🔥 为首屏锚点预留安全滚动缓冲高度
                 heroContainer.style.scrollMarginTop = '40px';
@@ -1484,16 +2513,16 @@
             if (imgContainer) {
                 imgContainer.innerHTML = '';
                 const sources = Array.isArray(data.content) ? data.content : [data.content];
-                
+
                 sources.forEach((item, index) => {
                     // 🔥 自动绑定对应顺序的 ID 锚点
                     const mediaId = `modal-media-${index}`;
 
                     if (Array.isArray(item)) {
                         const rowDiv = document.createElement('div');
-                        rowDiv.className = 'flex w-full'; 
-                        rowDiv.id = mediaId; 
-                        rowDiv.style.scrollMarginTop = '40px'; 
+                        rowDiv.className = 'flex w-full';
+                        rowDiv.id = mediaId;
+                        rowDiv.style.scrollMarginTop = '40px';
                         item.forEach(src => {
                             let media;
                             if (src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm')) {
@@ -1507,7 +2536,7 @@
                                 media = document.createElement('img');
                                 media.src = src;
                                 // 🔥 杀掉懒加载，加入高度骨架，彻底解决高度0折叠导致的锚定失效BUG
-                                media.style.minHeight = '600px'; 
+                                media.style.minHeight = '600px';
                                 media.onload = function() { this.style.minHeight = 'auto'; };
                             }
                             media.className = 'flex-1 w-1/2 block object-cover border-r border-black last:border-0';
@@ -1527,12 +2556,12 @@
                             media = document.createElement('img');
                             media.src = item;
                             // 🔥 杀掉懒加载，强制最低高度撑开DOM，让浏览器锚定计算极其精准！
-                            media.style.minHeight = '1000px'; 
+                            media.style.minHeight = '1000px';
                             media.onload = function() { this.style.minHeight = 'auto'; };
                         }
-                        media.className = 'w-full block object-cover'; 
-                        media.id = mediaId; 
-                        media.style.scrollMarginTop = '40px'; 
+                        media.className = 'w-full block object-cover';
+                        media.id = mediaId;
+                        media.style.scrollMarginTop = '40px';
                         imgContainer.appendChild(media);
                     }
                 });
@@ -1556,7 +2585,7 @@
                         }
 
                         navHtml += `
-                            <button onclick="${clickAction}" 
+                            <button onclick="${clickAction}"
                                     class="group relative flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-300">
                                 <div class="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-accent transition-colors duration-300 shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_12px_rgba(236,72,153,0.8)]"></div>
                                 <span class="text-[13px] font-bold text-gray-400 group-hover:text-white tracking-wide transition-colors duration-300 whitespace-nowrap">${tag.name}</span>
@@ -1565,7 +2594,7 @@
                     });
                     navHtml += `</div>`;
                     navSidebar.innerHTML = navHtml;
-                    
+
                     navSidebar.classList.remove('hidden');
                     setTimeout(() => {
                         navSidebar.classList.remove('opacity-0', 'translate-x-[-30px]', 'pointer-events-none');
@@ -1578,12 +2607,16 @@
                 }
             }
 
+            setupProjectTabs(data);
+
             if (modal && modal.classList) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
             }
-            
+
             if (document.body && document.body.style) {
+                document.documentElement.classList.add('is-project-modal-open');
+                document.body.classList.add('is-project-modal-open');
                 document.body.style.overflow = 'hidden';
             }
 
@@ -1600,7 +2633,7 @@
                 const cardCenterY = lastClickedCardRect.top + lastClickedCardRect.height / 2;
                 const windowCenterX = window.innerWidth / 2;
                 const windowCenterY = window.innerHeight / 2;
-                
+
                 translateX = cardCenterX - windowCenterX;
                 translateY = cardCenterY - windowCenterY;
             }
@@ -1610,9 +2643,9 @@
                 content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
                 content.style.opacity = '0';
                 void content.offsetWidth;
-                content.style.transition = ''; 
+                content.style.transition = '';
             }
-            
+
             setTimeout(() => {
                 if (backdrop && backdrop.classList) {
                     backdrop.classList.remove('opacity-0');
@@ -1626,18 +2659,49 @@
         }
 
         function closeModal() {
+            stopZaowuAutoplay();
+            if (modalProjectContentSwapTimer) {
+                clearTimeout(modalProjectContentSwapTimer);
+                modalProjectContentSwapTimer = null;
+            }
+            const closingScrollArea = document.getElementById('modal-scroll-area');
+            if (closingScrollArea) closingScrollArea.classList.remove('is-project-content-fading');
+            if (zaowuBubbleRevealTimer) {
+                clearTimeout(zaowuBubbleRevealTimer);
+                zaowuBubbleRevealTimer = null;
+            }
             if (backdrop && backdrop.classList) {
                 backdrop.classList.remove('opacity-100');
                 backdrop.classList.add('opacity-0');
             }
-            
+
             // 🔥 退出弹窗时隐藏悬浮面板
             const navSidebar = document.getElementById('modal-nav-sidebar');
             if (navSidebar && !navSidebar.classList.contains('opacity-0')) {
                 navSidebar.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
                 navSidebar.classList.add('opacity-0', 'translate-x-[-30px]', 'pointer-events-none');
             }
-            
+
+            // 🔥 退出弹窗时隐藏双子项目 Tab
+            const tabsWrap = document.getElementById('modal-project-tabs');
+            if (tabsWrap) {
+                tabsWrap.classList.remove('is-zaowu-platform-view');
+                tabsWrap.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                tabsWrap.classList.add('opacity-0', 'translate-x-[30px]', 'pointer-events-none');
+                setTimeout(() => tabsWrap.classList.add('hidden'), 400);
+            }
+
+            const constructionBubble = document.getElementById('zaowu-construction-bubble');
+            if (constructionBubble) {
+                constructionBubble.classList.remove('is-visible');
+                constructionBubble.setAttribute('aria-hidden', 'true');
+            }
+            const tabSwitchHint = document.getElementById('zaowu-tab-switch-hint');
+            if (tabSwitchHint) {
+                tabSwitchHint.classList.remove('is-visible');
+                tabSwitchHint.setAttribute('aria-hidden', 'true');
+            }
+
             let translateX = 0;
             let translateY = 0;
             if (lastClickedCardRect) {
@@ -1653,33 +2717,72 @@
                 content.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.15)`;
                 content.style.opacity = '0';
             }
-            
+
             setTimeout(() => {
                 if (modal && modal.classList) {
                     modal.classList.add('hidden');
                     modal.classList.remove('flex');
                 }
                 if (document.body && document.body.style) {
+                    document.documentElement.classList.remove('is-project-modal-open');
+                    document.body.classList.remove('is-project-modal-open');
                     document.body.style.overflow = '';
                 }
-                
+
                 const heroContainer = document.getElementById('modal-hero-container');
                 const infoContainer = document.getElementById('modal-info-container');
                 const imageContainer = document.getElementById('modal-image-container');
                 if (heroContainer) heroContainer.innerHTML = '';
                 if (infoContainer) infoContainer.innerHTML = '';
-                if (imageContainer) imageContainer.innerHTML = ''; 
-                
+                if (imageContainer) imageContainer.innerHTML = '';
+
                 if (content && content.style) {
                     content.style.transform = '';
                     content.style.opacity = '';
                 }
-            }, 450); 
+            }, 450);
         }
 
         const flashWorksData = [
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/%E7%BE%8E%E5%9B%A214%E5%91%A8%E5%B9%B4%E9%99%90%E5%AE%9A%E7%89%88%E6%8E%A2%E7%B4%A2%E5%9B%A2%E5%9B%A2.jpg", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/%E5%B0%81%E9%9D%A2.mp4",
+                images: [
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/1.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/2.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/3.jpg",
+                    [
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4a.mp4",
+                        "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/4b.mp4"
+                    ],
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/5.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/6.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/7.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/8.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/9.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/10.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/11.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/12.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/13.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/14.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/15.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/16.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/17.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/18.jpg",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/19.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/20.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/21.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/22.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/23.mp4",
+                    "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/24.jpg"
+                ],
+                title: "2023美团中秋礼盒",
+                desc: "美团2023年中秋礼盒全链路设计，将可持续环保理念与业务深度结合，首创“太空舱”产品形态。",
+                tags: ["全链路文创设计", "周边手办", "美团公益"],
+                date: "2023-09-29",
+                likes: "1025"
+            },
+            {
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/%E7%BE%8E%E5%9B%A214%E5%91%A8%E5%B9%B4%E9%99%90%E5%AE%9A%E7%89%88%E6%8E%A2%E7%B4%A2%E5%9B%A2%E5%9B%A2.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/%E7%BE%8E%E5%9B%A214%E5%91%A8%E5%B9%B4%E9%99%90%E5%AE%9A%E7%89%88%E6%8E%A2%E7%B4%A2%E5%9B%A2%E5%9B%A2.jpg",
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%8D%81%E5%9B%9B%E5%91%A8%E5%B9%B4%E5%AE%87%E8%88%AA%E5%9B%A2%E5%9B%A2/2.mp4",
@@ -1706,7 +2809,7 @@
                 ]
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/1.mp4", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/1.mp4",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%91%98%E5%B7%A5%E5%85%A5%E8%81%8C%E4%B8%80%E5%91%A8%E5%B9%B4%E7%BA%AA%E5%BF%B5%E7%A4%BC/1.mp4",
                     [
@@ -1728,7 +2831,7 @@
                 likes: "1025"
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E6%AD%A3%E8%A7%86%E5%9B%BE.png", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E6%AD%A3%E8%A7%86%E5%9B%BE.png",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E4%B8%96%E7%95%8C/%E6%AD%A3%E8%A7%86%E5%9B%BE.png",
                     [
@@ -1751,7 +2854,7 @@
                 likes: "1025"
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E7%94%9F%E6%97%A5%E6%9D%AF.jpg", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E7%94%9F%E6%97%A5%E6%9D%AF.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E7%94%9F%E6%97%A5%E6%9D%AF.jpg",
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2%E7%9A%84%E7%94%9F%E6%97%A5%E7%A4%BC%E7%9B%92/%E6%89%8B%E6%9C%BA%E6%95%88%E6%9E%9C.png",
@@ -1764,7 +2867,7 @@
                 likes: "1025"
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%8C%85%E8%A3%85%E7%9B%92%E6%95%88%E6%9E%9C%E5%9B%BE.jpg", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%8C%85%E8%A3%85%E7%9B%92%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%B0%83%E6%96%99%E7%BD%90%E5%8C%85%E8%A3%85%E7%9B%92%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E8%B1%A1%E6%96%87%E5%88%9B/%E5%B0%8F%E8%B1%A1%E8%BD%AF%E8%83%B6%E5%8C%85%E6%95%88%E6%9E%9C%E5%9B%BE.jpg",
@@ -1790,7 +2893,7 @@
                 ]
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/1.jpg", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/1.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/1.jpg",
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E8%B4%A2%E7%A5%9E%E5%9B%A2%E5%9B%A2/2.jpg",
@@ -1815,8 +2918,8 @@
                 ]
             },
             {
-                bgColor: "white", 
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/%E5%B0%81%E9%9D%A2.jpg", 
+                bgColor: "white",
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/%E5%B0%81%E9%9D%A2.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/0.jpg",
                     { src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%A5%9E%E5%88%B8%E8%8A%82%E6%B3%95%E9%97%A8%E5%AF%BA%E8%81%94%E5%90%8D%E6%89%8B%E4%B8%B2/1.png?v=v2", halfWidth: true },
@@ -1851,7 +2954,7 @@
                 ]
             },
             {
-                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E5%B0%8F%E5%9B%BE.jpg", 
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E5%B0%8F%E5%9B%BE.jpg",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E8%AF%84%E5%AE%A1%E5%9B%A2%E5%8A%A8%E6%80%812.mp4",
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%BE%8E%E8%AF%84%E5%AE%A1%E5%9B%A2/%E8%AF%84%E5%AE%A1%E5%9B%A2%E5%8A%A8%E6%80%813.mp4"
@@ -1887,9 +2990,9 @@
                 mainView.classList.replace('opacity-100', 'opacity-0');
                 setTimeout(() => {
                     mainView.classList.replace('block', 'hidden');
-                    renderFlashWorks(); 
+                    renderFlashWorks();
                     flashView.classList.replace('hidden', 'block');
-                    void flashView.offsetWidth; 
+                    void flashView.offsetWidth;
                     flashView.classList.replace('opacity-0', 'opacity-100');
                 }, 300);
             } else {
@@ -1905,21 +3008,21 @@
 
         function renderFlashWorks() {
             const grid = document.getElementById('flash-waterfall-grid');
-            if (grid.children.length > 0) return; 
+            if (grid.children.length > 0) return;
 
             let html = '';
-            const delayClasses = ['delay-100', 'delay-200', 'delay-300']; 
+            const delayClasses = ['delay-100', 'delay-200', 'delay-300'];
 
             flashWorksData.forEach((work, index) => {
                 const workJson = encodeURIComponent(JSON.stringify(work)).replace(/'/g, "%27");
                 const isCoverVideo = work.src.toLowerCase().endsWith('.mp4') || work.src.toLowerCase().endsWith('.webm');
-                const delayClass = delayClasses[index % 3]; 
-                
+                const delayClass = delayClasses[index % 3];
+
                 if (work.featured) {
                     const mediaHtml = isCoverVideo
                         ? `<video src="${work.src}" loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
                         : `<img src="${work.src}" loading="lazy" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
-                    
+
                     html += `
                         <div class="reveal-card-blur ${delayClass} block w-full mb-4 md:mb-6 group cursor-pointer relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(236,72,153,0.2)]" style="column-span: all; -webkit-column-span: all;" onclick="openFlashModal('${workJson}')">
                             <div class="flex flex-col md:flex-row w-full h-auto md:h-[320px]">
@@ -1944,7 +3047,7 @@
                     const mediaHtml = isCoverVideo
                         ? `<video src="${work.src}" loop muted playsinline preload="none" class="lazy-video w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out"></video>`
                         : `<img src="${work.src}" loading="lazy" class="w-full object-cover block group-hover:scale-105 transition-transform duration-700 ease-out">`;
-                    
+
                     html += `
                         <div class="reveal-card-blur ${delayClass} break-inside-avoid inline-block w-full mb-3 md:mb-4 group cursor-pointer relative rounded-xl overflow-hidden bg-white/[0.04] border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]" onclick="openFlashModal('${workJson}')">
                             <div class="relative w-full overflow-hidden">
@@ -1964,7 +3067,7 @@
                     scrollObserver.observe(el);
                 });
             }
-            
+
             if (typeof videoObserver !== 'undefined') {
                 document.querySelectorAll('#flash-waterfall-grid .lazy-video').forEach(el => {
                     videoObserver.observe(el);
@@ -1978,30 +3081,30 @@
 
         function openFlashModal(encodedData) {
             const data = JSON.parse(decodeURIComponent(encodedData));
-            
+
             const galleryInner = document.getElementById('flash-modal-gallery-inner');
             const galleryScroll = document.getElementById('flash-modal-gallery');
             const leftContainer = document.getElementById('flash-modal-left-container');
             const bgBlur = document.getElementById('flash-modal-bg-blur');
-            
+
             galleryInner.innerHTML = '';
-            galleryScroll.scrollTop = 0; 
+            galleryScroll.scrollTop = 0;
 
             const imagesToRender = data.images && data.images.length > 0 ? data.images : [data.src];
             const isMulti = imagesToRender.length > 1;
-            
+
             const firstItemSrc = typeof imagesToRender[0] === 'string' ? imagesToRender[0] : imagesToRender[0].src;
             const isSingleVideo = !isMulti && (firstItemSrc.toLowerCase().endsWith('.mp4') || firstItemSrc.toLowerCase().endsWith('.webm'));
 
-            let baseClass = (isMulti || isSingleVideo) 
-                ? 'flex flex-col w-full min-h-full' 
+            let baseClass = (isMulti || isSingleVideo)
+                ? 'flex flex-col w-full min-h-full'
                 : 'flex flex-col items-center justify-center min-h-full p-4 md:p-8 gap-6 md:gap-8';
-            
+
             if (data.bgColor === 'white') {
-                baseClass += ' bg-white'; 
+                baseClass += ' bg-white';
                 leftContainer.classList.remove('bg-[#0a0a0a]');
-                leftContainer.classList.add('bg-[#15171e]'); 
-                bgBlur.style.display = 'none'; 
+                leftContainer.classList.add('bg-[#15171e]');
+                bgBlur.style.display = 'none';
             } else {
                 leftContainer.classList.remove('bg-[#15171e]');
                 leftContainer.classList.add('bg-[#0a0a0a]');
@@ -2010,7 +3113,7 @@
             }
 
             galleryInner.className = baseClass;
-            
+
             const borderColor = data.bgColor === 'white' ? 'border-gray-200' : 'border-[#0a0a0a]';
 
             imagesToRender.forEach(item => {
@@ -2030,9 +3133,9 @@
                     const itemSrc = typeof item === 'string' ? item : item.src;
                     const isHalfWidth = typeof item === 'object' && item.halfWidth;
                     const isVideo = itemSrc.toLowerCase().endsWith('.mp4') || itemSrc.toLowerCase().endsWith('.webm');
-                    
-                    const mediaClass = isHalfWidth 
-                        ? "w-[65%] md:w-[45%] mx-auto block object-contain my-3 md:my-4 cursor-zoom-in" 
+
+                    const mediaClass = isHalfWidth
+                        ? "w-[65%] md:w-[45%] mx-auto block object-contain my-3 md:my-4 cursor-zoom-in"
                         : "w-full block object-cover m-0 p-0 cursor-zoom-in";
 
                     if (isMulti || isSingleVideo) {
@@ -2051,20 +3154,20 @@
             document.getElementById('flash-modal-desc').innerText = data.desc;
             document.getElementById('flash-modal-date').innerText = `发布于 ${data.date}`;
             document.getElementById('flash-modal-likes').innerText = data.likes;
-            
+
             const likeIcon = document.getElementById('flash-like-btn-svg');
             if (likeIcon) {
                 likeIcon.setAttribute('fill', 'none');
                 likeIcon.classList.remove('text-red-500');
             }
-            
+
             const tagsHtml = data.tags.map(tag => `<span class="cursor-pointer hover:underline">#${tag}</span>`).join('');
             document.getElementById('flash-modal-tags').innerHTML = tagsHtml;
 
             const commentsContainer = document.getElementById('flash-modal-comments-container');
             const commentsList = document.getElementById('flash-modal-comments-list');
             const commentsCount = document.getElementById('flash-modal-comments-count');
-            
+
             if (commentsContainer && commentsList && commentsCount) {
                 if (data.comments && data.comments.length > 0) {
                     commentsCount.innerText = data.comments.length;
@@ -2097,7 +3200,7 @@
             flashModal.classList.remove('hidden');
             flashModal.classList.add('flex');
             document.body.style.overflow = 'hidden';
-            
+
             requestAnimationFrame(() => {
                 flashModalBackdrop.classList.replace('opacity-0', 'opacity-100');
                 flashModalContent.classList.replace('opacity-0', 'opacity-100');
@@ -2109,21 +3212,21 @@
             flashModalBackdrop.classList.replace('opacity-100', 'opacity-0');
             flashModalContent.classList.replace('opacity-100', 'opacity-0');
             flashModalContent.classList.replace('scale-100', 'scale-95');
-            
+
             setTimeout(() => {
                 flashModal.classList.remove('flex');
                 flashModal.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 400); 
+            }, 400);
         }
 
         function triggerLike(event, btnElement) {
             event.stopPropagation();
-            
+
             const svgIcon = document.getElementById('flash-like-btn-svg');
             svgIcon.setAttribute('fill', 'currentColor');
             svgIcon.classList.add('text-red-500');
-            
+
             svgIcon.animate([
                 { transform: 'scale(1)' },
                 { transform: 'scale(1.4)', offset: 0.3 },
@@ -2140,7 +3243,7 @@
             if (!isNaN(currentLikes)) {
                 currentLikes++;
                 likesSpan.innerText = currentLikes;
-                likesSpan.style.color = "#ef4444"; 
+                likesSpan.style.color = "#ef4444";
                 likesSpan.animate([
                     { transform: 'scale(1)' },
                     { transform: 'scale(1.2)', offset: 0.3 },
@@ -2155,24 +3258,24 @@
             heart.style.bottom = '100%';
             heart.style.pointerEvents = 'none';
             heart.style.zIndex = '999';
-            
+
             const colors = ['#ef4444', '#f43f5e', '#ec4899', '#fb7185'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            
+
             heart.innerHTML = `<svg style="width: 24px; height: 24px; color: ${randomColor}; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
-            
+
             btnElement.appendChild(heart);
 
-            const xOffset = (Math.random() - 0.5) * 80; 
-            const rot = (Math.random() - 0.5) * 60;     
-            const yOffset = -100 - Math.random() * 60;  
+            const xOffset = (Math.random() - 0.5) * 80;
+            const rot = (Math.random() - 0.5) * 60;
+            const yOffset = -100 - Math.random() * 60;
 
             heart.animate([
                 { transform: `translate(-50%, 0) scale(0)`, opacity: 0 },
                 { transform: `translate(calc(-50% + ${xOffset * 0.3}px), ${yOffset * 0.3}px) scale(1.2) rotate(${rot * 0.3}deg)`, opacity: 1, offset: 0.2 },
                 { transform: `translate(calc(-50% + ${xOffset}px), ${yOffset}px) scale(0.8) rotate(${rot}deg)`, opacity: 0 }
             ], {
-                duration: 1200 + Math.random() * 400, 
+                duration: 1200 + Math.random() * 400,
                 easing: 'ease-out',
                 fill: 'forwards'
             });
@@ -2187,7 +3290,7 @@
             flashFullscreenImg.src = src;
             flashFullscreenModal.classList.remove('hidden');
             flashFullscreenModal.classList.add('flex');
-            
+
             requestAnimationFrame(() => {
                 flashFullscreenModal.classList.replace('opacity-0', 'opacity-100');
                 flashFullscreenImg.classList.replace('scale-95', 'scale-100');
@@ -2197,11 +3300,11 @@
         function closeFlashFullscreen() {
             flashFullscreenModal.classList.replace('opacity-100', 'opacity-0');
             flashFullscreenImg.classList.replace('scale-100', 'scale-95');
-            
+
             setTimeout(() => {
                 flashFullscreenModal.classList.add('hidden');
                 flashFullscreenModal.classList.remove('flex');
-                flashFullscreenImg.src = ''; 
+                flashFullscreenImg.src = '';
             }, 300);
         }
 
@@ -2227,7 +3330,7 @@
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-            
+
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
@@ -2236,19 +3339,19 @@
             } catch (err) {
                 console.error('复制失败', err);
             }
-            
+
             document.body.removeChild(textArea);
         }
 
         function showToast(message) {
             const toast = document.getElementById('toast-message');
             const toastText = document.getElementById('toast-text');
-            
+
             toastText.innerText = message;
-            
+
             toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
             toast.classList.add('opacity-100', 'translate-y-0');
-            
+
             clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('opacity-100', 'translate-y-0');
@@ -2266,7 +3369,7 @@
                 try {
                     const ipResponse = await fetch('https://api.ipify.org?format=json');
                     const ipData = await ipResponse.json();
-                    
+
                     const trackData = {
                         event_name: 'resume_download',
                         ip_address: ipData.ip,

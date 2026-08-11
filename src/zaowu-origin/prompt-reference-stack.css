@@ -1,0 +1,346 @@
+/* Reference-image uploader: cropped thumbnails, stable stacking, precise removal. */
+
+.prompt-dock .prompt-dock-reference-zone {
+  --reference-motion: 360ms var(--glass-motion-ease);
+  transition:
+    flex-basis var(--reference-motion),
+    filter 220ms ease;
+}
+
+.prompt-dock .prompt-dock-reference-stack {
+  cursor: default;
+}
+
+.prompt-dock .prompt-dock-reference-stack.is-empty {
+  cursor: pointer;
+}
+
+.prompt-dock .prompt-dock-reference-cards {
+  pointer-events: auto;
+}
+
+.prompt-dock .prompt-dock-reference-card {
+  overflow: visible;
+  isolation: isolate;
+  will-change: transform;
+  transition:
+    transform var(--reference-motion),
+    box-shadow 220ms ease,
+    filter 220ms ease;
+}
+
+.prompt-dock .prompt-dock-reference-card > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.prompt-dock .prompt-dock-reference-remove {
+  position: absolute;
+  z-index: 2;
+  top: -8px;
+  right: -8px;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 50%;
+  background: rgba(42, 46, 55, 0.94);
+  color: #fff;
+  box-shadow: 0 5px 13px rgba(18, 21, 28, 0.2);
+  opacity: 0;
+  transform: scale(0.72);
+  pointer-events: none;
+  transition:
+    opacity 150ms ease,
+    transform 220ms var(--glass-motion-ease),
+    background 150ms ease;
+}
+
+.prompt-dock .prompt-dock-reference-remove::before,
+.prompt-dock .prompt-dock-reference-remove::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 1.4px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.prompt-dock .prompt-dock-reference-remove::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.prompt-dock .prompt-dock-reference-remove::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.prompt-dock .prompt-dock-reference-remove:hover {
+  background: rgba(28, 31, 38, 0.98);
+  transform: scale(1.08);
+}
+
+.prompt-dock .prompt-dock-reference-card:hover,
+.prompt-dock .prompt-dock-reference-card:focus-within {
+  z-index: 30 !important;
+}
+
+.prompt-dock .prompt-dock-reference-card:hover .prompt-dock-reference-remove,
+.prompt-dock .prompt-dock-reference-card:focus-within .prompt-dock-reference-remove {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.prompt-dock .prompt-dock-reference-add {
+  cursor: pointer;
+}
+
+.prompt-dock .prompt-dock-reference-add > span,
+.prompt-dock .prompt-dock-reference-empty-card > span {
+  position: absolute;
+  inset: 0;
+}
+
+.prompt-dock .prompt-dock-reference-add > span::before,
+.prompt-dock .prompt-dock-reference-add > span::after,
+.prompt-dock .prompt-dock-reference-empty-card > span::before,
+.prompt-dock .prompt-dock-reference-empty-card > span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.35px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.prompt-dock .prompt-dock-reference-add > span::after,
+.prompt-dock .prompt-dock-reference-empty-card > span::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.prompt-dock .prompt-dock-reference-stack:hover .prompt-dock-reference-add,
+.prompt-dock .prompt-dock-reference-add:hover,
+.prompt-dock .prompt-dock-reference-add:focus-visible {
+  background: #fff;
+  transform: scale(1.08);
+}
+
+.prompt-dock .prompt-dock-reference-add:focus-visible,
+.prompt-dock .prompt-dock-reference-remove:focus-visible,
+.prompt-dock .prompt-dock-reference-stack.is-empty:focus-visible {
+  outline: 2px solid rgba(113, 104, 238, 0.42);
+  outline-offset: 3px;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-card,
+.prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-card {
+  transform:
+    translateX(var(--reference-open-x))
+    rotate(var(--reference-open-rotate));
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-card:hover,
+.prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-card:focus-within {
+  transform:
+    translateX(var(--reference-open-x))
+    translateY(-3px)
+    rotate(0deg)
+    scale(1.04);
+  box-shadow: 0 13px 28px rgba(24, 28, 38, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prompt-dock .prompt-dock-reference-zone,
+  .prompt-dock .prompt-dock-reference-stack,
+  .prompt-dock .prompt-dock-reference-card,
+  .prompt-dock .prompt-dock-reference-add,
+  .prompt-dock .prompt-dock-reference-remove {
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (hover: none) {
+  .prompt-dock .prompt-dock-reference-card:focus-within .prompt-dock-reference-remove {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+
+/* Uploaded state: the thumbnail replaces the empty upload tile. */
+.prompt-dock .prompt-dock-reference-zone.has-images {
+  --reference-thumb-width: 64px;
+  --reference-thumb-height: 70px;
+  --reference-thumb-radius: 14px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-tilt {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-upload-label {
+  display: none;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-stack {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 70px;
+  margin: 0 auto;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-cards {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-card {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  width: var(--reference-thumb-width) !important;
+  min-width: var(--reference-thumb-width) !important;
+  max-width: var(--reference-thumb-width) !important;
+  height: var(--reference-thumb-height) !important;
+  min-height: var(--reference-thumb-height) !important;
+  max-height: var(--reference-thumb-height) !important;
+  flex: 0 0 var(--reference-thumb-width);
+  aspect-ratio: auto !important;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: var(--reference-thumb-radius);
+  background: transparent;
+  box-shadow: 0 4px 11px rgba(24, 28, 38, 0.12);
+  transform:
+    translate(var(--reference-stack-x), var(--reference-stack-y))
+    rotate(var(--reference-stack-rotate));
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-card > img {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block;
+  box-sizing: border-box;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: auto !important;
+  border: 0;
+  border-radius: var(--reference-thumb-radius);
+  background: transparent;
+  object-fit: cover !important;
+  object-position: 50% 50% !important;
+  clip-path: inset(0 round var(--reference-thumb-radius));
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-add {
+  right: -6px;
+  bottom: -1px;
+  width: 21px;
+  height: 21px;
+  border: 1px solid rgba(39, 43, 53, 0.08) !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 4px 11px rgba(24, 28, 38, 0.16) !important;
+  transform: none;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images:hover,
+.prompt-dock .prompt-dock-reference-zone.has-images:focus-within {
+  flex-basis: var(--reference-zone-open-width);
+  width: var(--reference-zone-open-width);
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-stack,
+.prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-stack {
+  width: var(--reference-open-width);
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-add,
+.prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-add {
+  right: -8px;
+}
+
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-add:hover,
+.prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-add:focus-visible {
+  background: #fff !important;
+  transform: scale(1.08);
+}
+
+@media (max-width: 680px) {
+  .prompt-dock .prompt-dock-reference-zone.has-images {
+    --reference-thumb-width: 56px;
+    --reference-thumb-height: 62px;
+    --reference-thumb-radius: 12px;
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-stack {
+    width: 56px;
+    height: 62px;
+    margin-top: 0;
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-card {
+    left: 0;
+    top: 0;
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images .prompt-dock-reference-add {
+    width: 19px;
+    height: 19px;
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images:hover,
+  .prompt-dock .prompt-dock-reference-zone.has-images:focus-within {
+    flex-basis: min(var(--reference-zone-open-width), 148px);
+    width: min(var(--reference-zone-open-width), 148px);
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-stack,
+  .prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-stack {
+    width: min(var(--reference-open-width), 142px);
+  }
+
+  .prompt-dock .prompt-dock-reference-zone.has-images:hover .prompt-dock-reference-card,
+  .prompt-dock .prompt-dock-reference-zone.has-images:focus-within .prompt-dock-reference-card {
+    transform:
+      translateX(var(--reference-open-mobile-x))
+      rotate(var(--reference-open-rotate));
+  }
+}
