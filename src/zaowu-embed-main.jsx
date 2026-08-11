@@ -36,11 +36,35 @@ import "./zaowu-embed-overrides.css";
 
 const CAROUSEL_DELAY = 1750;
 const CAROUSEL_DURATION = 720;
+const MODAL_SCROLL_TARGET_LIMIT = 480;
 const INITIAL_CATEGORY_INDEX = Math.max(
   0,
   categories.findIndex((category) => category.id === "print3d"),
 );
 const TITLE_LINES = ["灵感造物", "以灵感诞生好物"];
+
+function getModalWheelDelta(event, sensitivity = 1, cap = 160) {
+  const unit = event.deltaMode === 1
+    ? 16
+    : event.deltaMode === 2
+      ? window.innerHeight
+      : 1;
+  const pixelDelta = event.deltaY * unit;
+  const magnitude = Math.abs(pixelDelta);
+
+  // macOS trackpads emit frequent pixel-mode deltas. Reduce the smaller,
+  // high-precision values most, while keeping coarse mouse-wheel input crisp.
+  const precisionScale = event.deltaMode !== 0
+    ? 1
+    : magnitude < 80
+      ? 0.58
+      : magnitude < 160
+        ? 0.72
+        : 0.82;
+
+  return Math.sign(pixelDelta)
+    * Math.min(magnitude * precisionScale * sensitivity, cap);
+}
 
 const WORKBENCH_THEME_CARDS = [
   {
@@ -224,10 +248,8 @@ function OriginalCommunityWaterfall() {
     let parentDocument = null;
     let frame = null;
     let measureFrame = 0;
-    let lastWheelEventAt = 0;
     let lastObservedWheelAt = 0;
     let transitionLockedUntil = 0;
-    let gestureResetTimer = 0;
     let storyLockScrollTop = null;
     let freeScrollAnimationFrame = 0;
     let freeScrollTarget = null;
@@ -266,10 +288,7 @@ function OriginalCommunityWaterfall() {
 
     function queueFreeScroll(event, maxParentScroll, sensitivity = 1) {
       if (!parentArea) return;
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-      const pixelDelta = event.deltaY * unit;
-      const forwardedDelta = Math.sign(pixelDelta)
-        * Math.min(Math.abs(pixelDelta) * sensitivity, 240);
+      const forwardedDelta = getModalWheelDelta(event, sensitivity);
       const currentTarget = freeScrollTarget ?? parentArea.scrollTop;
       const unconstrainedTarget = clamp(currentTarget + forwardedDelta, 0, maxParentScroll);
 
@@ -277,8 +296,8 @@ function OriginalCommunityWaterfall() {
       // leave a long, floaty tail after the user has stopped scrolling.
       freeScrollTarget = clamp(
         unconstrainedTarget,
-        Math.max(0, parentArea.scrollTop - 680),
-        Math.min(maxParentScroll, parentArea.scrollTop + 680),
+        Math.max(0, parentArea.scrollTop - MODAL_SCROLL_TARGET_LIMIT),
+        Math.min(maxParentScroll, parentArea.scrollTop + MODAL_SCROLL_TARGET_LIMIT),
       );
       if (!freeScrollAnimationFrame) {
         freeScrollAnimationFrame = window.requestAnimationFrame(animateFreeScroll);
@@ -290,9 +309,7 @@ function OriginalCommunityWaterfall() {
       storyLockScrollTop = null;
       isStoryActiveRef.current = false;
       transitionLockedUntil = 0;
-      lastWheelEventAt = 0;
       lastObservedWheelAt = 0;
-      window.clearTimeout(gestureResetTimer);
     }
 
     function setStage(nextStage) {
@@ -329,8 +346,6 @@ function OriginalCommunityWaterfall() {
           storyLockScrollTop = null;
           isStoryActiveRef.current = false;
           transitionLockedUntil = 0;
-          lastWheelEventAt = 0;
-          lastObservedWheelAt = 0;
           queueStoryUpdate();
           return;
         }
@@ -436,16 +451,12 @@ function OriginalCommunityWaterfall() {
       event,
       maxParentScroll,
       minimumMagnitude = 0,
-      sensitivity = 1.1,
+      sensitivity = 1,
     ) {
       if (!parentArea) return;
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-      const pixelDelta = event.deltaY * unit;
-      const forwardedDelta = Math.sign(pixelDelta)
-        * Math.min(
-          Math.max(Math.abs(pixelDelta) * sensitivity, minimumMagnitude),
-          260,
-        );
+      const adjustedDelta = getModalWheelDelta(event, sensitivity);
+      const forwardedDelta = Math.sign(adjustedDelta)
+        * Math.max(Math.abs(adjustedDelta), minimumMagnitude);
       parentArea.scrollTop = clamp(
         parentArea.scrollTop + forwardedDelta,
         0,
@@ -462,14 +473,14 @@ function OriginalCommunityWaterfall() {
       // Preserve tiny trackpad deltas in the free waterfall. Dropping them
       // here lets the generic eased bridge handle part of a slow gesture,
       // producing a different feel on the two sides of the 56% checkpoint.
-      const minimumHandledDelta = currentStage === 5 ? 0.01 : 2;
+      const minimumHandledDelta = currentStage === 5 ? 0.01 : 6;
       if (Math.abs(event.deltaY) < minimumHandledDelta) return;
 
       const direction = event.deltaY > 0 ? 1 : -1;
       const now = window.performance.now();
       const beginsNewWheelGesture = (
         !lastObservedWheelAt
-        || now - lastObservedWheelAt > 120
+        || now - lastObservedWheelAt > 180
       );
       lastObservedWheelAt = now;
       const maxParentScroll = parentArea
@@ -493,7 +504,6 @@ function OriginalCommunityWaterfall() {
         storyLockScrollTop = null;
         isStoryActiveRef.current = false;
         transitionLockedUntil = 0;
-        lastWheelEventAt = 0;
 
         queueFreeScroll(event, maxParentScroll);
         return;
@@ -507,13 +517,13 @@ function OriginalCommunityWaterfall() {
         currentStage === 0
         && direction < 0
         && parentArea
+        && (storyLockScrollTop !== null || isStoryActiveRef.current)
       ) {
         cancelQueuedParentScroll();
         storyLockScrollTop = null;
         isStoryActiveRef.current = false;
         transitionLockedUntil = 0;
-        lastWheelEventAt = 0;
-        applyParentWheelDelta(event, maxParentScroll, 96);
+        applyParentWheelDelta(event, maxParentScroll, 56);
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
@@ -539,7 +549,6 @@ function OriginalCommunityWaterfall() {
           event.stopImmediatePropagation();
           setStage(2);
           transitionLockedUntil = now + 860;
-          lastWheelEventAt = now;
           return;
         }
       }
@@ -567,15 +576,10 @@ function OriginalCommunityWaterfall() {
         return;
       }
 
-      // Do not let the inertial tail emitted while a transition is locked
-      // extend the gesture debounce. Once the motion settles, the very next
-      // deliberate wheel input should be able to advance the story.
-      const isNewGesture = !lastWheelEventAt || now - lastWheelEventAt > 120;
-      lastWheelEventAt = now;
-      window.clearTimeout(gestureResetTimer);
-      gestureResetTimer = window.setTimeout(() => {
-        lastWheelEventAt = 0;
-      }, 140);
+      // A transition needs a genuinely new gesture after a quiet gap. This
+      // prevents the long momentum tail from one trackpad swipe from advancing
+      // a second stage as soon as the previous animation unlocks.
+      const isNewGesture = beginsNewWheelGesture;
 
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -634,7 +638,6 @@ function OriginalCommunityWaterfall() {
       window.removeEventListener("message", handleStoryControlMessage);
       window.cancelAnimationFrame(measureFrame);
       cancelFreeScroll();
-      window.clearTimeout(gestureResetTimer);
     };
   }, []);
 
@@ -1406,8 +1409,8 @@ function InspirationShowcase() {
       const unconstrainedTarget = clamp(scrollTarget + deltaY, 0, maxScroll);
       scrollTarget = clamp(
         unconstrainedTarget,
-        Math.max(0, parentArea.scrollTop - 680),
-        Math.min(maxScroll, parentArea.scrollTop + 680),
+        Math.max(0, parentArea.scrollTop - MODAL_SCROLL_TARGET_LIMIT),
+        Math.min(maxScroll, parentArea.scrollTop + MODAL_SCROLL_TARGET_LIMIT),
       );
       if (!scrollAnimationFrame) {
         scrollAnimationFrame = window.requestAnimationFrame(animateParentScroll);
@@ -1442,11 +1445,7 @@ function InspirationShowcase() {
         }
       }
       if (communityStoryOwnsWheel) return;
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-      const pixelDelta = event.deltaY * unit;
-      const magnitude = Math.abs(pixelDelta);
-      const sensitivity = magnitude >= 40 ? 1.1 : 1;
-      const adjustedDelta = Math.sign(pixelDelta) * Math.min(magnitude * sensitivity, 220);
+      const adjustedDelta = getModalWheelDelta(event);
       let handledDirectly = false;
 
       try {
