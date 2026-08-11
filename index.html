@@ -547,8 +547,9 @@
         }
 
         #zaowu-tab-switch-hint {
+            --tab-switch-hint-rest-x: 6px;
             position: absolute;
-            top: 8px;
+            top: 50px;
             left: calc(100% + 22px);
             z-index: 2;
             width: 270px;
@@ -566,7 +567,7 @@
             letter-spacing: 0.01em;
             opacity: 0;
             visibility: hidden;
-            transform: translate3d(-18px, 0, 0);
+            transform: translate3d(calc(var(--tab-switch-hint-rest-x) - 18px), -50%, 0);
             transform-origin: left center;
             pointer-events: none;
             transition:
@@ -591,7 +592,7 @@
         #zaowu-tab-switch-hint.is-visible {
             opacity: 1;
             visibility: visible;
-            transform: translate3d(0, 0, 0);
+            transform: translate3d(var(--tab-switch-hint-rest-x), -50%, 0);
             transition-delay: 0s;
         }
 
@@ -2072,9 +2073,19 @@
             const loraBar = document.getElementById('modal-scroll-progress-bar');
             const platformBar = document.getElementById('zaowu-scroll-progress-bar');
             const debug = document.getElementById('modal-scroll-debug');
+            const tabSwitchHint = document.getElementById('zaowu-tab-switch-hint');
             if (loraBar) loraBar.style.width = `${modalProjectScrollState.lora.pct}%`;
             if (platformBar) platformBar.style.width = `${modalProjectScrollState.platform.pct}%`;
             if (debug) debug.innerText = `进度: ${modalProjectScrollState[key].pct.toFixed(1)}%`;
+
+            if (key === 'lora' && pct >= 3) {
+                isTabSwitchHintDismissed = true;
+            }
+            if (tabSwitchHint) {
+                const shouldShowTabHint = key === 'lora' && !isTabSwitchHintDismissed;
+                tabSwitchHint.classList.toggle('is-visible', shouldShowTabHint);
+                tabSwitchHint.setAttribute('aria-hidden', shouldShowTabHint ? 'false' : 'true');
+            }
 
         }
 
@@ -2289,6 +2300,7 @@
         let modalProjectContentSwapTimer = null;
         let activeModalProjectKey = 'lora';
         let isRestoringModalProjectScroll = false;
+        let isTabSwitchHintDismissed = false;
         let modalProjectScrollState = {
             lora: { scrollTop: 0, pct: 0 },
             platform: { scrollTop: 0, pct: 0 }
@@ -2307,6 +2319,7 @@
             }
             activeModalProjectKey = 'lora';
             isRestoringModalProjectScroll = false;
+            isTabSwitchHintDismissed = false;
             modalProjectScrollState = {
                 lora: { scrollTop: 0, pct: 0 },
                 platform: { scrollTop: 0, pct: 0 }
@@ -2442,7 +2455,7 @@
                 if (key !== 'platform') constructionBubble.classList.remove('is-visible');
             }
             if (tabSwitchHint) {
-                const shouldShowTabHint = key === 'lora';
+                const shouldShowTabHint = key === 'lora' && !isTabSwitchHintDismissed;
                 tabSwitchHint.classList.toggle('is-visible', shouldShowTabHint);
                 tabSwitchHint.setAttribute('aria-hidden', shouldShowTabHint ? 'false' : 'true');
             }
