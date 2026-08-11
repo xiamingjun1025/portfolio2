@@ -1882,6 +1882,20 @@ body {
 }
 
 .zaowu-embed-shell
+  .community-story-section:is(
+    [data-story-stage="2"],
+    [data-story-stage="3"]
+  )
+  .community-story-gallery {
+  /* The control is 52px tall. Keep the banner in normal flow beneath its
+     clamped viewport-safe position instead of allowing both layers to occupy
+     the same top band. */
+  top: calc(
+    max(28px, calc(52px + var(--community-story-viewport-lift, 0px))) + 72px
+  );
+}
+
+.zaowu-embed-shell
   .community-story-section:is([data-story-stage="4"], [data-story-stage="5"])
   .community-story-control {
   top: calc(-172px + var(--community-story-viewport-lift, 0px));
