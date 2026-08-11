@@ -251,6 +251,8 @@ function OriginalCommunityWaterfall() {
     let frame = null;
     let measureFrame = 0;
     let lastObservedWheelAt = 0;
+    let pendingPrecisionWheelDelta = 0;
+    let pendingPrecisionWheelDirection = 0;
     let transitionLockedUntil = 0;
     let storyLockScrollTop = null;
     let freeScrollAnimationFrame = 0;
@@ -312,6 +314,8 @@ function OriginalCommunityWaterfall() {
       isStoryActiveRef.current = false;
       transitionLockedUntil = 0;
       lastObservedWheelAt = 0;
+      pendingPrecisionWheelDelta = 0;
+      pendingPrecisionWheelDirection = 0;
     }
 
     function setStage(nextStage) {
@@ -504,11 +508,24 @@ function OriginalCommunityWaterfall() {
         event.stopImmediatePropagation();
       }
 
-      // Tiny precision deltas still belong to the story once the handoff has
-      // begun. Consume them at the checkpoint instead of letting another
-      // listener restart ordinary scrolling underneath the lock.
+      // Trackpads often cross the checkpoint with a run of sub-6px precision
+      // deltas. Keep those events inside the story, but accumulate them until
+      // they represent a deliberate gesture so the handoff cannot get stuck.
       const minimumHandledDelta = currentStage === 5 ? 0.01 : 6;
-      if (Math.abs(event.deltaY) < minimumHandledDelta) return;
+      let precisionGestureReady = false;
+      if (Math.abs(event.deltaY) < minimumHandledDelta) {
+        if (beginsNewWheelGesture || direction !== pendingPrecisionWheelDirection) {
+          pendingPrecisionWheelDelta = 0;
+        }
+        pendingPrecisionWheelDirection = direction;
+        pendingPrecisionWheelDelta += event.deltaY;
+        if (Math.abs(pendingPrecisionWheelDelta) < minimumHandledDelta) return;
+        precisionGestureReady = true;
+        pendingPrecisionWheelDelta = 0;
+      } else {
+        pendingPrecisionWheelDelta = 0;
+        pendingPrecisionWheelDirection = direction;
+      }
 
       // While the five-column entrance is still settling, keep its inertial
       // tail from moving the parent. setStage(5) releases this lock
@@ -601,7 +618,7 @@ function OriginalCommunityWaterfall() {
       // A transition needs a genuinely new gesture after a quiet gap. This
       // prevents the long momentum tail from one trackpad swipe from advancing
       // a second stage as soon as the previous animation unlocks.
-      const isNewGesture = beginsNewWheelGesture;
+      const isNewGesture = beginsNewWheelGesture || precisionGestureReady;
 
       event.preventDefault();
       event.stopImmediatePropagation();
