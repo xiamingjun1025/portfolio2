@@ -36,7 +36,6 @@ import "./zaowu-embed-overrides.css";
 
 const CAROUSEL_DELAY = 1750;
 const CAROUSEL_DURATION = 720;
-const MODAL_SCROLL_TARGET_LIMIT = 480;
 const STORY_CHECKPOINT_PROGRESS = 0.56;
 const STORY_TAKEOVER_PROGRESS = 0.552;
 const INITIAL_CATEGORY_INDEX = Math.max(
@@ -254,42 +253,13 @@ function OriginalCommunityWaterfall() {
     let pendingPrecisionWheelDirection = 0;
     let transitionLockedUntil = 0;
     let storyLockScrollTop = null;
-    let freeScrollAnimationFrame = 0;
-    let freeScrollTarget = null;
 
     function isPlatformViewActive() {
       const parentModal = parentDocument?.getElementById("modal-content");
       return parentModal?.classList.contains("is-zaowu-platform-view") === true;
     }
 
-    function cancelFreeScroll() {
-      window.cancelAnimationFrame(freeScrollAnimationFrame);
-      freeScrollAnimationFrame = 0;
-      freeScrollTarget = null;
-    }
-
-    function animateFreeScroll() {
-      if (!parentArea || freeScrollTarget === null || !isPlatformViewActive()) {
-        cancelFreeScroll();
-        return;
-      }
-
-      const distance = freeScrollTarget - parentArea.scrollTop;
-      if (Math.abs(distance) < 0.55) {
-        parentArea.scrollTop = freeScrollTarget;
-        freeScrollAnimationFrame = 0;
-        freeScrollTarget = null;
-        return;
-      }
-
-      // Accumulated wheel deltas form the acceleration phase; this eased
-      // approach supplies a soft deceleration tail without fighting the
-      // user's direction or introducing a fixed-duration scroll animation.
-      parentArea.scrollTop += distance * 0.2;
-      freeScrollAnimationFrame = window.requestAnimationFrame(animateFreeScroll);
-    }
-
-    function queueFreeScroll(
+    function forwardParentScroll(
       event,
       maxParentScroll,
       sensitivity = 1,
@@ -297,27 +267,14 @@ function OriginalCommunityWaterfall() {
     ) {
       if (!parentArea) return;
       const forwardedDelta = getModalWheelDelta(event, sensitivity);
-      const currentTarget = freeScrollTarget ?? parentArea.scrollTop;
-      const unconstrainedTarget = clamp(
-        currentTarget + forwardedDelta,
+      parentArea.scrollTop = clamp(
+        parentArea.scrollTop + forwardedDelta,
         0,
         Math.min(maxParentScroll, upperBound),
       );
-
-      // Bound the pending distance so fast wheels stay responsive and never
-      // leave a long, floaty tail after the user has stopped scrolling.
-      freeScrollTarget = clamp(
-        unconstrainedTarget,
-        Math.max(0, parentArea.scrollTop - MODAL_SCROLL_TARGET_LIMIT),
-        Math.min(maxParentScroll, parentArea.scrollTop + MODAL_SCROLL_TARGET_LIMIT),
-      );
-      if (!freeScrollAnimationFrame) {
-        freeScrollAnimationFrame = window.requestAnimationFrame(animateFreeScroll);
-      }
     }
 
     function releaseStoryScrollLock() {
-      cancelFreeScroll();
       storyLockScrollTop = null;
       isStoryActiveRef.current = false;
       transitionLockedUntil = 0;
@@ -338,8 +295,6 @@ function OriginalCommunityWaterfall() {
           || storyLockScrollTop === null
           || !isPlatformViewActive()
         ) return;
-        cancelFreeScroll();
-        parentArea.scrollTop = storyLockScrollTop;
         queueStoryUpdate();
       };
       window.requestAnimationFrame(() => window.requestAnimationFrame(syncVisibleCheckpoint));
@@ -352,7 +307,6 @@ function OriginalCommunityWaterfall() {
           // Stage 5 is the finished gallery, not another pinned checkpoint.
           // Release as soon as its transition settles so the user's next wheel
           // event is ordinary browsing from its very first pixel.
-          cancelFreeScroll();
           storyLockScrollTop = null;
           isStoryActiveRef.current = false;
           transitionLockedUntil = 0;
@@ -403,14 +357,10 @@ function OriginalCommunityWaterfall() {
         // may overshoot it, so pull the modal back to this same visible frame
         // and hold it there until every tab state has completed.
         if ((currentStage < 5 && hasReachedCheckpoint) || storyLockScrollTop !== null) {
-          cancelFreeScroll();
           // Keep one physical lock point for the whole gesture. Recomputing it
           // from scrollHeight on every scroll frame makes the viewport chase a
           // moving target while media and responsive layout settle.
           if (storyLockScrollTop === null) storyLockScrollTop = checkpointScrollTop;
-          if (Math.abs(parentArea.scrollTop - storyLockScrollTop) > 1) {
-            parentArea.scrollTop = storyLockScrollTop;
-          }
         }
 
         isStoryActiveRef.current = (
@@ -504,9 +454,10 @@ function OriginalCommunityWaterfall() {
         && !isStoryActiveRef.current
         && !isEnteringStoryCheckpoint
       ) {
-        // Stop the eased target at the story checkpoint. This avoids a visible
-        // overshoot-and-snap when a fast trackpad gesture reaches the handoff.
-        queueFreeScroll(event, maxParentScroll, 1, checkpointScrollTop);
+        // Trackpads already provide a high-frequency inertial stream. Apply
+        // each reduced delta directly instead of chasing a second animated
+        // target, which visibly lagged and juddered behind macOS momentum.
+        forwardParentScroll(event, maxParentScroll, 1, checkpointScrollTop);
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
@@ -517,10 +468,9 @@ function OriginalCommunityWaterfall() {
       // target on one side of the boundary while the story lock pulls the
       // viewport to the other, producing a visible up/down jitter.
       if (isEnteringStoryCheckpoint) {
-        cancelFreeScroll();
-        storyLockScrollTop = checkpointScrollTop;
+        storyLockScrollTop = Math.round(checkpointScrollTop);
         isStoryActiveRef.current = true;
-        parentArea.scrollTop = checkpointScrollTop;
+        parentArea.scrollTop = storyLockScrollTop;
         event.preventDefault();
         event.stopImmediatePropagation();
       }
@@ -549,7 +499,6 @@ function OriginalCommunityWaterfall() {
       // automatically with the end of the 920ms layout transition, so the
       // finished waterfall never requires a separate "unlock" gesture.
       if (currentStage === 5 && storyLockScrollTop !== null && direction > 0) {
-        cancelFreeScroll();
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -561,7 +510,7 @@ function OriginalCommunityWaterfall() {
         isStoryActiveRef.current = false;
         transitionLockedUntil = 0;
 
-        queueFreeScroll(event, maxParentScroll);
+        forwardParentScroll(event, maxParentScroll);
         return;
       }
 
@@ -575,7 +524,6 @@ function OriginalCommunityWaterfall() {
         && parentArea
         && (storyLockScrollTop !== null || isStoryActiveRef.current)
       ) {
-        cancelFreeScroll();
         storyLockScrollTop = null;
         isStoryActiveRef.current = false;
         transitionLockedUntil = 0;
@@ -596,10 +544,9 @@ function OriginalCommunityWaterfall() {
           Math.min(Math.abs(event.deltaY) * 1.5, 220),
         );
         if (parentArea.scrollTop <= checkpointScrollTop + reentryBuffer) {
-          cancelFreeScroll();
-          storyLockScrollTop = checkpointScrollTop;
+          storyLockScrollTop = Math.round(checkpointScrollTop);
           isStoryActiveRef.current = true;
-          parentArea.scrollTop = checkpointScrollTop;
+          parentArea.scrollTop = storyLockScrollTop;
           event.preventDefault();
           event.stopImmediatePropagation();
           setStage(2);
@@ -608,19 +555,16 @@ function OriginalCommunityWaterfall() {
         }
       }
 
-      // The final waterfall is ordinary browsing content, but its wheel
-      // deltas still pass through a short inertial target so cards accelerate
-      // and settle naturally instead of jumping by a fixed amount per tick.
+      // The final waterfall uses the same direct, reduced trackpad stream as
+      // the preceding content so there is no second deceleration curve.
       if (currentStage === 5 && storyLockScrollTop === null && parentArea) {
-        queueFreeScroll(event, maxParentScroll);
+        forwardParentScroll(event, maxParentScroll);
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
       }
 
       if (!isStoryActiveRef.current) return;
-
-      cancelFreeScroll();
 
       const isTransitionLocked = now < transitionLockedUntil;
 
@@ -691,7 +635,6 @@ function OriginalCommunityWaterfall() {
       window.removeEventListener("message", resetStorySequence);
       window.removeEventListener("message", handleStoryControlMessage);
       window.cancelAnimationFrame(measureFrame);
-      cancelFreeScroll();
     };
   }, []);
 
