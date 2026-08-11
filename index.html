@@ -440,6 +440,7 @@
                     transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
                     width 680ms cubic-bezier(0.16, 1, 0.3, 1),
                     left 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                    right 680ms cubic-bezier(0.16, 1, 0.3, 1),
                     background-color 360ms ease,
                     box-shadow 450ms ease;
             }
@@ -466,6 +467,30 @@
                         calc(100vw - 196px)
                     )
                 );
+            }
+        }
+
+        /* 窄桌面视口下给右侧双项目 Tab 预留完整轨道。
+           保持弹层原左边界不动，只将右边界收至 Tab 左侧并留 16px。 */
+        @media (min-width: 1024px) and (max-width: 1447px) {
+            #modal-content.is-zaowu-dual-project:not(.is-zaowu-platform-view) {
+                position: absolute;
+                top: 5vh;
+                left: max(2.5vw, calc((100vw - 1024px) / 2));
+                right: 212px;
+                width: auto;
+                max-width: none;
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1823px) {
+            #modal-content.is-zaowu-dual-project.is-zaowu-platform-view {
+                position: absolute;
+                top: 5vh;
+                left: max(2.5vw, calc((100vw - 1400px) / 2));
+                right: 212px;
+                width: auto;
+                max-width: none;
             }
         }
 
