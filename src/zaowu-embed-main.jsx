@@ -37,6 +37,8 @@ import "./zaowu-embed-overrides.css";
 const CAROUSEL_DELAY = 1750;
 const CAROUSEL_DURATION = 720;
 const MODAL_SCROLL_TARGET_LIMIT = 480;
+const STORY_CHECKPOINT_PROGRESS = 0.56;
+const STORY_TAKEOVER_PROGRESS = 0.552;
 const INITIAL_CATEGORY_INDEX = Math.max(
   0,
   categories.findIndex((category) => category.id === "print3d"),
@@ -393,7 +395,7 @@ function OriginalCommunityWaterfall() {
         const currentStage = storyStageRef.current;
         const maxParentScroll = Math.max(1, parentArea.scrollHeight - parentArea.clientHeight);
         const parentProgress = parentArea.scrollTop / maxParentScroll;
-        const checkpointProgress = 0.56;
+        const checkpointProgress = STORY_CHECKPOINT_PROGRESS;
         const checkpointScrollTop = checkpointProgress * maxParentScroll;
         const hasReachedCheckpoint = parentProgress >= checkpointProgress - 0.004;
 
@@ -470,12 +472,6 @@ function OriginalCommunityWaterfall() {
         return;
       }
       const currentStage = storyStageRef.current;
-      // Preserve tiny trackpad deltas in the free waterfall. Dropping them
-      // here lets the generic eased bridge handle part of a slow gesture,
-      // producing a different feel on the two sides of the 56% checkpoint.
-      const minimumHandledDelta = currentStage === 5 ? 0.01 : 6;
-      if (Math.abs(event.deltaY) < minimumHandledDelta) return;
-
       const direction = event.deltaY > 0 ? 1 : -1;
       const now = window.performance.now();
       const beginsNewWheelGesture = (
@@ -486,7 +482,33 @@ function OriginalCommunityWaterfall() {
       const maxParentScroll = parentArea
         ? Math.max(1, parentArea.scrollHeight - parentArea.clientHeight)
         : 1;
-      const checkpointScrollTop = maxParentScroll * 0.56;
+      const checkpointScrollTop = maxParentScroll * STORY_CHECKPOINT_PROGRESS;
+      const parentProgress = parentArea ? parentArea.scrollTop / maxParentScroll : 0;
+      const isEnteringStoryCheckpoint = (
+        currentStage === 0
+        && direction > 0
+        && parentProgress >= STORY_TAKEOVER_PROGRESS
+      );
+
+      // Start owning downward input just before the exact checkpoint. Without
+      // this handoff buffer, macOS momentum can leave the generic eased scroll
+      // target on one side of the boundary while the story lock pulls the
+      // viewport to the other, producing a visible up/down jitter.
+      if (isEnteringStoryCheckpoint) {
+        cancelFreeScroll();
+        cancelQueuedParentScroll();
+        storyLockScrollTop = checkpointScrollTop;
+        isStoryActiveRef.current = true;
+        parentArea.scrollTop = checkpointScrollTop;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+
+      // Tiny precision deltas still belong to the story once the handoff has
+      // begun. Consume them at the checkpoint instead of letting another
+      // listener restart ordinary scrolling underneath the lock.
+      const minimumHandledDelta = currentStage === 5 ? 0.01 : 6;
+      if (Math.abs(event.deltaY) < minimumHandledDelta) return;
 
       // While the five-column entrance is still settling, keep its inertial
       // tail from moving the parent. setStage(5) releases this lock
@@ -1436,9 +1458,18 @@ function InspirationShowcase() {
           const maxParentScroll = parentArea
             ? Math.max(1, parentArea.scrollHeight - parentArea.clientHeight)
             : 1;
+          const parentProgress = parentArea
+            ? parentArea.scrollTop / maxParentScroll
+            : 0;
           communityStoryOwnsWheel = Boolean(
             parentArea
-            && parentArea.scrollTop / maxParentScroll >= 0.556,
+            && (
+              parentProgress >= STORY_CHECKPOINT_PROGRESS - 0.004
+              || (
+                event.deltaY > 0
+                && parentProgress >= STORY_TAKEOVER_PROGRESS
+              )
+            ),
           );
         } catch {
           // Cross-origin embeds fall through to the existing message bridge.
