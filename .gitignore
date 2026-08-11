@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+.codex-*.log
+design-qa-*.png
+qa-*.png
+*.py
