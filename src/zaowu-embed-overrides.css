@@ -1872,12 +1872,13 @@ body {
 .zaowu-embed-shell
   .community-story-section:is(
     [data-story-stage="2"],
-    [data-story-stage="3"],
-    [data-story-stage="4"],
-    [data-story-stage="5"]
+    [data-story-stage="3"]
   )
   .community-story-control {
-  top: calc(-40px + var(--community-story-viewport-lift, 0px));
+  /* Keep the discovery tabs inside the modal viewport while the story content
+     rises. The responsive lift may be negative on tall displays, so clamp the
+     control to a stable top safe area instead of letting it slide off-screen. */
+  top: max(28px, calc(52px + var(--community-story-viewport-lift, 0px)));
 }
 
 .zaowu-embed-shell
