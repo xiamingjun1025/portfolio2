@@ -1793,6 +1793,18 @@
         </div>
     </div>
 
+    <!-- 闪作纯展示视频弹窗 -->
+    <div id="flash-showcase-modal" class="fixed inset-0 z-[115] hidden items-center justify-center p-3 md:p-8" role="dialog" aria-modal="true" aria-label="视频作品展示">
+        <div id="flash-showcase-backdrop" class="absolute inset-0 bg-black/90 backdrop-blur-xl opacity-0 transition-opacity duration-400 cursor-pointer" onclick="closeFlashShowcase()"></div>
+
+        <div id="flash-showcase-content" class="relative z-10 inline-flex max-w-[95vw] max-h-[92vh] items-center justify-center overflow-hidden rounded-[18px] md:rounded-[28px] bg-black shadow-[0_24px_90px_rgba(0,0,0,0.75)] ring-1 ring-white/10 opacity-0 scale-95 transition-all duration-400">
+            <button onclick="closeFlashShowcase()" aria-label="关闭视频" class="absolute top-3 right-3 md:top-4 md:right-4 z-20 bg-black/45 hover:bg-black/75 text-white p-2.5 md:p-3 rounded-full backdrop-blur-md transition-all border border-white/15 shadow-lg hover:scale-105">
+                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <video id="flash-showcase-video" loop muted playsinline controls preload="metadata" class="block max-w-[95vw] max-h-[92vh] md:max-w-[92vw] md:max-h-[88vh] w-auto h-auto object-contain bg-black"></video>
+        </div>
+    </div>
+
     <!-- 闪作全屏看图 -->
     <div id="flash-fullscreen-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/95 backdrop-blur-xl transition-opacity duration-300 opacity-0" onclick="closeFlashFullscreen()">
         <button onclick="closeFlashFullscreen()" class="absolute top-4 right-4 md:top-8 md:right-8 z-50 text-white/60 hover:text-white p-3 rounded-full transition-all bg-white/5 hover:bg-white/20 backdrop-blur-md shadow-lg hover:scale-110">
@@ -2784,6 +2796,15 @@
 
         const flashWorksData = [
             {
+                displayMode: "showcase",
+                src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%97%AA%E4%BD%9C%E7%A2%8E%E7%89%87/%E7%BE%8E%E5%9B%A22023%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%9B%92%EF%BC%881080p%EF%BC%89.mp4",
+                title: "美团2023中秋礼盒宣传片",
+                desc: "美团2023中秋礼盒视频作品",
+                tags: ["品牌文创", "动态影像"],
+                date: "2023-09-29",
+                likes: "1025"
+            },
+            {
                 src: "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/%E5%B0%81%E9%9D%A2.mp4",
                 images: [
                     "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2023%E4%B8%AD%E7%A7%8B/1.jpg",
@@ -3117,9 +3138,18 @@
         const flashModal = document.getElementById('flash-modal');
         const flashModalContent = document.getElementById('flash-modal-content');
         const flashModalBackdrop = document.getElementById('flash-modal-backdrop');
+        const flashShowcaseModal = document.getElementById('flash-showcase-modal');
+        const flashShowcaseContent = document.getElementById('flash-showcase-content');
+        const flashShowcaseBackdrop = document.getElementById('flash-showcase-backdrop');
+        const flashShowcaseVideo = document.getElementById('flash-showcase-video');
 
         function openFlashModal(encodedData) {
             const data = JSON.parse(decodeURIComponent(encodedData));
+
+            if (data.displayMode === 'showcase') {
+                openFlashShowcase(data);
+                return;
+            }
 
             const galleryInner = document.getElementById('flash-modal-gallery-inner');
             const galleryScroll = document.getElementById('flash-modal-gallery');
@@ -3259,6 +3289,39 @@
             }, 400);
         }
 
+        function openFlashShowcase(data) {
+            flashShowcaseVideo.src = data.src;
+            flashShowcaseVideo.setAttribute('aria-label', data.title || '视频作品');
+            flashShowcaseVideo.currentTime = 0;
+            flashShowcaseVideo.muted = true;
+
+            flashShowcaseModal.classList.remove('hidden');
+            flashShowcaseModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            requestAnimationFrame(() => {
+                flashShowcaseBackdrop.classList.replace('opacity-0', 'opacity-100');
+                flashShowcaseContent.classList.replace('opacity-0', 'opacity-100');
+                flashShowcaseContent.classList.replace('scale-95', 'scale-100');
+                flashShowcaseVideo.play().catch(() => {});
+            });
+        }
+
+        function closeFlashShowcase() {
+            flashShowcaseVideo.pause();
+            flashShowcaseBackdrop.classList.replace('opacity-100', 'opacity-0');
+            flashShowcaseContent.classList.replace('opacity-100', 'opacity-0');
+            flashShowcaseContent.classList.replace('scale-100', 'scale-95');
+
+            setTimeout(() => {
+                flashShowcaseModal.classList.remove('flex');
+                flashShowcaseModal.classList.add('hidden');
+                flashShowcaseVideo.removeAttribute('src');
+                flashShowcaseVideo.load();
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
         function triggerLike(event, btnElement) {
             event.stopPropagation();
 
@@ -3351,6 +3414,8 @@
             if (e.key === 'Escape') {
                 if (!flashFullscreenModal.classList.contains('hidden')) {
                     closeFlashFullscreen();
+                } else if (!flashShowcaseModal.classList.contains('hidden')) {
+                    closeFlashShowcase();
                 } else if (!flashModal.classList.contains('hidden')) {
                     closeFlashModal();
                 } else if (!modal.classList.contains('hidden')) {
