@@ -6,7 +6,7 @@
     <title>夏铭骏 | AI品牌创意设计师</title>
 
     <!-- 🔥 最高优先级预加载首屏核心视频 -->
-    <link rel="preload" as="video" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
+    <link rel="preload" as="video" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8FA.mp4" type="video/mp4">
     <!-- 🔥 新增：最高优先级预加载表情包插画，保证小人瞬间出现 -->
     <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%961.png">
     <link rel="preload" as="image" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E6%83%85%E6%84%9F%E5%8C%962.png">
@@ -1125,8 +1125,11 @@
 
     <section id="home" class="relative w-full h-screen bg-[#050505] overflow-hidden flex items-center justify-center z-10">
         <div class="absolute inset-0 z-0">
-            <video id="hero-video" autoplay loop muted playsinline class="w-full h-full object-cover">
-                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8F.mp4" type="video/mp4">
+            <video id="hero-video" autoplay muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover">
+                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8FA.mp4" type="video/mp4">
+            </video>
+            <video id="hero-video-loop" loop muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover opacity-0">
+                <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A6%96%E5%B1%8FB.mp4" type="video/mp4">
             </video>
             <div class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-black/50 via-black/20 to-transparent pointer-events-none z-10"></div>
             <div class="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10"></div>
@@ -1929,8 +1932,21 @@
             });
 
             const heroVideo = document.getElementById('hero-video');
+            const heroLoopVideo = document.getElementById('hero-video-loop');
             if (heroVideo) {
                 heroVideo.muted = true;
+
+                if (heroLoopVideo) {
+                    heroLoopVideo.muted = true;
+                    heroVideo.addEventListener('ended', () => {
+                        heroLoopVideo.currentTime = 0;
+                        heroLoopVideo.play().then(() => {
+                            heroLoopVideo.classList.remove('opacity-0');
+                            heroVideo.classList.add('opacity-0');
+                        }).catch(err => console.log("首屏循环视频自动播放拦截:", err));
+                    }, { once: true });
+                }
+
                 heroVideo.play().catch(err => console.log("首屏视频自动播放拦截:", err));
             }
 
