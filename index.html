@@ -16,13 +16,14 @@
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=block" rel="stylesheet">
+    <link rel="preload" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/OPPO%20Sans%204.0.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link href="https://fonts.loli.net/css2?family=Oswald:wght@300;400;500;600;700&display=block" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Microsoft YaHei', 'sans-serif'],
+                        sans: ['OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
                     },
                     colors: {
                         brand: '#0a0a0a',
@@ -45,7 +46,17 @@
     </script>
 
     <style>
+        @font-face {
+            font-family: 'OPPO Sans 4.0';
+            src: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/OPPO%20Sans%204.0.ttf') format('truetype');
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
         html, body {
+            font-family: 'OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-weight: 400;
             background-color: #050505 !important;
             color: #F9FAFB;
             margin: 0;
@@ -659,208 +670,6 @@
             user-select: none;
         }
 
-        /* “大艺术家团团”专属黑胶唱片机：桌面端悬浮在弹层右侧，小屏收纳到右下角。 */
-        #artist-record-player {
-            position: fixed;
-            top: 50%;
-            left: calc(50% + min(47.5vw, 32rem) + 16px);
-            z-index: 155;
-            width: min(168px, calc(50vw - min(47.5vw, 32rem) - 32px));
-            min-width: 96px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transform: translate3d(14px, -50%, 0) scale(0.96);
-            transform-origin: left center;
-            transition: opacity 360ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 520ms;
-        }
-        #artist-record-player.is-visible {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translate3d(0, -50%, 0) scale(1);
-            transition-delay: 0s;
-        }
-        .artist-record-toggle {
-            width: 100%;
-            padding: clamp(8px, 1vw, 14px);
-            border: 1px solid rgba(231, 203, 132, 0.22);
-            border-radius: clamp(14px, 1.4vw, 22px);
-            color: #f7edd2;
-            background: linear-gradient(145deg, rgba(45, 40, 33, 0.98), rgba(10, 10, 10, 0.99) 52%), #0b0b0b;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -18px 36px rgba(0,0,0,0.34), 0 24px 55px rgba(0,0,0,0.46);
-            overflow: hidden;
-            text-align: left;
-            transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .artist-record-toggle:hover,
-        .artist-record-toggle:focus-visible {
-            border-color: rgba(231, 203, 132, 0.48);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.11), inset 0 -18px 36px rgba(0,0,0,0.34), 0 28px 64px rgba(0,0,0,0.58), 0 0 24px rgba(197,158,80,0.09);
-            transform: translateY(-3px);
-        }
-        .artist-player-brand {
-            display: block;
-            margin: 0 0 clamp(6px, 0.7vw, 10px);
-            overflow: hidden;
-            color: rgba(239,216,163,0.66);
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(7px, 0.62vw, 9px);
-            font-weight: 700;
-            letter-spacing: 0.16em;
-            line-height: 1;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .artist-turntable-deck {
-            position: relative;
-            display: block;
-            width: 100%;
-            aspect-ratio: 1 / 0.86;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: clamp(10px, 1vw, 16px);
-            background: radial-gradient(circle at 25% 18%, rgba(255,255,255,0.08), transparent 25%), linear-gradient(150deg, #29241d, #111 62%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), inset 0 0 28px rgba(0,0,0,0.52);
-        }
-        .artist-vinyl {
-            position: absolute;
-            top: 50%;
-            left: 8%;
-            width: 70%;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: radial-gradient(circle, #d6b96e 0 4%, #1d1710 4.5% 8%, #c89a3d 8.5% 20%, #090909 20.5% 28%, #171717 29% 31%, #050505 32% 38%, #1c1c1c 39% 40%, #050505 41% 48%, #191919 49% 50%, #050505 51% 58%, #1b1b1b 59% 60%, #050505 61% 100%);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.72), inset 4px 5px 10px rgba(255,255,255,0.035);
-            transform: translateY(-50%);
-            animation: artist-vinyl-spin 3.4s linear infinite;
-            animation-play-state: paused;
-            will-change: transform;
-        }
-        .artist-vinyl::after {
-            content: 'TT';
-            position: absolute;
-            inset: 37%;
-            display: grid;
-            place-items: center;
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 50%;
-            color: rgba(255,255,255,0.82);
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(7px, 0.7vw, 10px);
-            font-style: italic;
-            font-weight: 700;
-            background: radial-gradient(circle at 35% 30%, #cda34c, #5d421b 72%);
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.3);
-        }
-        #artist-record-player.is-playing .artist-vinyl { animation-play-state: running; }
-        @keyframes artist-vinyl-spin {
-            from { transform: translateY(-50%) rotate(0deg); }
-            to { transform: translateY(-50%) rotate(360deg); }
-        }
-        .artist-tonearm {
-            position: absolute;
-            top: 14%;
-            right: 8%;
-            width: 13%;
-            height: 68%;
-            transform: rotate(-16deg);
-            transform-origin: 50% 12%;
-            transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        #artist-record-player.is-playing .artist-tonearm { transform: rotate(7deg); }
-        .artist-tonearm::before {
-            content: '';
-            position: absolute;
-            top: 7%;
-            left: 50%;
-            width: 19%;
-            height: 78%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, #6e6657, #eee1c3 42%, #625946);
-            box-shadow: 2px 3px 8px rgba(0,0,0,0.5);
-            transform: translateX(-50%);
-        }
-        .artist-tonearm::after {
-            content: '';
-            position: absolute;
-            right: 20%;
-            bottom: 1%;
-            width: 50%;
-            height: 15%;
-            border-radius: 2px 6px 6px 2px;
-            background: linear-gradient(135deg, #d4bb7c, #5f4b24);
-            box-shadow: 1px 3px 5px rgba(0,0,0,0.5);
-            transform: rotate(-7deg);
-        }
-        .artist-tonearm-pivot {
-            position: absolute;
-            top: 4%;
-            left: 50%;
-            width: 72%;
-            aspect-ratio: 1;
-            border: 2px solid #9b885e;
-            border-radius: 50%;
-            background: radial-gradient(circle, #e8d7ae 0 18%, #3e382d 20% 62%, #161616 64%);
-            box-shadow: 0 4px 9px rgba(0,0,0,0.54);
-            transform: translateX(-50%);
-        }
-        .artist-player-footer {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: clamp(7px, 0.8vw, 11px);
-            min-width: 0;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .artist-player-dot {
-            width: 6px;
-            height: 6px;
-            flex: 0 0 auto;
-            border-radius: 50%;
-            background: #716552;
-            box-shadow: 0 0 0 rgba(220,181,92,0);
-            transition: background 220ms ease, box-shadow 220ms ease;
-        }
-        #artist-record-player.is-playing .artist-player-dot {
-            background: #dcb55c;
-            box-shadow: 0 0 10px rgba(220,181,92,0.74);
-        }
-        #artist-player-status {
-            flex: 0 0 auto;
-            color: rgba(242,222,177,0.9);
-            font-size: clamp(7px, 0.62vw, 9px);
-            font-weight: 700;
-            letter-spacing: 0.09em;
-        }
-        .artist-player-hint {
-            min-width: 0;
-            margin-left: auto;
-            overflow: hidden;
-            color: rgba(255,255,255,0.36);
-            font-size: clamp(7px, 0.58vw, 8px);
-            font-weight: 500;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        @media (max-width: 1279px) {
-            #artist-record-player {
-                top: auto;
-                right: 16px;
-                bottom: 62px;
-                left: auto;
-                width: 112px;
-                min-width: 0;
-                transform: translate3d(0, 12px, 0) scale(0.94);
-                transform-origin: right bottom;
-            }
-            #artist-record-player.is-visible { transform: translate3d(0, 0, 0) scale(1); }
-        }
-        @media (max-width: 767px) {
-            #artist-record-player { right: 12px; bottom: 58px; width: 96px; }
-            .artist-player-hint { display: none; }
-        }
-
         #modal-scroll-progress-bar,
         #zaowu-scroll-progress-bar {
             transition: width 120ms linear, opacity 220ms ease;
@@ -1319,7 +1128,7 @@
         </div>
         <div class="flex items-center gap-3">
             <div class="text-gray-300 text-[14px] font-medium tracking-wide">网页正在加载哦，稍等一下下！</div>
-            <div id="loader-percentage" class="font-['Oswald'] text-accent font-bold text-[14px] tracking-wider">0%</div>
+            <div id="loader-percentage" class="font-sans text-accent font-bold text-[14px] tracking-wider">0%</div>
         </div>
     </div>
 
@@ -1391,7 +1200,7 @@
                         <div class="flex items-baseline whitespace-nowrap pt-2">
                             <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-wide leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom">夏铭骏</h1>
                             <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] transform -skew-x-6 scale-y-[1.15] origin-bottom">/</span>
-                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-black text-white tracking-tight leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
+                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-black text-white tracking-tight leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom" style="font-family: 'OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', sans-serif;">Aaron</h1>
                         </div>
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
                     </div>
@@ -1525,7 +1334,7 @@
                 <h2 class="text-3xl md:text-4xl lg:text-[44px] text-white mb-6 flex justify-center items-baseline">
                     <span class="reveal-blur-text inline-block drop-shadow-xl pr-2 md:pr-3 font-sans font-black italic tracking-tight">My</span>
                     <span class="text-accent reveal-blur-text delay-blur-300 inline-block drop-shadow-[0_0_20px_rgba(236,72,153,0.4)] whitespace-nowrap">
-                        <span class="typewriter-text italic font-bold tracking-wide" style="font-family: 'Playfair Display', serif;">Portfolio</span><span class="typewriter-cursor"></span>
+                        <span class="typewriter-text italic font-bold tracking-wide" style="font-family: 'OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', sans-serif;">Portfolio</span><span class="typewriter-cursor"></span>
                     </span>
                 </h2>
 
@@ -1840,10 +1649,10 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[12px] md:text-[13px] text-gray-300 backdrop-blur-xl mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-default reveal-on-scroll">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
-                <span class="font-bold tracking-widest uppercase font-['Montserrat']">求职中 AVAILABLE FOR WORK</span>
+                <span class="font-bold tracking-widest uppercase font-sans">求职中 AVAILABLE FOR WORK</span>
             </div>
 
-            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-['Montserrat'] uppercase leading-none reveal-on-scroll">
+            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-sans uppercase leading-none reveal-on-scroll">
                 <span class="text-white drop-shadow-lg">THANK </span>
                 <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-rose-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]">YOU</span>
             </h2>
@@ -1858,7 +1667,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%BE%AE%E4%BF%A1.png" alt="WeChat" class="w-12 h-12 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">WeChat</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">WeChat</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
                 </div>
 
@@ -1866,7 +1675,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%94%B5%E8%AF%9D.png?v=update" alt="Phone" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(96,165,250,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Phone</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">Phone</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-blue-400 transition-colors tracking-wide">+86 17681621482</p>
                 </div>
 
@@ -1874,7 +1683,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%82%AE%E4%BB%B6.png?v=update" alt="Email" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Email</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">Email</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-purple-400 transition-colors tracking-wide">m17681621482@163.com</p>
                 </div>
             </div>
@@ -1968,25 +1777,8 @@
             </button>
         </div>
 
-        <!-- “大艺术家团团”专属黑胶唱片机 -->
-        <aside id="artist-record-player" aria-hidden="true">
-            <button id="artist-record-toggle" type="button" class="artist-record-toggle" onclick="toggleArtistSoundtrack()" aria-label="播放项目音乐" aria-pressed="false">
-                <span class="artist-player-brand">THE GRAND ARTIST</span>
-                <span class="artist-turntable-deck" aria-hidden="true">
-                    <span class="artist-vinyl"></span>
-                    <span class="artist-tonearm"><span class="artist-tonearm-pivot"></span></span>
-                </span>
-                <span class="artist-player-footer">
-                    <span class="artist-player-dot"></span>
-                    <span id="artist-player-status">PAUSED</span>
-                    <span class="artist-player-hint">点击播放 / 暂停</span>
-                </span>
-            </button>
-            <audio id="artist-soundtrack" preload="auto" loop></audio>
-        </aside>
-
         <!-- 🔥 右下角“实时进度探测器”：移出弹层，固定到视口右下角 -->
-        <div id="modal-scroll-debug" class="fixed bottom-4 right-4 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-mono z-[200] pointer-events-none">
+        <div id="modal-scroll-debug" class="fixed bottom-4 right-4 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-sans z-[200] pointer-events-none">
             进度: 0.0%
         </div>
     </div>
@@ -2802,93 +2594,6 @@
             }
         }
 
-        let artistSoundtrackSession = 0;
-
-        function setArtistRecordPlayerState(isPlaying) {
-            const player = document.getElementById('artist-record-player');
-            const toggle = document.getElementById('artist-record-toggle');
-            const status = document.getElementById('artist-player-status');
-            if (!player || !toggle || !status) return;
-            player.classList.toggle('is-playing', isPlaying);
-            toggle.setAttribute('aria-label', isPlaying ? '暂停项目音乐' : '播放项目音乐');
-            toggle.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
-            status.textContent = isPlaying ? 'PLAYING' : 'PAUSED';
-        }
-
-        function hideArtistRecordPlayer() {
-            artistSoundtrackSession += 1;
-            const player = document.getElementById('artist-record-player');
-            const audio = document.getElementById('artist-soundtrack');
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;
-                audio.removeAttribute('src');
-                audio.load();
-            }
-            if (player) {
-                player.classList.remove('is-visible', 'is-playing');
-                player.setAttribute('aria-hidden', 'true');
-            }
-            setArtistRecordPlayerState(false);
-        }
-
-        function setupArtistRecordPlayer(data) {
-            const player = document.getElementById('artist-record-player');
-            const audio = document.getElementById('artist-soundtrack');
-            if (!player || !audio) return;
-
-            artistSoundtrackSession += 1;
-            const session = artistSoundtrackSession;
-            audio.pause();
-            audio.removeAttribute('src');
-            audio.load();
-            player.classList.remove('is-visible', 'is-playing');
-            player.setAttribute('aria-hidden', 'true');
-            setArtistRecordPlayerState(false);
-
-            const isArtistProject = data && data.title === '遇见博物馆联名：大艺术家团团';
-            const soundtrack = data && (data.soundtrack || (data.hero && data.hero.type === 'video' ? data.hero.src : ''));
-            if (!isArtistProject || !soundtrack) return;
-
-            audio.src = soundtrack;
-            audio.currentTime = 0;
-            audio.volume = 0.72;
-            player.classList.add('is-visible');
-            player.setAttribute('aria-hidden', 'false');
-
-            const playPromise = audio.play();
-            if (playPromise && typeof playPromise.then === 'function') {
-                playPromise.then(() => {
-                    if (session === artistSoundtrackSession) setArtistRecordPlayerState(true);
-                }).catch(() => {
-                    if (session === artistSoundtrackSession) setArtistRecordPlayerState(false);
-                });
-            } else {
-                setArtistRecordPlayerState(!audio.paused);
-            }
-        }
-
-        function toggleArtistSoundtrack() {
-            const audio = document.getElementById('artist-soundtrack');
-            if (!audio || !audio.src) return;
-            if (!audio.paused) {
-                audio.pause();
-                setArtistRecordPlayerState(false);
-                return;
-            }
-            const session = artistSoundtrackSession;
-            const playPromise = audio.play();
-            if (playPromise && typeof playPromise.then === 'function') {
-                playPromise.then(() => {
-                    if (session === artistSoundtrackSession) setArtistRecordPlayerState(true);
-                }).catch(() => {
-                    if (session === artistSoundtrackSession) setArtistRecordPlayerState(false);
-                });
-            } else {
-                setArtistRecordPlayerState(!audio.paused);
-            }
-        }
-
         function openProjectModal(event, data) {
             const heroContainer = document.getElementById('modal-hero-container');
             const heroClass = "w-full h-auto max-h-[70vh] md:max-h-[80vh] object-contain block bg-[#0a0a0a]";
@@ -2902,8 +2607,6 @@
                     heroContainer.innerHTML = `<img src="${data.hero.src}" class="${heroClass}">`;
                 }
             }
-
-            setupArtistRecordPlayer(data);
 
             const infoContainer = document.getElementById('modal-info-container');
             if (infoContainer) {
@@ -3067,7 +2770,6 @@
 
         function closeModal() {
             stopZaowuAutoplay();
-            hideArtistRecordPlayer();
             if (modalProjectContentSwapTimer) {
                 clearTimeout(modalProjectContentSwapTimer);
                 modalProjectContentSwapTimer = null;
