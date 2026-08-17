@@ -193,6 +193,38 @@
             font-weight: 600;
         }
 
+        .project-tags > .innovation-award-tag {
+            gap: 4px;
+            min-height: 24px;
+            padding: 0 7px;
+            border-color: rgba(224, 188, 112, 0.18);
+            border-radius: 6px;
+            background: linear-gradient(180deg, #30302F 0%, #242424 100%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.045),
+                0 1px 4px rgba(0, 0, 0, 0.18);
+        }
+
+        .innovation-award-text {
+            background: linear-gradient(90deg, #C99949 0%, #F5DFAB 48%, #D6AD62 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .innovation-award-laurel {
+            width: 9px;
+            height: 14px;
+            flex: 0 0 auto;
+            color: #D9B775;
+        }
+
+        .innovation-award-laurel--right {
+            transform: scaleX(-1);
+        }
+
         .play-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
@@ -1554,7 +1586,17 @@
                                 </h3>
                             </div>
                             <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
-                                <span>设计部创新实践奖</span>
+                                <span class="innovation-award-tag" aria-label="设计部创新实践奖">
+                                <svg class="innovation-award-laurel" viewBox="0 0 12 18" aria-hidden="true">
+                                    <path d="M9.6 1.6C5.2 5.2 4.3 11.7 7.7 16.4" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round"/>
+                                    <path d="M8.8 4.1C7.1 4.1 6.3 3.2 6.3 2.1C7.8 2.1 8.7 2.9 8.8 4.1ZM6.7 7.2C5 7 4.3 6 4.4 4.9C5.9 5.1 6.7 6 6.7 7.2ZM6.1 10.7C4.5 10.3 4 9.2 4.2 8.1C5.7 8.5 6.3 9.5 6.1 10.7ZM6.8 14.1C5.3 13.5 5 12.4 5.4 11.3C6.8 11.9 7.3 13 6.8 14.1Z" fill="currentColor"/>
+                                </svg>
+                                <span class="innovation-award-text">设计部创新实践奖</span>
+                                <svg class="innovation-award-laurel innovation-award-laurel--right" viewBox="0 0 12 18" aria-hidden="true">
+                                    <path d="M9.6 1.6C5.2 5.2 4.3 11.7 7.7 16.4" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round"/>
+                                    <path d="M8.8 4.1C7.1 4.1 6.3 3.2 6.3 2.1C7.8 2.1 8.7 2.9 8.8 4.1ZM6.7 7.2C5 7 4.3 6 4.4 4.9C5.9 5.1 6.7 6 6.7 7.2ZM6.1 10.7C4.5 10.3 4 9.2 4.2 8.1C5.7 8.5 6.3 9.5 6.1 10.7ZM6.8 14.1C5.3 13.5 5 12.4 5.4 11.3C6.8 11.9 7.3 13 6.8 14.1Z" fill="currentColor"/>
+                                </svg>
+                            </span>
                                 <span>创意生产力升级</span>
                                 <span>AI赋能品牌创意</span>
                             </div>
