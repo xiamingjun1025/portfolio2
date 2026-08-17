@@ -16,13 +16,14 @@
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=block" rel="stylesheet">
+    <link rel="preload" href="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/OPPO%20Sans%204.0.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@800;900&family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=block" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Microsoft YaHei', 'sans-serif'],
+                        sans: ['OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
                     },
                     colors: {
                         brand: '#0a0a0a',
@@ -45,7 +46,17 @@
     </script>
 
     <style>
+        @font-face {
+            font-family: 'OPPO Sans 4.0';
+            src: url('https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/OPPO%20Sans%204.0.ttf') format('truetype');
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
         html, body {
+            font-family: 'OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-weight: 400;
             background-color: #050505 !important;
             color: #F9FAFB;
             margin: 0;
@@ -1117,7 +1128,7 @@
         </div>
         <div class="flex items-center gap-3">
             <div class="text-gray-300 text-[14px] font-medium tracking-wide">网页正在加载哦，稍等一下下！</div>
-            <div id="loader-percentage" class="font-['Oswald'] text-accent font-bold text-[14px] tracking-wider">0%</div>
+            <div id="loader-percentage" class="font-sans text-accent font-bold text-[14px] tracking-wider">0%</div>
         </div>
     </div>
 
@@ -1189,7 +1200,7 @@
                         <div class="flex items-baseline whitespace-nowrap pt-2">
                             <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-wide leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom">夏铭骏</h1>
                             <span class="text-white/40 font-light mx-3 md:mx-5 text-3xl sm:text-4xl md:text-5xl translate-y-[2px] transform -skew-x-6 scale-y-[1.15] origin-bottom">/</span>
-                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-black text-white tracking-tight leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom" style="font-family: 'Montserrat', sans-serif;">Aaron</h1>
+                            <h1 class="text-4xl sm:text-5xl md:text-[56px] font-black text-white tracking-tight leading-none transform -skew-x-6 scale-y-[1.15] origin-bottom" style="font-family: 'OPPO Sans 4.0', 'PingFang SC', 'Microsoft YaHei', sans-serif;">Aaron</h1>
                         </div>
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%A4%B4%E5%83%8F.png" alt="头像" class="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/20 flex-shrink-0 shadow-lg">
                     </div>
@@ -1321,7 +1332,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 flex flex-col items-center">
                 <h2 class="text-3xl md:text-4xl lg:text-[44px] text-white mb-6 flex justify-center items-baseline">
-                    <span class="reveal-blur-text inline-block drop-shadow-xl pr-2 md:pr-3 font-sans font-black italic tracking-tight">My</span>
+                    <span class="reveal-blur-text inline-block drop-shadow-xl pr-2 md:pr-3 font-['Inter'] font-black italic tracking-tight">My</span>
                     <span class="text-accent reveal-blur-text delay-blur-300 inline-block drop-shadow-[0_0_20px_rgba(236,72,153,0.4)] whitespace-nowrap">
                         <span class="typewriter-text italic font-bold tracking-wide" style="font-family: 'Playfair Display', serif;">Portfolio</span><span class="typewriter-cursor"></span>
                     </span>
@@ -1638,10 +1649,10 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[12px] md:text-[13px] text-gray-300 backdrop-blur-xl mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] cursor-default reveal-on-scroll">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
-                <span class="font-bold tracking-widest uppercase font-['Montserrat']">求职中 AVAILABLE FOR WORK</span>
+                <span class="font-bold tracking-widest uppercase font-sans">求职中 AVAILABLE FOR WORK</span>
             </div>
 
-            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-['Montserrat'] uppercase leading-none reveal-on-scroll">
+            <h2 class="text-6xl md:text-[90px] lg:text-[110px] font-black tracking-tighter mb-8 font-sans uppercase leading-none reveal-on-scroll">
                 <span class="text-white drop-shadow-lg">THANK </span>
                 <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-rose-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]">YOU</span>
             </h2>
@@ -1656,7 +1667,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%BE%AE%E4%BF%A1.png" alt="WeChat" class="w-12 h-12 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">WeChat</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">WeChat</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-emerald-400 transition-colors tracking-wide">x903129947</p>
                 </div>
 
@@ -1664,7 +1675,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%94%B5%E8%AF%9D.png?v=update" alt="Phone" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(96,165,250,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Phone</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">Phone</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-blue-400 transition-colors tracking-wide">+86 17681621482</p>
                 </div>
 
@@ -1672,7 +1683,7 @@
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-500">
                         <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%82%AE%E4%BB%B6.png?v=update" alt="Email" class="w-7 h-7 object-contain transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]">
                     </div>
-                    <h3 class="text-xl font-extrabold text-white mb-2 font-['Montserrat'] tracking-wide">Email</h3>
+                    <h3 class="text-xl font-extrabold text-white mb-2 font-sans tracking-wide">Email</h3>
                     <p class="text-[13px] font-medium text-gray-400 group-hover:text-purple-400 transition-colors tracking-wide">m17681621482@163.com</p>
                 </div>
             </div>
@@ -1767,7 +1778,7 @@
         </div>
 
         <!-- 🔥 右下角“实时进度探测器”：移出弹层，固定到视口右下角 -->
-        <div id="modal-scroll-debug" class="fixed bottom-4 right-4 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-mono z-[200] pointer-events-none">
+        <div id="modal-scroll-debug" class="fixed bottom-4 right-4 bg-black/80 backdrop-blur-md text-accent border border-accent/50 px-4 py-2 rounded-full text-[14px] font-bold font-sans z-[200] pointer-events-none">
             进度: 0.0%
         </div>
     </div>
