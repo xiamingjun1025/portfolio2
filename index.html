@@ -153,6 +153,76 @@
             transform: scale(1.12) !important;
         }
 
+        .project-card-info {
+            gap: 0;
+        }
+
+        .project-tags > span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 24px;
+            padding: 0 9px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            color: rgba(229, 231, 235, 0.66);
+            background: rgba(255, 255, 255, 0.075);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .project-tags > .project-hot-tag {
+            gap: 1px;
+            padding-right: 6px;
+            padding-left: 6px;
+            border-color: #FF5656;
+            color: #fff;
+            background: #540B0B;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+        }
+
+        .project-hot-flame {
+            line-height: 1;
+            transform: translateY(-0.5px);
+        }
+
+        .project-hot-tag-text {
+            background: linear-gradient(90deg, #FF8282 0%, #FFAADD 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .project-tags > .innovation-award-tag {
+            gap: 3px;
+            min-height: 24px;
+            padding: 0 7px;
+            border-color: transparent;
+            border-radius: 7px;
+            background: #2E2F31;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+        }
+
+        .innovation-award-text {
+            background: linear-gradient(90deg, #EDCA91 0%, #FFE7C2 52%, #E6BA72 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: 0.015em;
+        }
+
+        .innovation-award-laurel {
+            width: 9px;
+            height: 16px;
+            flex: 0 0 auto;
+            object-fit: contain;
+        }
+
+        .innovation-award-laurel--right {
+            transform: scaleX(-1);
+        }
+
         .play-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
@@ -406,20 +476,6 @@
             animation: typewriter-blink 0.8s infinite;
         }
 
-        .zap-text-sync {
-            background: linear-gradient(90deg, #ffffff 0%, #ffffff 42%, #fde047 48%, #eab308 50%, #fde047 52%, #ffffff 58%, #ffffff 100%);
-            background-size: 300% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: text-zap-sweep 3s infinite linear;
-        }
-
-        @keyframes text-zap-sweep {
-            0%, 60% { background-position: 100% center; }
-            85%, 100% { background-position: 0% center; }
-        }
-
         .marquee-wrapper {
             display: flex;
             width: max-content;
@@ -432,21 +488,6 @@
         @keyframes marquee-scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
-        }
-
-        .zap-icon-sync {
-            color: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
-            animation: lightning-zap 3s infinite linear;
-            filter: drop-shadow(0 0 0px transparent);
-        }
-
-        @keyframes lightning-zap {
-            0%, 80% { color: rgba(255, 255, 255, 0.2); filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
-            82% { color: #fef08a; filter: drop-shadow(0 0 6px #eab308); transform: scale(1.1); }
-            85% { color: #ffffff; filter: drop-shadow(0 0 10px #fde047) drop-shadow(0 0 20px #eab308); transform: scale(1.2); }
-            89% { color: #fef08a; filter: drop-shadow(0 0 4px #eab308); transform: scale(1); }
-            94%, 100% { color: rgba(255, 255, 255, 0.2); filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
         }
 
         .mosaic-particle {
@@ -1374,7 +1415,7 @@
                         "year": "2025",
                         "title": "遇见博物馆联名：大艺术家团团",
                         "desc": "利用前沿3D与AI技术创作的《大艺术家团团》高水准动态创意短片，有效提升品牌在年轻群体中的传播声量。",
-                        "tags": ["品牌联名营销", "文创与传播设计"],
+                        "tags": ["AI赋能品牌营销", "文创与传播设计"],
                         "navTags": [
                             { "name": "背景&策略", "target": "8%" },
                             { "name": "H5互动", "target": "23.7%" },
@@ -1404,9 +1445,10 @@
                             <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://dc-file.leanticket.cn/7AAx481EiCxgtwvstUMdgpzuGgCp9fFs/VznmAkRZ_vip.mp4" type="video/mp4">
                             </video>
-                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
-                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
-                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            <div class="absolute top-0 left-0 z-10 pointer-events-none">
+                                <div class="w-[104px] h-[30px] md:w-[114px] md:h-[32px] flex items-center justify-center bg-[radial-gradient(circle_at_92%_88%,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.28)_22%,transparent_48%),linear-gradient(105deg,#F2A13A_0%,#FFD285_50%,#FFE8BD_100%)] rounded-br-[13px] md:rounded-br-[14px] shadow-[0_3px_8px_rgba(74,42,8,0.10)]">
+                                    <span class="text-[12px] md:text-[13px] leading-[1.3] font-semibold text-[#482606] tracking-[0.01em] whitespace-nowrap text-center">设计部高分项目</span>
+                                </div>
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
@@ -1414,19 +1456,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AI赋能品牌营销设计 · 2025</p>
-                                <div class="relative inline-block mb-3">
+                                <div class="relative inline-block mb-2">
                                     <h3 class="text-lg font-bold rare-metal-text tracking-wide pr-2">遇见博物馆联名：大艺术家团团</h3>
                                     <svg class="absolute -top-1.5 -left-2 w-2.5 h-2.5 text-yellow-300 animate-sparkle-1 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                     <svg class="absolute top-1.5 -right-1 w-2 h-2 text-yellow-400/80 animate-sparkle-2 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                     <svg class="absolute -bottom-1 left-[30%] w-1.5 h-1.5 text-yellow-200/70 animate-sparkle-3 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                 </div>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#品牌联名营销</span>
-                                <span>#文创与传播设计</span>
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span class="project-hot-tag"><span class="project-hot-flame">🔥</span><span class="project-hot-tag-text">礼品店热度榜TOP1</span></span>
+                                <span>AI赋能品牌营销</span>
+                                <span>文创与传播设计</span>
+                                <span>2025</span>
                             </div>
                         </div>
                     </div>
@@ -1438,7 +1481,7 @@
                         "year": "2024",
                         "title": "美团中秋礼盒全链路设计",
                         "desc": "以全新视觉理念打造的2024美团中秋礼盒，探索材料与工艺的创新运用。",
-                        "tags": ["文化传播设计", "实用产品全链路设计"],
+                        "tags": ["品牌文创", "全链路产品开发"],
                         "navTags": [
                             { "name": "背景&调研", "target": "modal-media-1" },
                             { "name": "设计推导", "target": "modal-media-2", "offset": 880 },
@@ -1465,9 +1508,10 @@
                             <video loop muted playsinline preload="none" class="lazy-video w-full h-full object-cover">
                                 <source src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/2024%E4%B8%AD%E7%A7%8B/%E4%B8%AD%E7%A7%8B%E5%B0%81%E9%9D%A2.mp4" type="video/mp4">
                             </video>
-                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
-                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
-                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部高分项目</span>
+                            <div class="absolute top-0 left-0 z-10 pointer-events-none">
+                                <div class="w-[104px] h-[30px] md:w-[114px] md:h-[32px] flex items-center justify-center bg-[radial-gradient(circle_at_92%_88%,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.28)_22%,transparent_48%),linear-gradient(105deg,#F2A13A_0%,#FFD285_50%,#FFE8BD_100%)] rounded-br-[13px] md:rounded-br-[14px] shadow-[0_3px_8px_rgba(74,42,8,0.10)]">
+                                    <span class="text-[12px] md:text-[13px] leading-[1.3] font-semibold text-[#482606] tracking-[0.01em] whitespace-nowrap text-center">设计部高分项目</span>
+                                </div>
                             </div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="play-btn w-16 h-16 rounded-full flex items-center justify-center">
@@ -1475,17 +1519,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2024</p>
-                                <div class="flex items-center mb-3 group">
-                                    <h3 class="text-lg font-bold zap-text-sync tracking-wide">美团中秋礼盒全链路设计</h3>
-                                    <svg class="w-5 h-5 ml-1.5 zap-icon-sync flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                </div>
+                                <h3 class="text-lg font-bold text-white mb-2">美团中秋礼盒全链路设计</h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#文化传播设计</span>
-                                <span>#实用产品全链路设计</span>
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span>品牌文创</span>
+                                <span>全链路产品开发</span>
+                                <span>2024</span>
                             </div>
                         </div>
                     </div>
@@ -1496,7 +1537,7 @@
                         "year": "2026",
                         "title": "灵感造物平台& 品牌AI资产建设",
                         "desc": "探索AIGC技术在企业内部的落地，通过训练团团IP专属模型，大幅提升设计团队的内容产出效率与视觉统一性。",
-                        "tags": ["创意生产力升级", "AI赋能品牌创意"],
+                        "tags": ["创意生产力升级", "产品建设与AI应用"],
                         "navTags": [
                             { "name": "项目背景", "target": "modal-media-0" },
                             { "name": "难点攻克", "target": "28.8%" },
@@ -1519,15 +1560,15 @@
                     })'>
                         <div class="media-container relative aspect-[16/9] overflow-hidden bg-gray-800">
                             <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E5%9B%A2%E5%9B%A2IP%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BB%BA%E8%AE%BE/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%B0%81%E9%9D%A2.png" alt="灵感造物平台& 品牌AI资产建设" class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4 px-3 py-1 bg-[#FFD700] rounded-full flex items-center shadow-[0_0_15px_rgba(255,215,0,0.5)] z-10 pointer-events-none">
-                                <svg class="w-3.5 h-3.5 text-black mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" /></svg>
-                                <span class="text-[12px] font-extrabold text-black tracking-wide">设计部创新实践奖</span>
+                            <div class="absolute top-0 left-0 z-10 pointer-events-none">
+                                <div class="w-[104px] h-[30px] md:w-[114px] md:h-[32px] flex items-center justify-center bg-[radial-gradient(circle_at_92%_88%,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.28)_22%,transparent_48%),linear-gradient(105deg,#F2A13A_0%,#FFD285_50%,#FFE8BD_100%)] rounded-br-[13px] md:rounded-br-[14px] shadow-[0_3px_8px_rgba(74,42,8,0.10)]">
+                                    <span class="text-[12px] md:text-[13px] leading-[1.3] font-semibold text-[#482606] tracking-[0.01em] whitespace-nowrap text-center">设计部高分项目</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">产品建设与AI应用 · 2026</p>
-                                <h3 class="text-lg font-bold text-white mb-3">
+                                <h3 class="text-lg font-bold text-white mb-2">
                                     灵感造物平台
                                     <span class="relative inline-block tech-text-gradient pr-1">
                                         & 品牌AI资产建设
@@ -1541,9 +1582,15 @@
                                     </span>
                                 </h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#创意生产力升级</span>
-                                <span>#AI赋能品牌创意</span>
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span class="innovation-award-tag" aria-label="设计部创新实践奖">
+                                <img class="innovation-award-laurel" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAbBAMAAABRv8j0AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAeUExURS4vMUdFQ2BbVd7Lr6ueivfhwZKIecW1nXpyaP///0D761UAAAACdFJOUwAAdpPNOAAAAAFiS0dECfHZpewAAAAHdElNRQfqCBELMA6XdR1qAAAAg0lEQVQI1zWPsQqDQBBE90SsxYhYXqO1GkxvlTawDPkCexvBUgXxt2OcvWv2cbfzhhOJWuGJ1SCBJ0SYCA6Nvc2fe2RSEeYhIRzqmXqgDekgPILQ9SaUgsJ6k/SGEZ1YHIN1QtNwRaUb8TXRidVMjkvl7q0VurALwOtP+QX8Sfl+6vQD/6QW0gHGe1sAAAAASUVORK5CYII=" alt="" aria-hidden="true">
+                                <span class="innovation-award-text">设计部创新实践奖</span>
+                                <img class="innovation-award-laurel innovation-award-laurel--right" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAbBAMAAABRv8j0AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAeUExURS4vMUdFQ2BbVd7Lr6ueivfhwZKIecW1nXpyaP///0D761UAAAACdFJOUwAAdpPNOAAAAAFiS0dECfHZpewAAAAHdElNRQfqCBELMA6XdR1qAAAAg0lEQVQI1zWPsQqDQBBE90SsxYhYXqO1GkxvlTawDPkCexvBUgXxt2OcvWv2cbfzhhOJWuGJ1SCBJ0SYCA6Nvc2fe2RSEeYhIRzqmXqgDekgPILQ9SaUgsJ6k/SGEZ1YHIN1QtNwRaUb8TXRidVMjkvl7q0VurALwOtP+QX8Sfl+6vQD/6QW0gHGe1sAAAAASUVORK5CYII=" alt="" aria-hidden="true">
+                            </span>
+                                <span>创意生产力升级</span>
+                                <span>产品建设与AI应用</span>
+                                <span>2026</span>
                             </div>
                         </div>
                     </div>
@@ -1554,7 +1601,7 @@
                         "year": "2026",
                         "title": "美团马年新春福袋 & 传播设计",
                         "desc": "美团马年新春创意动画短片，探索前沿3D动态视觉表达与品牌IP的趣味结合。",
-                        "tags": ["企业社会责任", "品牌影响力", "节日礼品周边设计"],
+                        "tags": ["企业社会责任", "节日衍生品设计"],
                         "content": [
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE0.jpg",
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E9%A9%AC%E5%B9%B4%E6%96%B0%E6%98%A5/%E5%9B%BE1.jpg",
@@ -1572,15 +1619,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2026</p>
-                                <h3 class="text-lg font-bold text-white mb-3">美团马年新春福袋 & 传播设计</h3>
+                                <h3 class="text-lg font-bold text-white mb-2">美团马年新春福袋 & 传播设计</h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#企业社会责任</span>
-                                <span>#品牌影响力</span>
-                                <span>#节日礼品周边设计</span>
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span>企业社会责任</span>
+                                <span>节日衍生品设计</span>
+                                <span>2026</span>
                             </div>
                         </div>
                     </div>
@@ -1591,7 +1637,7 @@
                         "year": "2025",
                         "title": "美团文创线下零售空间 & 体验设计",
                         "desc": "独立负责上海新总部350㎡实体文创空间全案设计，打造“员工第三空间”社交休憩地。",
-                        "tags": ["空间设计", "体验设计"],
+                        "tags": ["品牌空间体验", "展陈空间设计"],
                         "content": [
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE1.jpg",
                             "https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%9B%BE2.jpg",
@@ -1604,14 +1650,14 @@
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
                             <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update" alt="美团文创线下零售空间 & 体验设计" class="w-full h-full object-cover">
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌空间体验 · 2025</p>
-                                <h3 class="text-lg font-bold text-white mb-3">美团文创线下零售空间 & 体验设计</h3>
+                                <h3 class="text-lg font-bold text-white mb-2">美团文创线下零售空间 & 体验设计</h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
-                                <span>#空间设计</span>
-                                <span>#体验设计</span>
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span>品牌空间体验</span>
+                                <span>展陈空间设计</span>
+                                <span>2025</span>
                             </div>
                         </div>
                     </div>
