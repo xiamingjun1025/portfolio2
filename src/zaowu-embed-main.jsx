@@ -27,8 +27,7 @@ import {
   communityWall,
   getCategoryIndex,
 } from "./zaowu-origin/App.jsx";
-const oppoSansReady =
-  document.fonts?.load('600 1em "OPPO Sans 4.0"') ?? Promise.resolve();
+import { douyinSansReady } from "./zaowu-origin/douyinSansFont.js";
 import "./zaowu-origin/styles-home.css";
 import "./zaowu-origin/campaign-carousel-refinement.js";
 import "./zaowu-origin/waterfall-protected.js";
@@ -1325,7 +1324,7 @@ function InspirationShowcase() {
 
   useEffect(() => {
     let cancelled = false;
-    oppoSansReady.then(() => {
+    douyinSansReady.then(() => {
       if (!cancelled) setTitleFontsReady(true);
     });
     return () => {
