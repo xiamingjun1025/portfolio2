@@ -153,6 +153,44 @@
             transform: scale(1.12) !important;
         }
 
+        .project-card-info {
+            gap: 0;
+        }
+
+        .project-tags > span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 24px;
+            padding: 0 9px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            color: rgba(229, 231, 235, 0.66);
+            background: rgba(255, 255, 255, 0.075);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .project-tags > .project-hot-tag {
+            gap: 3px;
+            border-color: #FF5656;
+            color: #fff;
+            background: #540B0B;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+        }
+
+        .project-hot-flame {
+            line-height: 1;
+            transform: translateY(-0.5px);
+        }
+
+        .project-hot-tag-text {
+            background: linear-gradient(90deg, #FF8282 0%, #FFAADD 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: 600;
+        }
+
         .play-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
@@ -1415,17 +1453,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AI赋能品牌营销设计 · 2025</p>
-                                <div class="relative inline-block mb-3">
+                                <p class="text-xs text-gray-400 mb-1 font-medium">AI赋能品牌营销设计 · 2025</p>
+                                <div class="relative inline-block mb-2">
                                     <h3 class="text-lg font-bold rare-metal-text tracking-wide pr-2">遇见博物馆联名：大艺术家团团</h3>
                                     <svg class="absolute -top-1.5 -left-2 w-2.5 h-2.5 text-yellow-300 animate-sparkle-1 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                     <svg class="absolute top-1.5 -right-1 w-2 h-2 text-yellow-400/80 animate-sparkle-2 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                     <svg class="absolute -bottom-1 left-[30%] w-1.5 h-1.5 text-yellow-200/70 animate-sparkle-3 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0l2.59 9.41L24 12l-9.41 2.59L12 24l-2.59-9.41L0 12l9.41-2.59L12 0z"/></svg>
                                 </div>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
+                                <span class="project-hot-tag"><span class="project-hot-flame">🔥</span><span class="project-hot-tag-text">礼品店热度榜TOP1</span></span>
                                 <span>#品牌联名营销</span>
                                 <span>#文创与传播设计</span>
                             </div>
@@ -1477,15 +1516,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌文创 · 2024</p>
-                                <div class="flex items-center mb-3 group">
+                                <p class="text-xs text-gray-400 mb-1 font-medium">品牌文创 · 2024</p>
+                                <div class="flex items-center mb-2 group">
                                     <h3 class="text-lg font-bold zap-text-sync tracking-wide">美团中秋礼盒全链路设计</h3>
                                     <svg class="w-5 h-5 ml-1.5 zap-icon-sync flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                                 </div>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
                                 <span>#文化传播设计</span>
                                 <span>#实用产品全链路设计</span>
                             </div>
@@ -1526,10 +1565,10 @@
                                 <span class="text-[12px] font-extrabold text-black tracking-wide">设计部创新实践奖</span>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">产品建设与AI应用 · 2026</p>
-                                <h3 class="text-lg font-bold text-white mb-3">
+                                <p class="text-xs text-gray-400 mb-1 font-medium">产品建设与AI应用 · 2026</p>
+                                <h3 class="text-lg font-bold text-white mb-2">
                                     灵感造物平台
                                     <span class="relative inline-block tech-text-gradient pr-1">
                                         & 品牌AI资产建设
@@ -1543,7 +1582,7 @@
                                     </span>
                                 </h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
                                 <span>#创意生产力升级</span>
                                 <span>#AI赋能品牌创意</span>
                             </div>
@@ -1574,12 +1613,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">AIGC建设与应用 · 2026</p>
-                                <h3 class="text-lg font-bold text-white mb-3">美团马年新春福袋 & 传播设计</h3>
+                                <p class="text-xs text-gray-400 mb-1 font-medium">AIGC建设与应用 · 2026</p>
+                                <h3 class="text-lg font-bold text-white mb-2">美团马年新春福袋 & 传播设计</h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
                                 <span>#企业社会责任</span>
                                 <span>#品牌影响力</span>
                                 <span>#节日礼品周边设计</span>
@@ -1606,12 +1645,12 @@
                         <div class="media-container relative aspect-[4/3] overflow-hidden bg-gray-800">
                             <img src="https://xiamingjun-project.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E5%9B%A2%E4%B8%8A%E6%B5%B7%E6%80%BB%E9%83%A8%E7%A4%BC%E5%93%81%E5%BA%97%E7%A9%BA%E9%97%B4%E8%AE%BE%E8%AE%A1/%E5%B0%81%E9%9D%A2.jpg?v=update" alt="美团文创线下零售空间 & 体验设计" class="w-full h-full object-cover">
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="project-card-info px-4 pt-3.5 pb-4 flex-1 flex flex-col">
                             <div>
-                                <p class="text-xs text-gray-400 mb-1.5 font-medium">品牌空间体验 · 2025</p>
-                                <h3 class="text-lg font-bold text-white mb-3">美团文创线下零售空间 & 体验设计</h3>
+                                <p class="text-xs text-gray-400 mb-1 font-medium">品牌空间体验 · 2025</p>
+                                <h3 class="text-lg font-bold text-white mb-2">美团文创线下零售空间 & 体验设计</h3>
                             </div>
-                            <div class="flex flex-wrap gap-2 text-[11px] text-gray-500 font-medium">
+                            <div class="project-tags flex flex-wrap gap-1.5 text-[11px] font-medium">
                                 <span>#空间设计</span>
                                 <span>#体验设计</span>
                             </div>
